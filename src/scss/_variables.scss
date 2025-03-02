@@ -1,0 +1,88 @@
+// Шрифт по умолчанию
+$fontfamily: "SFProText";
+
+// Шрифт по умолчанию
+
+$md1: 1439.98px;
+$md2: 1199.98px;
+$md3: 991.98px;
+$md4: 743.98px;
+$md5: 575.98px;
+$md6: 389.98px;
+
+// ПЕРЕМЕННЫЕ
+$minWidth: 320; // Минимальная ширина страницы
+$maxWidth: 1920; // Ширина макета
+$maxWidthContainer: rem(720, 16); // Максимальная ширина ограничивающего контейнера
+$containerPadding: 30;
+
+$text: var(--text-primary);
+$secondary: var(--text-secondary);
+$tertiary: var(--text-tertiary);
+$accent: var(--text-accent);
+
+/* Red Shades */
+$red-300: var(--red-300);
+$red-350: var(--red-350);
+$red-400: var(--red-400);
+$red-450: var(--red-450);
+$red-500: var(--red-500);
+$red-550: var(--red-550);
+$red-600: var(--red-600);
+$red-650: var(--red-650);
+$red-700: var(--red-700);
+$red-750: var(--red-750);
+$red-800: var(--red-800);
+$red-850: var(--red-850);
+$red-900: var(--red-900);
+
+/* Blue Shades */
+$blue-300: var(--blue-300);
+$blue-350: var(--blue-350);
+$blue-400: var(--blue-400);
+$blue-450: var(--blue-450);
+$blue-500: var(--blue-500);
+$blue-550: var(--blue-550);
+$blue-600: var(--blue-600);
+$blue-650: var(--blue-650);
+$blue-700: var(--blue-700);
+$blue-750: var(--blue-750);
+$blue-800: var(--blue-800);
+$blue-850: var(--blue-850);
+$blue-900: var(--blue-900);
+
+/* Green Shades */
+$green-200: var(--green-200);
+$green-300: var(--green-300);
+$green-400: var(--green-400);
+$green-500: var(--green-500);
+$green-600: var(--green-600);
+$green-700: var(--green-700);
+$green-800: var(--green-800);
+$green-900: var(--green-900);
+
+/* Yellow Shades */
+$yellow-300: var(--yellow-300);
+$yellow-400: var(--yellow-400);
+$yellow-500: var(--yellow-500);
+$yellow-600: var(--yellow-600);
+$yellow-700: var(--yellow-700);
+$yellow-800: var(--yellow-800);
+$yellow-900: var(--yellow-900);
+
+/* Purple Shade */
+$purple-900: var(--purple-900);
+
+/* Teal Shade */
+$teal-400: var(--teal-400);
+
+// Z-Index
+$ui-index-1: 1; // Для наполняющих элементов в общем потоке
+$ui-index-2: 2; // Для наполняющих элементов в общем потоке
+$ui-index-3: 3; // Для масок
+$ui-index-4: 4; // Для сайдбаров
+$ui-index-5: 5; // Для модалок
+$ui-index-6: 6; // Для элементов, перекрывающих все
+
+// Transition Easing
+$gentle-easing: cubic-bezier(0.68, -0.55, 0.27, 1.55);

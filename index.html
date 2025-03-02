@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <title>BotAds</title>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <div class="header__container">
+          <div class="header__top">
+            <button type="button" class="header__users btn btn-primary btn-sm">
+              <span class="btn__text">
+                <svg>
+                  <use xlink:href="/img/sprite.svg#icon-language"></use>
+                </svg> Все пользователи </span>
+              <svg class="btn__icon-down">
+                <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
+              </svg>
+            </button>
+            <button type="button" class="header__add btn btn-secondary btn-icon"></button>
+          </div>
+          <div class="header__sort">
+            <button type="button" class="header__sort-btn btn btn-secondary btn-sm"> Цена <svg class="btn__icon-down">
+                <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
+              </svg>
+            </button>
+            <button type="button" class="header__sort-btn btn btn-secondary btn-sm"> Дата <svg class="btn__icon-down">
+                <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
+              </svg>
+            </button>
+            <button type="button" class="header__sort-btn btn btn-secondary btn-sm"> Количество пользователей <svg class="btn__icon-down">
+                <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="header__bottom">
+            <div class="header__filter">
+              <button type="button" class="header__filter btn btn-white btn-icon btn-xs">
+                <svg>
+                  <use xlink:href="/img/sprite.svg#icon-filter"></use>
+                </svg>
+              </button>
+            </div>
+            <form action="#" class="header__categories ">
+              <button type="button" class="header__categories-btn btn btn-white btn-xs"> Категории <svg class="header__categories-down">
+                  <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
+                </svg>
+                <span class="header__categories-quantity">0</span>
+              </button>
+              <div class="header__categories-body ">
+                <div class="header__categories-list">
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="downloads" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Скачивания</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="dating" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Знакомства</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="ai" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Нейросети</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="voices" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Войсы</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="movies" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Фильмы</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="music" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Музыка</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="books" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Книги</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="games" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Игры</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="finance" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Финансы</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="business" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Бизнес</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="crypto" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Криптовалюта</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="polls" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Опросы</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="food-drinks" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Еда и напитки</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="horoscopes" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Гороскопы</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="fonts" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Шрифты</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="entertainment" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Развлечения</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="medicine" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Медицина</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="education" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Образование</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="apps" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Приложения</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="apk-files" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">APK и файлы</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="sports" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Спорт</span>
+                  </label>
+                  <label class="header__categories-item input-label">
+                    <input type="checkbox" name="category" value="administration" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Администрирование</span>
+                  </label>
+                </div>
+              </div>
+            </form>
+            <form action="#" class="header__search">
+              <button class="header__search-back btn btn-white btn-icon btn-xs">
+                <svg>
+                  <use xlink:href="/img/sprite.svg#icon-arrow-left"></use>
+                </svg>
+              </button>
+              <input type="text" name="search" class="form__control" placeholder="Поиск">
+              <button type="button" class="header__search-btn btn btn-white btn-icon btn-xs">
+                <svg>
+                  <use xlink:href="/img/sprite.svg#icon-search"></use>
+                </svg>
+              </button>
+              <div class="header__search-body">
+                <div class="picture">
+                  <img src="/img/duck/lupe.gif" alt="Duck">
+                </div>
+                <span class="headline fw-semibold color-secondary">Нет результатов</span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </header>
+      <main class="page" id="app"></main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
