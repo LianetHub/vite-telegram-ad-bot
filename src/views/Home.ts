@@ -26,6 +26,8 @@ export class Home {
 		try {
 			const response: ApiResponse | ApiError = await searchCatalog({});
 
+			console.log(response);
+
 			if ("error" in response) {
 				throw new Error(response.error);
 			}

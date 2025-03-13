@@ -12,15 +12,17 @@
       <header class="header">
         <div class="header__container">
           <div class="header__top">
-            <button type="button" class="header__users btn btn-primary btn-sm">
+            <a href="#select-language" data-modal class="header__users btn btn-primary btn-sm">
               <span class="btn__text">
                 <svg>
                   <use xlink:href="/img/sprite.svg#icon-language"></use>
-                </svg> Все пользователи </span>
+                </svg>
+                Все пользователи
+              </span>
               <svg class="btn__icon-down">
                 <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
               </svg>
-            </button>
+            </a>
             <button type="button" class="header__add btn btn-secondary btn-icon"></button>
           </div>
           <div class="header__sort">
@@ -45,13 +47,17 @@
                 </svg>
               </button>
             </div>
-            <form action="#" class="header__categories ">
-              <button type="button" class="header__categories-btn btn btn-white btn-xs"> Категории <svg class="header__categories-down">
-                  <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
-                </svg>
-                <span class="header__categories-quantity">0</span>
+            <form action="#" class="header__categories">
+              <button type="button" class="header__categories-btn btn btn-white btn-xs">
+                Категории
+                <span class="header__categories-btn-actions">
+                  <svg class="header__categories-down">
+                    <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
+                  </svg>
+                  <span class="header__categories-quantity" data-name="category">0</span>
+                </span>
               </button>
-              <div class="header__categories-body ">
+              <div class="header__categories-body">
                 <div class="header__categories-list">
                   <label class="header__categories-item input-label">
                     <input type="checkbox" name="category" value="downloads" class="input-label__control hidden" hidden>
@@ -142,6 +148,11 @@
                     <span class="input-label__field">Администрирование</span>
                   </label>
                 </div>
+                <button type="reset" class="header__categories-reset btn btn-primary btn-icon btn-rounded btn-sm">
+                  <svg>
+                    <use xlink:href="img/sprite.svg#icon-clear"></use>
+                  </svg>
+                </button>
               </div>
             </form>
             <form action="#" class="header__search">
@@ -166,7 +177,493 @@
           </div>
         </div>
       </header>
-      <main class="page" id="app"></main>
+      <main class="page" id="app">
+        <div class="cards">
+          <div class="cards__container">
+            <div class="card">
+              <div class="card__header">
+                <a href="https://t.me/instagram_downloader_bot" class="card__thumb">
+                  <img src="img/apps/instagrаm-downloader.png" alt="Иконка приложения">
+                </a>
+                <div class="card__app">
+                  <div class="card__app-name callout fw-medium">Instagram Downloader Bot</div>
+                  <a href="https://t.me/instagram_downloader_bot" class="card__app-link link">@instagram_downloader_bot</a>
+                </div>
+              </div>
+              <div class="card__body">
+                <div class="card__row">
+                  <div class="card__active subtitle">
+                    <span class="color-secondary">Актив:</span>
+                    <span class="fw-medium">3.2M</span>
+                  </div>
+                  <button type="button" class="card__time subtitle fw-medium">
+                    <span class="card__time-value">15 окт</span>
+                    <svg>
+                      <use xlink:href="img/sprite.svg#icon-chevron-right"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card__row">
+                  <div class="card__countries">
+                    <ul class="card__countries-list">
+                      <li class="card__countries-item caption-lg"><img src="img/flags/russian.svg" alt="Флаг">1.5M</li>
+                      <li class="card__countries-item caption-lg"><img src="img/flags/english.svg" alt="Флаг">870k</li>
+                      <li class="card__countries-item caption-lg"><img src="img/flags/french.svg" alt="Флаг">560k</li>
+                    </ul>
+                    <div class="card__countries-side">
+                      <button class="card__countries-more footnote"> Ещё 5 <svg>
+                          <use xlink:href="img/sprite.svg#icon-chevron-down"></use>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card__actions">
+                    <div class="card__price title-sm fw-semibold"> 21 000 ₽ </div>
+                    <button type="button" class="card__btn btn btn-icon btn-rounded btn-primary-outline btn-sm">
+                      <svg>
+                        <use xlink:href="img/sprite.svg#icon-plus"></use>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card__header">
+                <a href="https://t.me/TopSaverBot" class="card__thumb">
+                  <img src="img/apps/top-saver.png" alt="Иконка приложения">
+                </a>
+                <div class="card__app">
+                  <div class="card__app-name callout fw-medium">Top Saver Bot</div>
+                  <a href="https://t.me/TopSaverBot" class="card__app-link link">@TopSaverBot</a>
+                </div>
+              </div>
+              <div class="card__body">
+                <div class="card__row">
+                  <div class="card__active subtitle">
+                    <span class="color-secondary">Актив:</span>
+                    <span class="fw-medium">8.4M</span>
+                  </div>
+                  <button type="button" class="card__time subtitle fw-medium">
+                    <span class="card__time-value">25 сен</span>
+                    <svg>
+                      <use xlink:href="img/sprite.svg#icon-chevron-right"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card__row">
+                  <div class="card__countries">
+                    <ul class="card__countries-list">
+                      <li class="card__countries-item caption-lg"><img src="img/flags/russian.svg" alt="Флаг">2.3M</li>
+                      <li class="card__countries-item caption-lg"><img src="img/flags/english.svg" alt="Флаг">1.5M</li>
+                      <li class="card__countries-item caption-lg"><img src="img/flags/german.svg" alt="Флаг">1.1M</li>
+                    </ul>
+                    <div class="card__countries-side">
+                      <button class="card__countries-more footnote"> Ещё 5 <svg>
+                          <use xlink:href="img/sprite.svg#icon-chevron-down"></use>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card__actions">
+                    <div class="card__price title-sm fw-semibold"> 38 600 ₽ </div>
+                    <button type="button" class="card__btn btn btn-icon btn-rounded btn-primary-outline btn-sm">
+                      <svg>
+                        <use xlink:href="img/sprite.svg#icon-plus"></use>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card__header">
+                <a href="https://t.me/catizenbot" class="card__thumb">
+                  <img src="img/apps/catizen.png" alt="Иконка приложения">
+                </a>
+                <div class="card__app">
+                  <div class="card__app-name callout fw-medium">Catizen</div>
+                  <a href="https://t.me/catizenbot" class="card__app-link link">@catizenbot</a>
+                </div>
+              </div>
+              <div class="card__body">
+                <div class="card__row">
+                  <div class="card__active subtitle">
+                    <span class="color-secondary">Актив:</span>
+                    <span class="fw-medium">10.5M</span>
+                  </div>
+                  <button type="button" class="card__time subtitle fw-medium">
+                    <span class="card__time-value">8 окт</span>
+                    <svg>
+                      <use xlink:href="img/sprite.svg#icon-chevron-right"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card__row">
+                  <div class="card__countries">
+                    <ul class="card__countries-list">
+                      <li class="card__countries-item caption-lg"><img src="img/flags/arabic.svg" alt="Флаг">5.8M</li>
+                      <li class="card__countries-item caption-lg"><img src="img/flags/english.svg" alt="Флаг">4.1M</li>
+                      <li class="card__countries-item caption-lg"><img src="img/flags/ukrainian.svg" alt="Флаг">1.6M</li>
+                    </ul>
+                    <div class="card__countries-side">
+                      <button class="card__countries-more footnote"> Ещё 5 <svg>
+                          <use xlink:href="img/sprite.svg#icon-chevron-down"></use>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card__actions">
+                    <div class="card__price title-sm fw-semibold"> 50 500 ₽ </div>
+                    <button type="button" class="card__btn btn btn-icon btn-rounded btn-primary-outline btn-sm">
+                      <svg>
+                        <use xlink:href="img/sprite.svg#icon-plus"></use>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card__header">
+                <a href="https://t.me/spinthe_bot" class="card__thumb">
+                  <img src="img/apps/spin-bottle.png" alt="Иконка приложения">
+                </a>
+                <div class="card__app">
+                  <div class="card__app-name callout fw-medium">Spin the Bottle</div>
+                  <a href="https://t.me/spinthe_bot" class="card__app-link link">@spinthe_bot</a>
+                </div>
+              </div>
+              <div class="card__body">
+                <div class="card__row">
+                  <div class="card__active subtitle">
+                    <span class="color-secondary">Актив:</span>
+                    <span class="fw-medium">3.2M</span>
+                  </div>
+                  <button type="button" class="card__time subtitle fw-medium">
+                    <span class="card__time-value">29 сен</span>
+                    <svg>
+                      <use xlink:href="img/sprite.svg#icon-chevron-right"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card__row">
+                  <div class="card__countries">
+                    <ul class="card__countries-list">
+                      <li class="card__countries-item caption-lg"><img src="img/flags/russian.svg" alt="Флаг">1.8M</li>
+                      <li class="card__countries-item caption-lg"><img src="img/flags/persian.svg" alt="Флаг">950k</li>
+                      <li class="card__countries-item caption-lg"><img src="img/flags/italian.svg" alt="Флаг">372k</li>
+                    </ul>
+                    <div class="card__countries-side">
+                      <button class="card__countries-more footnote"> Ещё 5 <svg>
+                          <use xlink:href="img/sprite.svg#icon-chevron-down"></use>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card__actions">
+                    <div class="card__price title-sm fw-semibold"> 8 300 ₽ </div>
+                    <button type="button" class="card__btn btn btn-icon btn-rounded btn-primary-outline btn-sm">
+                      <svg>
+                        <use xlink:href="img/sprite.svg#icon-plus"></use>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card__header">
+                <a href="https://t.me/vkmusic_bot" class="card__thumb">
+                  <img src="img/apps/vk-music.png" alt="Иконка приложения">
+                </a>
+                <div class="card__app">
+                  <div class="card__app-name callout fw-medium">VK Music Bot</div>
+                  <a href="https://t.me/vkmusic_bot" class="card__app-link link">@vkmusic_bot</a>
+                </div>
+              </div>
+              <div class="card__body">
+                <div class="card__row">
+                  <div class="card__active subtitle">
+                    <span class="color-secondary">Актив:</span>
+                    <span class="fw-medium">4.6M</span>
+                  </div>
+                  <button type="button" class="card__time subtitle fw-medium">
+                    <span class="card__time-value">30 сен</span>
+                    <svg>
+                      <use xlink:href="img/sprite.svg#icon-chevron-right"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card__row">
+                  <div class="card__countries">
+                    <ul class="card__countries-list">
+                      <li class="card__countries-item caption-lg"><img src="img/flags/russian.svg" alt="Флаг">2.3M</li>
+                      <li class="card__countries-item caption-lg"><img src="img/flags/english.svg" alt="Флаг">1.9M</li>
+                      <li class="card__countries-item caption-lg"><img src="img/flags/ukrainian.svg" alt="Флаг">1.0M</li>
+                    </ul>
+                    <div class="card__countries-side">
+                      <button class="card__countries-more footnote"> Ещё 5 <svg>
+                          <use xlink:href="img/sprite.svg#icon-chevron-down"></use>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card__actions">
+                    <div class="card__price title-sm fw-semibold"> 22 400 ₽ </div>
+                    <button type="button" class="card__btn btn btn-icon btn-rounded btn-primary-outline btn-sm">
+                      <svg>
+                        <use xlink:href="img/sprite.svg#icon-plus"></use>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <div id="select-language" class="modal">
+        <div class="modal__wrapper">
+          <div class="modal__header">
+            <div class="resize-indicator"></div>
+            <div class="modal__row">
+              <div class="modal__title title-sm fw-semibold">Выберите язык</div>
+              <button type="button" data-modal-close class="modal__close">
+                <svg>
+                  <use xlink:href="img/sprite.svg#icon-cross"></use>
+                </svg>
+              </button>
+            </div>
+            <div class="modal__row">
+              <div class="modal__title title-sm fw-semibold">
+                Выбрано
+                <span data-name="language">0</span>
+              </div>
+              <button type="button" class="modal__clear subtitle">Очистить</button>
+            </div>
+          </div>
+          <div class="modal__body">
+            <div class="language">
+              <div class="language__items">
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="russian" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/russian.svg" alt="Флаг">
+                    </span> Русский </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="english" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/english.svg" alt="Флаг">
+                    </span> English </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="arabic" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/arabic.svg" alt="Флаг">
+                    </span> Arabic </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="belarusian" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/belarusian.svg" alt="Флаг">
+                    </span> Belarusian </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="catalan" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/catalan.svg" alt="Флаг">
+                    </span> Catalan </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="croatian" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/croatian.svg" alt="Флаг">
+                    </span> Croatian </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="czech" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/czech.svg" alt="Флаг">
+                    </span> Czech </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="nederlands" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/nederlands.svg" alt="Флаг">
+                    </span> Nederlands </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="finnish" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/finnish.svg" alt="Флаг">
+                    </span> Finnish </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="french" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/french.svg" alt="Флаг">
+                    </span> French </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="hungarian" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/hungarian.svg" alt="Флаг">
+                    </span> Hungarian </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="indonesian" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/indonesian.svg" alt="Флаг">
+                    </span> Indonesian </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="italian" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/italian.svg" alt="Флаг">
+                    </span> Italian </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="kazakh" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/kazakh.svg" alt="Флаг">
+                    </span> Kazakh </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="korean" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/korean.svg" alt="Флаг">
+                    </span> Korean </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="malay" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/malay.svg" alt="Флаг">
+                    </span> Malay </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="hebrew" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/hebrew.svg" alt="Флаг">
+                    </span> Hebrew </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="norwegian" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/norwegian.svg" alt="Флаг">
+                    </span> Norwegian </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="persian" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/persian.svg" alt="Флаг">
+                    </span> Persian </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="polish" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/polish.svg" alt="Флаг">
+                    </span> Polish </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="serbian" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/serbian.svg" alt="Флаг">
+                    </span> Serbian </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="slovak" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/slovak.svg" alt="Флаг">
+                    </span> Slovak </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="swedish" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/swedish.svg" alt="Флаг">
+                    </span> Swedish </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="german" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/german.svg" alt="Флаг">
+                    </span> German </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="ukrainian" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/ukrainian.svg" alt="Флаг">
+                    </span> Ukrainian </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="turkish" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/turkish.svg" alt="Флаг">
+                    </span> Turkish </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="uzbek" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/uzbek.svg" alt="Флаг">
+                    </span> Uzbek </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="language" value="others" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <svg>
+                        <use xlink:href="img/sprite.svg#icon-language"></use>
+                      </svg>
+                    </span> Others </span>
+                </label>
+              </div>
+              <div class="language__bottom">
+                <div class="language__bottom-icon">
+                  <svg>
+                    <use xlink:href="img/sprite.svg#icon-crown"></use>
+                  </svg>
+                </div>
+                <div class="language__bottom-text subtitle fw-semibold">Telegram Premium</div>
+                <label class="switch">
+                  <input type="checkbox" name="premium" class="switch__input hidden" hidden>
+                  <span class="switch__field"></span>
+                </label>
+              </div>
+              <div class="complete-btn__wrapper">
+                <button class="complete-btn btn btn-primary btn-sm">Показать</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
