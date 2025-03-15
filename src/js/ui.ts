@@ -41,6 +41,12 @@ export class UIHandler {
 			this.createRippleEffect(button, e);
 		}
 
+		// cart
+		const cartBtn = target.closest(".card__btn") as HTMLElement | null;
+		if (cartBtn) {
+			cartBtn.classList.toggle("active");
+		}
+
 		// Открытие модального окна
 		const modalLink = target.closest("[data-modal]") as HTMLElement | null;
 		if (modalLink) {
@@ -72,10 +78,10 @@ export class UIHandler {
 		}
 
 		if (target.name === "language") {
-			const languageQuantityElement = document.querySelector(".select-language-quantity") as HTMLElement;
+			const languageQuantityElement = document.querySelector(".modal__language-quantity") as HTMLElement;
 			if (languageQuantityElement) {
 				this.updateCheckboxQuantity(languageQuantityElement, (count) => {
-					console.log(`Количество выбранных языков: ${count}`);
+					this.languageUIUpdate(count);
 				});
 			}
 		}
@@ -97,6 +103,7 @@ export class UIHandler {
 		categoriesBtn.classList.toggle("active");
 		const categoriesBody = document.querySelector(".header__categories-body") as HTMLElement | null;
 		categoriesBody?.classList.toggle("active");
+		this.body.classList.toggle("lock");
 	}
 
 	private resetCategories() {
@@ -116,6 +123,16 @@ export class UIHandler {
 		} else {
 			document.querySelector(".header__categories-btn")?.classList.remove("has-quantity");
 			document.querySelector(".header__categories-reset")?.classList.remove("visible");
+		}
+	}
+
+	private languageUIUpdate(count: number) {
+		console.log(`Количество выбранных языков: ${count}`);
+
+		if (count > 0) {
+			document.querySelector("[data-language-submit]")?.classList.remove("hide");
+		} else {
+			document.querySelector("[data-language-submit]")?.classList.add("hide");
 		}
 	}
 

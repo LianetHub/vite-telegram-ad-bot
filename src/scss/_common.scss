@@ -280,6 +280,39 @@ body {
 	// .card__btn
 	&__btn {
 		flex-shrink: 0;
+
+		.icon-plus,
+		.icon-minus {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.icon-plus {
+			opacity: 1;
+		}
+		.icon-minus {
+			transition: opacity 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+			opacity: 0;
+			& svg {
+				transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+				transform: scale(0);
+			}
+		}
+		&.active {
+			.icon-plus {
+				opacity: 0;
+			}
+			.icon-minus {
+				opacity: 1;
+				& svg {
+					transform: scale(1);
+				}
+			}
+		}
 	}
 	// .card__remove
 	&__remove {
