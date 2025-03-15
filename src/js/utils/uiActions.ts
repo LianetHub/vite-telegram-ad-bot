@@ -90,3 +90,28 @@ export function languageUIUpdate(count: number) {
 		document.querySelector("[data-language-submit]")?.classList.add("hide");
 	}
 }
+
+export function handleSegmentedChange(controls: HTMLElement, value: string) {
+	const buttons = controls?.querySelectorAll(".segmented-controls__item") as NodeListOf<HTMLElement>;
+	const runner = controls?.querySelector(".segmented-controls__runner") as HTMLElement;
+
+	let activeIndex = 0;
+
+	buttons.forEach((button, index) => {
+		const input = button.querySelector("input") as HTMLInputElement;
+		if (input && input.value === value) {
+			activeIndex = index;
+		}
+	});
+
+	if (buttons.length > 0 && runner) {
+		const activeButton = buttons[activeIndex];
+
+		buttons.forEach((button) => {
+			button.classList.remove("active");
+		});
+
+		activeButton.classList.add("active");
+		runner.style.left = `${activeIndex * 50}%`;
+	}
+}

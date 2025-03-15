@@ -769,9 +769,18 @@
             </button>
           </div>
           <div class="modal__filter">
-            <div class="tabs subtitle fw-medium">
-              <button type="button" class="tabs__btn active">За всех</button>
-              <button type="button" class="tabs__btn">За 100k</button>
+            <div class="segmented-controls subtitle fw-medium">
+              <div class="segmented-controls__wrapper">
+                <label class="segmented-controls__item">
+                  <input type="radio" name="audience" value="all" checked class="segmented-controls__item-input hidden" hidden>
+                  <span class="segmented-controls__item-btn">За всех</span>
+                </label>
+                <label class="segmented-controls__item">
+                  <input type="radio" name="audience" value="100k" class="segmented-controls__item-input hidden" hidden>
+                  <span class="segmented-controls__item-btn">За 100k</span>
+                </label>
+                <div class="segmented-controls__runner"></div>
+              </div>
             </div>
             <div class="modal__filter-inputs">
               <div class="modal__filter-field">

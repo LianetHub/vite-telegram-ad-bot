@@ -1,5 +1,5 @@
 import { EventEmitter } from "../store/EventEmitter";
-import { updateCheckboxQuantity, categoriesUIUpdate, languageUIUpdate } from "../utils/uiActions";
+import { updateCheckboxQuantity, categoriesUIUpdate, languageUIUpdate, handleSegmentedChange } from "../utils/uiActions";
 
 export class ChangeHandler {
 	constructor(private eventEmitter: EventEmitter) {
@@ -27,6 +27,12 @@ export class ChangeHandler {
 					this.eventEmitter.emit("languageChanged", count);
 				});
 			}
+		}
+
+		if (target.classList.contains("segmented-controls__item-input")) {
+			const segmentedControls = target.closest(".segmented-controls") as HTMLElement;
+			handleSegmentedChange(segmentedControls, target.value);
+			this.eventEmitter.emit("audienceChanged", target.value);
 		}
 	}
 }
