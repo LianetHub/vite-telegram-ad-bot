@@ -103,6 +103,9 @@
 		color: rgba(8, 8, 26, 0.36);
 		&:last-child {
 			grid-column: span 2;
+			&:active {
+				transform: scale(0.976);
+			}
 		}
 		&.selected {
 			color: $text;

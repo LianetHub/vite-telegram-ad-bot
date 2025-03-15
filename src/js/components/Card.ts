@@ -1,20 +1,24 @@
-import { CardProps } from "../js/types.ts";
+import { CardProps } from "../api/types.ts";
 import { formatDate } from "../utils/formatDate.ts";
 import { formatNumber } from "../utils/formatNumber.ts";
+// import { store } from "../store/store.ts";
 
 export class Card {
 	private data: CardProps;
+	private isInCart: boolean;
 
 	constructor(data: CardProps) {
 		this.data = data;
+		this.isInCart = false;
 	}
 
 	render(): HTMLElement {
 		const cardElement = document.createElement("div");
 		cardElement.classList.add("card");
+		cardElement.setAttribute("id", this.data.id);
 
 		cardElement.innerHTML = `
-        <div class="card__header" id="${this.data.id}">
+        <div class="card__header">
           <div class="card__thumb">
             <img src="${this.data.photo_url}" alt="Иконка приложения">
          </div>
@@ -47,13 +51,21 @@ export class Card {
             </div>
             <div class="card__actions">
               <div class="card__price title-sm fw-semibold">${this.data.total_price} ${this.data.currency}</div>
-              <button type="button" class="card__btn btn btn-icon btn-rounded btn-primary-outline btn-sm">
-                <svg><use xlink:href="/img/sprite.svg#icon-plus"></use></svg>
+              <button type="button" class="card__btn btn btn-icon btn-rounded btn-primary-outline btn-sm ${this.isInCart ? "active" : ""}">
+                <span class="icon-plus">
+                  <svg>
+                    <use xlink:href="img/sprite.svg#icon-plus"></use>
+                  </svg>
+                </span>
+                <span class="icon-minus">
+                  <svg>
+                    <use xlink:href="img/sprite.svg#icon-minus"></use>
+                  </svg>
+                </span>
               </button>
             </div>
           </div>
-        </div>
-      `;
+        </div>`;
 
 		return cardElement;
 	}

@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
-  <body class="">
+  <body class="lock">
     <div class="wrapper">
       <header class="header">
         <div class="header__container">
@@ -25,21 +25,27 @@
                 <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
               </svg>
             </a>
-            <button type="button" class="header__add btn btn-secondary btn-icon"></button>
+            <button type="button" class="header__add btn btn-secondary btn-icon active"></button>
           </div>
-          <div class="header__sort">
-            <button type="button" class="header__sort-btn btn btn-secondary btn-sm"> Цена <svg class="btn__icon-down">
+          <div class="header__sort active">
+            <a href="#select-price" data-modal class="header__sort-btn btn btn-secondary btn-sm">
+              Цена
+              <svg class="btn__icon-down">
                 <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
               </svg>
-            </button>
-            <button type="button" class="header__sort-btn btn btn-secondary btn-sm"> Дата <svg class="btn__icon-down">
+            </a>
+            <a href="#select-date" data-modal class="header__sort-btn btn btn-secondary btn-sm">
+              Дата
+              <svg class="btn__icon-down">
                 <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
               </svg>
-            </button>
-            <button type="button" class="header__sort-btn btn btn-secondary btn-sm"> Количество пользователей <svg class="btn__icon-down">
+            </a>
+            <a href="#select-users" data-modal class="header__sort-btn btn btn-secondary btn-sm">
+              Количество пользователей
+              <svg class="btn__icon-down">
                 <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
               </svg>
-            </button>
+            </a>
           </div>
           <div class="header__bottom">
             <div class="header__filter">
@@ -182,7 +188,7 @@
       <main class="page" id="app">
         <div class="cards">
           <div class="cards__container">
-            <div class="card">
+            <div class="card" id="1">
               <div class="card__header">
                 <a href="https://t.me/instagram_downloader_bot" class="card__thumb">
                   <img src="img/apps/instagrаm-downloader.png" alt="Иконка приложения">
@@ -219,6 +225,7 @@
                       </button>
                     </div>
                   </div>
+
                   <div class="card__actions">
                     <div class="card__price title-sm fw-semibold"> 21 000 ₽ </div>
                     <button type="button" class="card__btn btn btn-icon btn-rounded btn-primary-outline btn-sm">
@@ -237,10 +244,10 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </main>
+
       <div id="select-language" class="modal ">
         <div class="modal__wrapper">
           <div class="modal__header">
@@ -482,6 +489,310 @@
           </div>
         </div>
       </div>
+
+      <div id="filter" class="modal">
+        <div class="modal__wrapper">
+          <div class="modal__header">
+            <div class="resize-indicator"></div>
+            <div class="modal__row">
+              <div class="modal__title title-sm fw-semibold">Выберите язык</div>
+              <button type="button" data-modal-close class="modal__close">
+                <svg>
+                  <use xlink:href="img/sprite.svg#icon-cross"></use>
+                </svg>
+              </button>
+            </div>
+            <div class="modal__row">
+              <div class="modal__title title-sm fw-semibold">
+                Выбрано
+                <span class="modal__language-quantity" data-name="language">0</span>
+              </div>
+              <button type="button" class="modal__clear subtitle">Очистить</button>
+            </div>
+          </div>
+          <div class="modal__body">
+            <div class="filter">
+              <div class="filter__body">
+                <div class="filter__block">
+                  <h2 class="filter__title title-md fw-semibold">Сортировка</h2>
+                  <div class="filter__sort">
+                    <label class="radio-btn">
+                      <input type="radio" name="sort" value="1" checked class="radio-btn__input hidden" hidden>
+                      <span class="radio-btn__field"> По популярности </span>
+                    </label>
+                    <label class="radio-btn">
+                      <input type="radio" name="sort" value="2" class="radio-btn__input hidden" hidden>
+                      <span class="radio-btn__field"> Сначала дешевые </span>
+                    </label>
+                    <label class="radio-btn">
+                      <input type="radio" name="sort" value="3" class="radio-btn__input hidden" hidden>
+                      <span class="radio-btn__field"> Сначала дорогие </span>
+                    </label>
+                    <label class="radio-btn">
+                      <input type="radio" name="sort" value="4" class="radio-btn__input hidden" hidden>
+                      <span class="radio-btn__field"> Сначала много пользователей </span>
+                    </label>
+                    <label class="radio-btn">
+                      <input type="radio" name="sort" value="5" class="radio-btn__input hidden" hidden>
+                      <span class="radio-btn__field"> Сначала мало пользователей </span>
+                    </label>
+                  </div>
+                </div>
+                <div class="filter__block">
+                  <h2 class="filter__title title-md fw-semibold">Рассылок за неделю</h2>
+                  <div class="filter__labels">
+                    <label class="input-label">
+                      <input type="radio" name="messages" value="none" class="input-label__control hidden" hidden>
+                      <span class="input-label__field">Ни одной</span>
+                    </label>
+                    <label class="input-label">
+                      <input type="radio" name="messages" value="1" class="input-label__control hidden" hidden>
+                      <span class="input-label__field">Одна</span>
+                    </label>
+                    <label class="input-label">
+                      <input type="radio" name="messages" value="2" class="input-label__control hidden" hidden>
+                      <span class="input-label__field">Две</span>
+                    </label>
+                    <label class="input-label">
+                      <input type="radio" name="messages" value="3" class="input-label__control hidden" hidden>
+                      <span class="input-label__field">Три</span>
+                    </label>
+                    <label class="input-label">
+                      <input type="radio" name="messages" value="4" class="input-label__control hidden" hidden>
+                      <span class="input-label__field">Четыре</span>
+                    </label>
+                    <label class="input-label">
+                      <input type="radio" name="messages" value="5" class="input-label__control hidden" hidden>
+                      <span class="input-label__field">Пять и более</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="filter__block">
+                  <h2 class="filter__title title-md fw-semibold">Прирост за месяц</h2>
+                  <div class="filter__labels">
+                    <label class="input-label">
+                      <input type="radio" name="profit" value="up" class="input-label__control hidden" hidden>
+                      <span class="input-label__field">Положительный</span>
+                    </label>
+                    <label class="input-label">
+                      <input type="radio" name="profit" value="down" class="input-label__control hidden" hidden>
+                      <span class="input-label__field">Отрицательный</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="complete-btn__wrapper">
+                <button class="complete-btn btn btn-primary-outline btn-sm">Сбросить</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="select-users" class="modal modal-sm">
+        <div class="modal__wrapper">
+          <div class="modal__row">
+            <div class="modal__title title-sm fw-semibold">Количество пользователей</div>
+            <button type="button" class="modal__close" data-modal-close>
+              <svg>
+                <use xlink:href="img/sprite.svg#icon-cross"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="modal__filter">
+            <div class="modal__filter-inputs">
+              <div class="modal__filter-field">
+                <span class="color-secondary caption-lg">от</span>
+                <input type="text" name="start-users" class="form__control" value="100 чел.">
+              </div>
+              <div class="modal__filter-field">
+                <span class="color-secondary caption-lg">до</span>
+                <input type="text" name="end-users" class="form__control" value="9000 чел.">
+              </div>
+            </div>
+            <div class="range"></div>
+            <button type="button" class="modal__filter-btn btn btn-primary btn-sm">Показать</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="select-date" class="modal">
+        <div class="modal__wrapper">
+          <div class="modal__header">
+            <div class="resize-indicator"></div>
+            <div class="modal__row">
+              <div class="modal__title title-sm fw-semibold">Выберите дату</div>
+              <div class="modal__types">
+                <label class="modal__type">
+                  <input type="radio" name="calendar-type" checked value="single" class="modal__type-input hidden" hidden>
+                  <span class="modal__type-field"></span>
+                </label>
+                <label class="modal__type">
+                  <input type="radio" name="calendar-type" value="single" class="modal__type-input hidden" hidden>
+                  <span class="modal__type-field"></span>
+                </label>
+              </div>
+              <button type="button" data-modal-close class="modal__close">
+                <svg>
+                  <use xlink:href="img/sprite.svg#icon-cross"></use>
+                </svg>
+              </button>
+            </div>
+            <div class="calendar__days">
+              <div class="calendar__day">пн</div>
+              <div class="calendar__day">вт</div>
+              <div class="calendar__day">ср</div>
+              <div class="calendar__day">чт</div>
+              <div class="calendar__day">пт</div>
+              <div class="calendar__day">сб</div>
+              <div class="calendar__day">вс</div>
+            </div>
+          </div>
+          <div class="modal__body">
+            <div class="calendar">
+              <div class="calendar__block">
+                <div class="calendar__mounth">Октябрь</div>
+                <div class="calendar__body">
+                  <div class="calendar__item"></div>
+                  <div class="calendar__item last">1</div>
+                  <div class="calendar__item last">2</div>
+                  <div class="calendar__item today">3</div>
+                  <div class="calendar__item">4</div>
+                  <div class="calendar__item">5</div>
+                  <div class="calendar__item">6</div>
+                  <div class="calendar__item">7</div>
+                  <div class="calendar__item">8</div>
+                  <div class="calendar__item">9</div>
+                  <div class="calendar__item">10</div>
+                  <div class="calendar__item">11</div>
+                  <div class="calendar__item">12</div>
+                  <div class="calendar__item">13</div>
+                  <div class="calendar__item">14</div>
+                  <div class="calendar__item">15</div>
+                  <div class="calendar__item">16</div>
+                  <div class="calendar__item">17</div>
+                  <div class="calendar__item">18</div>
+                  <div class="calendar__item">19</div>
+                  <div class="calendar__item">20</div>
+                  <div class="calendar__item">21</div>
+                  <div class="calendar__item">22</div>
+                  <div class="calendar__item">23</div>
+                  <div class="calendar__item">24</div>
+                  <div class="calendar__item">25</div>
+                  <div class="calendar__item">26</div>
+                  <div class="calendar__item">27</div>
+                  <div class="calendar__item">28</div>
+                  <div class="calendar__item">29</div>
+                  <div class="calendar__item">30</div>
+                  <div class="calendar__item">31</div>
+                  <div class="calendar__item"></div>
+                  <div class="calendar__item"></div>
+                  <div class="calendar__item"></div>
+                </div>
+              </div>
+              <div class="calendar__block">
+                <div class="calendar__mounth">Ноябрь</div>
+                <div class="calendar__body">
+                  <div class="calendar__item"></div>
+                  <div class="calendar__item"></div>
+                  <div class="calendar__item"></div>
+                  <div class="calendar__item"></div>
+                  <div class="calendar__item"><span>1</span></div>
+                  <div class="calendar__item"><span>2</span></div>
+                  <div class="calendar__item"><span>3</span></div>
+                  <div class="calendar__item"><span>4</span></div>
+                  <div class="calendar__item"><span>5</span></div>
+                  <div class="calendar__item"><span>6</span></div>
+                  <div class="calendar__item"><span>7</span></div>
+                  <div class="calendar__item"><span>8</span></div>
+                  <div class="calendar__item"><span>9</span></div>
+                  <div class="calendar__item"><span>10</span></div>
+                  <div class="calendar__item"><span>11</span></div>
+                  <div class="calendar__item"><span>12</span></div>
+                  <div class="calendar__item"><span>13</span></div>
+                  <div class="calendar__item"><span>14</span></div>
+                  <div class="calendar__item"><span>15</span></div>
+                  <div class="calendar__item"><span>16</span></div>
+                  <div class="calendar__item"><span>17</span></div>
+                  <div class="calendar__item"><span>18</span></div>
+                  <div class="calendar__item"><span>19</span></div>
+                  <div class="calendar__item"><span>20</span></div>
+                  <div class="calendar__item"><span>21</span></div>
+                  <div class="calendar__item"><span>22</span></div>
+                  <div class="calendar__item"><span>23</span></div>
+                  <div class="calendar__item"><span>24</span></div>
+                  <div class="calendar__item"><span>25</span></div>
+                  <div class="calendar__item"><span>26</span></div>
+                  <div class="calendar__item"><span>27</span></div>
+                  <div class="calendar__item"><span>28</span></div>
+                  <div class="calendar__item"><span>29</span></div>
+                  <div class="calendar__item"><span>30</span></div>
+                  <div class="calendar__item"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="select-time" class="modal modal-sm">
+        <div class="time-select">
+          <div class="time-select__header">
+            <div class="time-select__current title-lg">12:20</div>
+            <div class="time-select__date color-secondary caption-lg">05 сентября</div>
+          </div>
+          <div class="time-select__body title-xl">
+            <div class="time-select__column">
+              <div class="time-select__value">11</div>
+              <div class="time-select__value active">12</div>
+              <div class="time-select__value">13</div>
+            </div>
+            <span class="time-select__separator"></span>
+            <div class="time-select__column">
+              <div class="time-select__value">19</div>
+              <div class="time-select__value active">20</div>
+              <div class="time-select__value">21</div>
+            </div>
+          </div>
+          <button type="button" class="time-select__btn btn btn-sm btn-secondary">Готово</button>
+        </div>
+      </div>
+
+      <div id="select-price" class="modal modal-sm active">
+        <div class="modal__wrapper">
+          <div class="modal__row">
+            <div class="modal__title title-sm fw-semibold">Цена рассылки</div>
+            <button type="button" class="modal__close" data-modal-close>
+              <svg>
+                <use xlink:href="img/sprite.svg#icon-cross"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="modal__filter">
+            <div class="tabs subtitle fw-medium">
+              <button type="button" class="tabs__btn active">За всех</button>
+              <button type="button" class="tabs__btn">За 100k</button>
+            </div>
+            <div class="modal__filter-inputs">
+              <div class="modal__filter-field">
+                <span class="color-secondary caption-lg">от</span>
+                <input type="text" name="start-price" class="form__control" value="1 000 ₽">
+              </div>
+              <div class="modal__filter-field">
+                <span class="color-secondary caption-lg">до</span>
+                <input type="text" name="end-price" class="form__control" value="2 400 000 ₽">
+              </div>
+            </div>
+            <div class="range">
+              <div class="range__control" style="left: 0;"></div>
+              <div class="range__field"></div>
+              <div class="range__control" style="right: 0"></div>
+            </div>
+            <button type="button" class="modal__filter-btn btn btn-primary btn-sm">Показать</button>
+          </div>
+        </div>
+      </div>
+
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

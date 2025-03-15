@@ -240,9 +240,11 @@
 		background: rgba(8, 8, 26, 0.04);
 		color: rgba($color: #08081a, $alpha: 0.6);
 
-		&:hover,
+		// &:hover {
+		// 	color: $text;
+		// }
 		&:active {
-			color: $text;
+			transform: scale(0.96);
 		}
 		&:disabled,
 		&[aria-disabled="true"] {

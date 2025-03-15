@@ -1,5 +1,5 @@
-import { API_BASE_URL } from "../js/config";
-import { ApiError } from "../js/types";
+import { API_BASE_URL } from "../api/config";
+import { ApiError } from "../api/types";
 
 export async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T | ApiError> {
 	try {

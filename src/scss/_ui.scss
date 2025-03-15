@@ -183,21 +183,36 @@
 	position: relative;
 	padding: 0.5rem 0;
 	width: 100%;
+	background: rgba(#08081a, 0.02);
+	border-radius: 1rem;
+
 	// .range__control
 	&__control {
 		position: absolute;
 		top: 50%;
-		transform: translateY(-50%);
 		width: 2rem;
 		height: 2rem;
 		border-radius: 50%;
 		background: #fff;
 		box-shadow: 0 rem(1) rem(4) rgba(8, 8, 26, 0.12);
+		transform: translate(-50%, -50%);
+		cursor: grab;
+		&.left {
+			left: 0;
+		}
+		&.right {
+			right: 0;
+		}
 	}
 	// .range__field
 	&__field {
+		position: absolute;
 		height: 1rem;
 		border-radius: 1rem;
+		top: 50%;
+
+		max-width: 100%;
+		transform: translateY(-50%);
 		background: linear-gradient(180deg, #5daafc 0%, #439eff 100%);
 	}
 }
@@ -332,18 +347,23 @@
 		visibility: visible;
 
 		.modal__wrapper {
-			transform: none;
+			transform: none !important;
 		}
 	}
 
 	&.modal-sm {
-		min-height: 0;
-		border-radius: 1.25rem;
-		padding: 1.25rem;
-		background: #fff;
-		margin: auto;
-		width: 100%;
-		max-width: calc(100vw - 1.5rem);
+		.modal__wrapper {
+			min-height: 0;
+			height: auto;
+			border-radius: 1.25rem;
+			padding: 1.25rem;
+			background: #fff;
+			margin: auto;
+			width: 100%;
+			max-width: calc(100vw - 1.5rem);
+			transform: scale(0);
+			transition: transform 0.3s $gentle-easing;
+		}
 	}
 	// .modal__wrapper
 	&__wrapper {

@@ -1,4 +1,4 @@
-import { CardProps } from "../js/types.ts";
+import { CardProps } from "../../api/types.ts";
 import { Card } from "./Card.ts";
 
 export class CardList {

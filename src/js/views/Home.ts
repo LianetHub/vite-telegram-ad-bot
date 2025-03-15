@@ -1,8 +1,8 @@
-import { CardList } from "../components/CardList";
-import { searchCatalog } from "../js/api";
+import { CardList } from "../components/UI/CardList";
+import { Api } from "../api/api";
 
-import { ApiResponse, ApiError } from "../js/types";
-import { CardProps } from "../js/types";
+import { ApiResponse, ApiError } from "../api/types";
+import { CardProps } from "../api/types";
 
 export class Home {
 	private rootElement: HTMLElement;
@@ -24,7 +24,7 @@ export class Home {
 		this.showLoader();
 
 		try {
-			const response: ApiResponse | ApiError = await searchCatalog({});
+			const response: ApiResponse | ApiError = await Api.searchCatalog({});
 
 			console.log(response);
 

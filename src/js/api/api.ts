@@ -12,7 +12,14 @@ import {
 	CheckAvailabilityResponse,
 } from "./types";
 
-export async function searchCatalog(params: SearchRequest): Promise<ApiResponse | ApiError> {
+export const Api = {
+	searchCatalog,
+	getAvailableDates,
+	getStartDates,
+	checkAvailability,
+};
+
+async function searchCatalog(params: SearchRequest): Promise<ApiResponse | ApiError> {
 	return request<ApiResponse>(API_ENDPOINTS.SEARCH_CATALOG, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -20,7 +27,7 @@ export async function searchCatalog(params: SearchRequest): Promise<ApiResponse 
 	});
 }
 
-export async function getAvailableDates(params: AvailableDatesRequest): Promise<AvailableDatesResponse | ApiError> {
+async function getAvailableDates(params: AvailableDatesRequest): Promise<AvailableDatesResponse | ApiError> {
 	const queryString = new URLSearchParams({
 		bot_id: params.bot_id.toString(),
 		languages: params.languages,
@@ -30,7 +37,7 @@ export async function getAvailableDates(params: AvailableDatesRequest): Promise<
 	return request<AvailableDatesResponse>(`${API_ENDPOINTS.AVAILABLE_DATES}?${queryString}`);
 }
 
-export async function getStartDates(params: StartDatesRequest): Promise<StartDatesResponse | ApiError> {
+async function getStartDates(params: StartDatesRequest): Promise<StartDatesResponse | ApiError> {
 	return request<StartDatesResponse>(API_ENDPOINTS.START_DATES, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -38,7 +45,7 @@ export async function getStartDates(params: StartDatesRequest): Promise<StartDat
 	});
 }
 
-export async function checkAvailability(params: CheckAvailabilityRequest): Promise<CheckAvailabilityResponse | ApiError> {
+async function checkAvailability(params: CheckAvailabilityRequest): Promise<CheckAvailabilityResponse | ApiError> {
 	return request<CheckAvailabilityResponse>(API_ENDPOINTS.CHECK_AVAILABILITY, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
