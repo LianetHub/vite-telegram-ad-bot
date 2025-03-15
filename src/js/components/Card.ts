@@ -1,7 +1,8 @@
 import { CardProps } from "../api/types.ts";
 import { formatDate } from "../utils/formatDate.ts";
 import { formatNumber } from "../utils/formatNumber.ts";
-// import { store } from "../store/store.ts";
+import { addThousandSeparator } from "../utils/addThousandSeparator";
+import { store } from "../store/store.ts";
 
 export class Card {
 	private data: CardProps;
@@ -9,13 +10,17 @@ export class Card {
 
 	constructor(data: CardProps) {
 		this.data = data;
-		this.isInCart = false;
+		this.isInCart = true;
 	}
 
 	render(): HTMLElement {
 		const cardElement = document.createElement("div");
 		cardElement.classList.add("card");
 		cardElement.setAttribute("id", this.data.id);
+
+		if (store.isInCart(this.data.id)) {
+			this.isInCart = true;
+		}
 
 		cardElement.innerHTML = `
         <div class="card__header">
@@ -24,7 +29,7 @@ export class Card {
          </div>
           <div class="card__app">
             <div class="card__app-name callout fw-medium">${this.data.name}</div>
-            <a href="" class="card__app-link link">${this.data.username}</a>
+            <a href="https://t.me/${this.data.username}" class="card__app-link link">${this.data.username}</a>
           </div>
         </div>
         <div class="card__body">
@@ -50,7 +55,7 @@ export class Card {
               </div>
             </div>
             <div class="card__actions">
-              <div class="card__price title-sm fw-semibold">${this.data.total_price} ${this.data.currency}</div>
+              <div class="card__price title-sm fw-semibold">${addThousandSeparator(this.data.total_price)} ${this.data.currency}</div>
               <button type="button" class="card__btn btn btn-icon btn-rounded btn-primary-outline btn-sm ${this.isInCart ? "active" : ""}">
                 <span class="icon-plus">
                   <svg>

@@ -1,31 +1,33 @@
 import { Api } from "../api/api";
 import { EventEmitter } from "./EventEmitter";
-
-// types.ts
-export interface CardState {
-	id: string;
-	isInCart: boolean;
-	name: string;
-	username: string;
-	total_users: number;
-	total_price: number;
-	currency: string;
-	photo_url: string;
-	next_available_date: string;
-}
+import {
+	SearchRequest,
+	ApiResponse,
+	ApiError,
+	AvailableDatesRequest,
+	AvailableDatesResponse,
+	StartDatesRequest,
+	StartDatesResponse,
+	CheckAvailabilityRequest,
+	CheckAvailabilityResponse,
+} from "../api/types";
 
 export interface StoreState {
-	cards: CardState[];
-	user?: { name: string; email: string };
-	filters?: { category: string; priceRange: [number, number] };
+	cards: ApiResponse["data"];
+	loading: boolean;
+	error: string | null;
+	cart: string[];
+	availableDates?: AvailableDatesResponse;
+	startDates?: StartDatesResponse;
+	checkAvailability?: CheckAvailabilityResponse;
 }
 
 class Store {
-	private state = {
-		products: [] as any[],
+	private state: StoreState = {
+		cards: [],
 		loading: false,
-		error: null as string | null,
-		cart: [] as string[],
+		error: null,
+		cart: [],
 	};
 
 	private events = new EventEmitter();
@@ -38,19 +40,80 @@ class Store {
 		this.events.on(event, callback);
 	}
 
-	async fetchProducts(params: any) {
+	async fetchCards(params: SearchRequest = {}): Promise<void> {
 		this.state.loading = true;
 		this.events.emit("loading:start");
 
 		try {
-			const response = await Api.searchCatalog(params);
+			const response: ApiResponse | ApiError = await Api.searchCatalog(params);
+
+			console.log(response);
 			if ("error" in response) throw new Error(response.error);
 
-			this.state.products = response.data;
-			this.events.emit("products:loaded");
+			this.state.cards = response.data;
+			this.events.emit("cards:loaded");
 		} catch (error) {
-			this.state.error = error.message;
-			this.events.emit("error", error.message);
+			this.state.error = error instanceof Error ? error.message : String(error);
+			this.events.emit("error", this.state.error);
+		} finally {
+			this.state.loading = false;
+			this.events.emit("loading:end");
+		}
+	}
+
+	async fetchAvailableDates(params: AvailableDatesRequest) {
+		this.state.loading = true;
+		this.events.emit("loading:start");
+
+		try {
+			const response = await Api.getAvailableDates(params);
+			if ("error" in response) throw new Error(response.error);
+
+			this.state.availableDates = response;
+			this.events.emit("availableDates:loaded");
+		} catch (error) {
+			// this.state.error = error.message;
+			// this.events.emit("error", error.message);
+		} finally {
+			this.state.loading = false;
+			this.events.emit("loading:end");
+		}
+	}
+
+	/** Получение стартовых дат */
+	async fetchStartDates(params: StartDatesRequest) {
+		this.state.loading = true;
+		this.events.emit("loading:start");
+
+		try {
+			const response = await Api.getStartDates(params);
+			if ("error" in response) throw new Error(response.error);
+
+			this.state.startDates = response;
+			this.events.emit("startDates:loaded");
+		} catch (error) {
+			// this.state.error = error.message;
+			// this.events.emit("error", error.message);
+		} finally {
+			this.state.loading = false;
+			this.events.emit("loading:end");
+		}
+	}
+
+	/** Проверка доступности */
+	async checkAvailability(params: CheckAvailabilityRequest) {
+		this.state.loading = true;
+		this.events.emit("loading:start");
+
+		try {
+			const response = await Api.checkAvailability(params);
+			if ("error" in response) throw new Error(response.error);
+
+			this.state.checkAvailability = response;
+			this.events.emit("availability:checked");
+		} catch (error) {
+			// this.state.error = error.message;
+			// this.events.emit("error", error.message);
 		} finally {
 			this.state.loading = false;
 			this.events.emit("loading:end");
@@ -69,9 +132,17 @@ class Store {
 		this.events.emit("cart:update");
 	}
 
-	// isCardInCart(id: string): boolean {
-	// 	return this.cardState[id] || false;
-	// }
+	toggleToCart(itemId: string) {
+		if (this.state.cart.includes(itemId)) {
+			this.removeFromCart(itemId);
+		} else {
+			this.addToCart(itemId);
+		}
+	}
+
+	isInCart(itemId: string): boolean {
+		return this.state.cart.includes(itemId);
+	}
 }
 
 export const store = new Store();

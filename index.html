@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
-  <body class="lock">
+  <body>
     <div class="wrapper">
       <header class="header">
         <div class="header__container">
@@ -25,9 +25,9 @@
                 <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
               </svg>
             </a>
-            <button type="button" class="header__add btn btn-secondary btn-icon active"></button>
+            <button type="button" class="header__add btn btn-secondary btn-icon"></button>
           </div>
-          <div class="header__sort active">
+          <div class="header__sort">
             <a href="#select-price" data-modal class="header__sort-btn btn btn-secondary btn-sm">
               Цена
               <svg class="btn__icon-down">
@@ -49,11 +49,11 @@
           </div>
           <div class="header__bottom">
             <div class="header__filter">
-              <button type="button" class="header__filter btn btn-white btn-icon btn-xs">
+              <a href="#filter" data-modal class="header__filter btn btn-white btn-icon btn-xs">
                 <svg>
                   <use xlink:href="/img/sprite.svg#icon-filter"></use>
                 </svg>
-              </button>
+              </a>
             </div>
             <form action="#" class="header__categories">
               <button type="button" class="header__categories-btn btn btn-white btn-xs">
@@ -65,7 +65,7 @@
                   <span class="header__categories-quantity" data-name="category">0</span>
                 </span>
               </button>
-              <div class="header__categories-body">
+              <div class="header__categories-body ">
                 <div class="header__categories-list">
                   <label class="header__categories-item input-label">
                     <input type="checkbox" name="category" value="downloads" class="input-label__control hidden" hidden>
@@ -175,6 +175,11 @@
                   <use xlink:href="/img/sprite.svg#icon-search"></use>
                 </svg>
               </button>
+              <button type="button" class="header__categories-close btn btn-icon btn-white btn-xs">
+                <svg>
+                  <use xlink:href="/img/sprite.svg#icon-cross"></use>
+                </svg>
+              </button>
               <div class="header__search-body">
                 <div class="picture">
                   <img src="/img/duck/lupe.gif" alt="Duck">
@@ -185,68 +190,21 @@
           </div>
         </div>
       </header>
-      <main class="page" id="app">
-        <div class="cards">
-          <div class="cards__container">
-            <div class="card" id="1">
-              <div class="card__header">
-                <a href="https://t.me/instagram_downloader_bot" class="card__thumb">
-                  <img src="img/apps/instagrаm-downloader.png" alt="Иконка приложения">
-                </a>
-                <div class="card__app">
-                  <div class="card__app-name callout fw-medium">Instagram Downloader Bot</div>
-                  <a href="https://t.me/instagram_downloader_bot" class="card__app-link link">@instagram_downloader_bot</a>
-                </div>
-              </div>
-              <div class="card__body">
-                <div class="card__row">
-                  <div class="card__active subtitle">
-                    <span class="color-secondary">Актив:</span>
-                    <span class="fw-medium">3.2M</span>
-                  </div>
-                  <button type="button" class="card__time subtitle fw-medium">
-                    <span class="card__time-value">15 окт</span>
-                    <svg>
-                      <use xlink:href="img/sprite.svg#icon-chevron-right"></use>
-                    </svg>
-                  </button>
-                </div>
-                <div class="card__row">
-                  <div class="card__countries">
-                    <ul class="card__countries-list">
-                      <li class="card__countries-item caption-lg"><img src="img/flags/russian.svg" alt="Флаг">1.5M</li>
-                      <li class="card__countries-item caption-lg"><img src="img/flags/english.svg" alt="Флаг">870k</li>
-                      <li class="card__countries-item caption-lg"><img src="img/flags/french.svg" alt="Флаг">560k</li>
-                    </ul>
-                    <div class="card__countries-side">
-                      <button class="card__countries-more footnote"> Ещё 5 <svg>
-                          <use xlink:href="img/sprite.svg#icon-chevron-down"></use>
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
+      <main class="page" id="app"></main>
+      <a href="#cart" data-modal class="bag">
+        <span class="bag__total subtitle fw-semibold">21 000 R</span>
+        <span class="bag__link btn btn-primary btn-icon btn-rounded btn-xs">
+          <svg>
+            <use xlink:href="img/sprite.svg#icon-bag"></use>
+          </svg>
+        </span>
+      </a>
 
-                  <div class="card__actions">
-                    <div class="card__price title-sm fw-semibold"> 21 000 ₽ </div>
-                    <button type="button" class="card__btn btn btn-icon btn-rounded btn-primary-outline btn-sm">
-                      <span class="icon-plus">
-                        <svg>
-                          <use xlink:href="img/sprite.svg#icon-plus"></use>
-                        </svg>
-                      </span>
-                      <span class="icon-minus">
-                        <svg>
-                          <use xlink:href="img/sprite.svg#icon-minus"></use>
-                        </svg>
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div id="cart" class="modal modal-lg">
+        <div class="modal__wrapper">
+
         </div>
-      </main>
+      </div>
 
       <div id="select-language" class="modal ">
         <div class="modal__wrapper">
@@ -490,101 +448,86 @@
         </div>
       </div>
 
-      <div id="filter" class="modal">
+      <div id="filter" class="modal modal-lg">
         <div class="modal__wrapper">
-          <div class="modal__header">
-            <div class="resize-indicator"></div>
-            <div class="modal__row">
-              <div class="modal__title title-sm fw-semibold">Выберите язык</div>
-              <button type="button" data-modal-close class="modal__close">
-                <svg>
-                  <use xlink:href="img/sprite.svg#icon-cross"></use>
-                </svg>
-              </button>
-            </div>
-            <div class="modal__row">
-              <div class="modal__title title-sm fw-semibold">
-                Выбрано
-                <span class="modal__language-quantity" data-name="language">0</span>
+          <button type="button" data-modal-close class="modal__back">
+            <svg>
+              <use xlink:href="img/sprite.svg#icon-arrow-left"></use>
+            </svg>
+          </button>
+          <div class="filter">
+            <div class="filter__body">
+              <div class="filter__block">
+                <h2 class="filter__title title-md fw-semibold">Сортировка</h2>
+                <div class="filter__sort">
+                  <label class="radio-btn">
+                    <input type="radio" name="sort" value="1" checked class="radio-btn__input hidden" hidden>
+                    <span class="radio-btn__field">По популярности</span>
+                  </label>
+                  <label class="radio-btn">
+                    <input type="radio" name="sort" value="2" class="radio-btn__input hidden" hidden>
+                    <span class="radio-btn__field">Сначала дешевые</span>
+                  </label>
+                  <label class="radio-btn">
+                    <input type="radio" name="sort" value="3" class="radio-btn__input hidden" hidden>
+                    <span class="radio-btn__field">Сначала дорогие</span>
+                  </label>
+                  <label class="radio-btn">
+                    <input type="radio" name="sort" value="4" class="radio-btn__input hidden" hidden>
+                    <span class="radio-btn__field">Сначала много пользователей</span>
+                  </label>
+                  <label class="radio-btn">
+                    <input type="radio" name="sort" value="5" class="radio-btn__input hidden" hidden>
+                    <span class="radio-btn__field">Сначала мало пользователей</span>
+                  </label>
+                </div>
               </div>
-              <button type="button" class="modal__clear subtitle">Очистить</button>
+              <div class="filter__block">
+                <h2 class="filter__title title-md fw-semibold">Рассылок за неделю</h2>
+                <div class="filter__labels">
+                  <label class="input-label">
+                    <input type="radio" name="messages" value="none" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Ни одной</span>
+                  </label>
+                  <label class="input-label">
+                    <input type="radio" name="messages" value="1" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Одна</span>
+                  </label>
+                  <label class="input-label">
+                    <input type="radio" name="messages" value="2" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Две</span>
+                  </label>
+                  <label class="input-label">
+                    <input type="radio" name="messages" value="3" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Три</span>
+                  </label>
+                  <label class="input-label">
+                    <input type="radio" name="messages" value="4" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Четыре</span>
+                  </label>
+                  <label class="input-label">
+                    <input type="radio" name="messages" value="5" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Пять и более</span>
+                  </label>
+                </div>
+              </div>
+              <div class="filter__block">
+                <h2 class="filter__title title-md fw-semibold">Прирост за месяц</h2>
+                <div class="filter__labels">
+                  <label class="input-label">
+                    <input type="radio" name="profit" value="up" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Положительный</span>
+                  </label>
+                  <label class="input-label">
+                    <input type="radio" name="profit" value="down" class="input-label__control hidden" hidden>
+                    <span class="input-label__field">Отрицательный</span>
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="modal__body">
-            <div class="filter">
-              <div class="filter__body">
-                <div class="filter__block">
-                  <h2 class="filter__title title-md fw-semibold">Сортировка</h2>
-                  <div class="filter__sort">
-                    <label class="radio-btn">
-                      <input type="radio" name="sort" value="1" checked class="radio-btn__input hidden" hidden>
-                      <span class="radio-btn__field"> По популярности </span>
-                    </label>
-                    <label class="radio-btn">
-                      <input type="radio" name="sort" value="2" class="radio-btn__input hidden" hidden>
-                      <span class="radio-btn__field"> Сначала дешевые </span>
-                    </label>
-                    <label class="radio-btn">
-                      <input type="radio" name="sort" value="3" class="radio-btn__input hidden" hidden>
-                      <span class="radio-btn__field"> Сначала дорогие </span>
-                    </label>
-                    <label class="radio-btn">
-                      <input type="radio" name="sort" value="4" class="radio-btn__input hidden" hidden>
-                      <span class="radio-btn__field"> Сначала много пользователей </span>
-                    </label>
-                    <label class="radio-btn">
-                      <input type="radio" name="sort" value="5" class="radio-btn__input hidden" hidden>
-                      <span class="radio-btn__field"> Сначала мало пользователей </span>
-                    </label>
-                  </div>
-                </div>
-                <div class="filter__block">
-                  <h2 class="filter__title title-md fw-semibold">Рассылок за неделю</h2>
-                  <div class="filter__labels">
-                    <label class="input-label">
-                      <input type="radio" name="messages" value="none" class="input-label__control hidden" hidden>
-                      <span class="input-label__field">Ни одной</span>
-                    </label>
-                    <label class="input-label">
-                      <input type="radio" name="messages" value="1" class="input-label__control hidden" hidden>
-                      <span class="input-label__field">Одна</span>
-                    </label>
-                    <label class="input-label">
-                      <input type="radio" name="messages" value="2" class="input-label__control hidden" hidden>
-                      <span class="input-label__field">Две</span>
-                    </label>
-                    <label class="input-label">
-                      <input type="radio" name="messages" value="3" class="input-label__control hidden" hidden>
-                      <span class="input-label__field">Три</span>
-                    </label>
-                    <label class="input-label">
-                      <input type="radio" name="messages" value="4" class="input-label__control hidden" hidden>
-                      <span class="input-label__field">Четыре</span>
-                    </label>
-                    <label class="input-label">
-                      <input type="radio" name="messages" value="5" class="input-label__control hidden" hidden>
-                      <span class="input-label__field">Пять и более</span>
-                    </label>
-                  </div>
-                </div>
-                <div class="filter__block">
-                  <h2 class="filter__title title-md fw-semibold">Прирост за месяц</h2>
-                  <div class="filter__labels">
-                    <label class="input-label">
-                      <input type="radio" name="profit" value="up" class="input-label__control hidden" hidden>
-                      <span class="input-label__field">Положительный</span>
-                    </label>
-                    <label class="input-label">
-                      <input type="radio" name="profit" value="down" class="input-label__control hidden" hidden>
-                      <span class="input-label__field">Отрицательный</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="complete-btn__wrapper">
-                <button class="complete-btn btn btn-primary-outline btn-sm">Сбросить</button>
-              </div>
-            </div>
+          <div class="complete-btn__wrapper">
+            <button class="complete-btn btn btn-primary-outline btn-sm hide">Сбросить</button>
           </div>
         </div>
       </div>
@@ -603,14 +546,14 @@
             <div class="modal__filter-inputs">
               <div class="modal__filter-field">
                 <span class="color-secondary caption-lg">от</span>
-                <input type="text" name="start-users" class="form__control" value="100 чел.">
+                <input type="text" name="start-users" id="start-users-input" class="form__control" value="100" data-unit="чел.">
               </div>
               <div class="modal__filter-field">
                 <span class="color-secondary caption-lg">до</span>
-                <input type="text" name="end-users" class="form__control" value="9000 чел.">
+                <input type="text" name="end-users" id="end-users-input" class="form__control" value="9000" data-unit="чел.">
               </div>
             </div>
-            <div class="range"></div>
+            <div id="range-users" class="range"></div>
             <button type="button" class="modal__filter-btn btn btn-primary btn-sm">Показать</button>
           </div>
         </div>
@@ -758,7 +701,7 @@
         </div>
       </div>
 
-      <div id="select-price" class="modal modal-sm active">
+      <div id="select-price" class="modal modal-sm">
         <div class="modal__wrapper">
           <div class="modal__row">
             <div class="modal__title title-sm fw-semibold">Цена рассылки</div>
@@ -772,11 +715,11 @@
             <div class="segmented-controls subtitle fw-medium">
               <div class="segmented-controls__wrapper">
                 <label class="segmented-controls__item">
-                  <input type="radio" name="audience" value="all" checked class="segmented-controls__item-input hidden" hidden>
+                  <input type="radio" name="audience" inputmode="numeric" value="all" checked class="segmented-controls__item-input hidden" hidden>
                   <span class="segmented-controls__item-btn">За всех</span>
                 </label>
                 <label class="segmented-controls__item">
-                  <input type="radio" name="audience" value="100k" class="segmented-controls__item-input hidden" hidden>
+                  <input type="radio" name="audience" inputmode="numeric" value="100k" class="segmented-controls__item-input hidden" hidden>
                   <span class="segmented-controls__item-btn">За 100k</span>
                 </label>
                 <div class="segmented-controls__runner"></div>
@@ -785,18 +728,14 @@
             <div class="modal__filter-inputs">
               <div class="modal__filter-field">
                 <span class="color-secondary caption-lg">от</span>
-                <input type="text" name="start-price" class="form__control" value="1 000 ₽">
+                <input type="text" name="start-price" class="form__control" id="start-price-input" value="1000" data-unit="₽">
               </div>
               <div class="modal__filter-field">
                 <span class="color-secondary caption-lg">до</span>
-                <input type="text" name="end-price" class="form__control" value="2 400 000 ₽">
+                <input type="text" name="end-price" class="form__control" id="end-price-input" value="2400000" data-unit="₽">
               </div>
             </div>
-            <div class="range">
-              <div class="range__control" style="left: 0;"></div>
-              <div class="range__field"></div>
-              <div class="range__control" style="right: 0"></div>
-            </div>
+            <div id="range-price" class="range"></div>
             <button type="button" class="modal__filter-btn btn btn-primary btn-sm">Показать</button>
           </div>
         </div>

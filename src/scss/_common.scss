@@ -227,6 +227,7 @@ body {
 	}
 	// .card__time-value
 	&__time-value {
+		line-height: math.div(24, 15);
 	}
 	// .card__countries
 	&__countries {
@@ -600,9 +601,6 @@ body {
 }
 
 .filter {
-	background: #fff;
-	padding: 2.5rem 1.25rem 6rem;
-	min-height: 100vh;
 	// .filter__block
 	&__block {
 		&:not(:last-child) {
@@ -615,6 +613,8 @@ body {
 	// .filter__sort
 	&__sort {
 		margin-top: 1.25rem;
+		margin-left: -1.25rem;
+		margin-right: -1.25rem;
 		display: flex;
 		flex-direction: column;
 	}

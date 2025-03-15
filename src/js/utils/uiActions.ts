@@ -4,11 +4,16 @@ export function toggleSubMenu(addButton: HTMLElement) {
 	sortElement?.classList.toggle("active");
 }
 
-export function toggleCategories(categoriesBtn: HTMLElement, body: HTMLElement) {
-	categoriesBtn.classList.toggle("active");
-	const categoriesBody = document.querySelector(".header__categories-body") as HTMLElement | null;
-	categoriesBody?.classList.toggle("active");
-	body.classList.toggle("lock");
+export function toggleCategories() {
+	const wrapper = document.querySelector(".header__bottom") as HTMLElement | null;
+	wrapper?.classList.toggle("open-categories");
+	document.body.classList.toggle("lock");
+}
+
+export function hideCategories() {
+	const wrapper = document.querySelector(".header__bottom") as HTMLElement | null;
+	wrapper?.classList.remove("open-categories");
+	document.body.classList.remove("lock");
 }
 
 export function resetCategories() {

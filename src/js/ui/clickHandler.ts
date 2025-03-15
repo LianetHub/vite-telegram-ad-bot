@@ -1,6 +1,6 @@
 import { EventEmitter } from "../store/EventEmitter";
-import { toggleSubMenu, toggleCategories, resetCategories, createRippleEffect, openModal, closeModal } from "../utils/uiActions";
-// import store from "../store/store";
+import { toggleSubMenu, toggleCategories, hideCategories, resetCategories, createRippleEffect, openModal, closeModal } from "../utils/uiActions";
+import { store } from "../store/store";
 
 export class ClickHandler {
 	private body: HTMLElement;
@@ -18,6 +18,8 @@ export class ClickHandler {
 		const target = e.target as HTMLElement | null;
 		if (!target) return;
 
+		console.log(target);
+
 		// menu actions
 		const addButton = target.closest(".header__add") as HTMLElement | null;
 		if (addButton) {
@@ -27,8 +29,12 @@ export class ClickHandler {
 
 		const categoriesBtn = target.closest(".header__categories-btn") as HTMLElement | null;
 		if (categoriesBtn) {
-			toggleCategories(categoriesBtn, this.body);
-			this.eventEmitter.emit("categoriesToggled", categoriesBtn);
+			toggleCategories();
+		}
+
+		const categoriesHideBtn = target.closest(".header__categories-close") as HTMLElement | null;
+		if (categoriesHideBtn) {
+			hideCategories();
 		}
 
 		const categoriesResetBtn = target.closest(".header__categories-reset") as HTMLElement | null;
@@ -37,8 +43,22 @@ export class ClickHandler {
 			this.eventEmitter.emit("categoriesReset");
 		}
 
+		const searchBtn = target.closest(".header__search-btn") as HTMLElement | null;
+		if (searchBtn) {
+			document.querySelector(".header__bottom")?.classList.add("open-search");
+			setTimeout(() => {
+				const searchInput = document.querySelector(".header__search .form__control") as HTMLInputElement;
+				searchInput?.focus();
+			}, 300);
+		}
+
+		const searchBack = target.closest(".header__search-back") as HTMLElement | null;
+		if (searchBack) {
+			document.querySelector(".header__bottom")?.classList.remove("open-search");
+		}
+
 		// Ripple-эффект
-		const button = target.closest(".btn") as HTMLElement | null;
+		const button = (target.closest(".btn") || target.closest(".radio-btn__field")) as HTMLElement | null;
 		if (button) {
 			createRippleEffect(button, e);
 			this.eventEmitter.emit("rippleEffect", button);
@@ -48,10 +68,9 @@ export class ClickHandler {
 		const cartBtn = target.closest(".card__btn") as HTMLElement | null;
 		if (cartBtn) {
 			cartBtn.classList.toggle("active");
-			this.eventEmitter.emit("cartToggled", cartBtn);
-			console.log(cartBtn.closest(".card")?.id);
+			const card = cartBtn.closest(".card") as HTMLElement;
 
-			// store.toggleCardInCart(this.data.id);
+			store.toggleToCart(card.id);
 		}
 
 		// Open modal

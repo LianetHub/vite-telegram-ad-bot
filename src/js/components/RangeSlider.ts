@@ -1,3 +1,5 @@
+import { addThousandSeparator } from "../utils/addThousandSeparator";
+
 export class RangeSlider {
 	private rangeElement: HTMLElement;
 	private leftControl: HTMLElement;
@@ -12,11 +14,21 @@ export class RangeSlider {
 	private isDraggingLeft: boolean = false;
 	private isDraggingRight: boolean = false;
 
-	constructor(rangeElement: HTMLElement) {
+	private minInput: HTMLInputElement;
+	private maxInput: HTMLInputElement;
+	private minInputUnit: string;
+	private maxInputUnit: string;
+
+	constructor(rangeElement: HTMLElement, minInput: HTMLInputElement, maxInput: HTMLInputElement) {
 		this.rangeElement = rangeElement;
 
-		const startValue = rangeElement.getAttribute("data-start-value");
-		const endValue = rangeElement.getAttribute("data-end-value");
+		this.minInput = minInput;
+		this.maxInput = maxInput;
+		this.minInputUnit = minInput.getAttribute("data-unit") || "";
+		this.maxInputUnit = maxInput.getAttribute("data-unit") || "";
+
+		const startValue = minInput?.value;
+		const endValue = maxInput?.value;
 
 		this.minValue = startValue ? parseInt(startValue) : this.minValue;
 		this.maxValue = endValue ? parseInt(endValue) : this.maxValue;
@@ -45,6 +57,12 @@ export class RangeSlider {
 
 		this.addEventListeners();
 		this.updateControlsPosition();
+
+		this.minInput.value = `${addThousandSeparator(this.currentMinValue)} ${this.minInputUnit}`;
+		this.maxInput.value = `${addThousandSeparator(this.currentMaxValue)} ${this.maxInputUnit}`;
+
+		this.minInput.addEventListener("input", this.onMinInputChange);
+		this.maxInput.addEventListener("input", this.onMaxInputChange);
 	}
 
 	private addEventListeners() {
@@ -134,7 +152,26 @@ export class RangeSlider {
 
 		this.rangeElement.setAttribute("data-start-value", `${this.currentMinValue}`);
 		this.rangeElement.setAttribute("data-end-value", `${this.currentMaxValue}`);
+
+		this.minInput.value = `${addThousandSeparator(this.currentMinValue)} ${this.minInputUnit}`;
+		this.maxInput.value = `${addThousandSeparator(this.currentMaxValue)} ${this.maxInputUnit}`;
 	}
+
+	private onMinInputChange = () => {
+		const newValue = parseInt(this.minInput.value.replace(` ${this.minInputUnit}`, ""));
+		if (!isNaN(newValue)) {
+			this.currentMinValue = Math.min(newValue, this.currentMaxValue);
+			this.updateControlsPosition();
+		}
+	};
+
+	private onMaxInputChange = () => {
+		const newValue = parseInt(this.maxInput.value.replace(` ${this.maxInputUnit}`, ""));
+		if (!isNaN(newValue)) {
+			this.currentMaxValue = Math.max(newValue, this.currentMinValue);
+			this.updateControlsPosition();
+		}
+	};
 
 	private calculatePercentage(value: number): number {
 		return ((value - this.minValue) / (this.maxValue - this.minValue)) * 100;
