@@ -66,25 +66,28 @@ class Store {
 		this.state.loading = true;
 		this.events.emit("loading:start");
 
-		// try {
-		// 	const response: ApiResponse | ApiError = await Api.searchCatalog(params);
+		try {
+			const response: ApiResponse | ApiError = await Api.searchCatalog(params);
 
-		// 	if ("error" in response) throw new Error(response.error);
+			if ("error" in response) throw new Error(response.error);
 
-		// 	console.log("Ответ сервера", response.data);
+			this.state.cards = response.data;
 
-		// 	this.state.cards = response.data;
+			if (this.state.cards.length === 0) {
+				this.events.emit("cards:empty");
+			} else {
+				this.events.emit("cards:loaded");
+			}
 
-		// 	this.events.emit("cards:loaded");
-		// 	this.updateTotalCart();
-		// } catch (error) {
-		// 	this.state.error = error instanceof Error ? error.message : String(error);
+			this.updateTotalCart();
+		} catch (error) {
+			this.state.error = error instanceof Error ? error.message : String(error);
 
-		// 	this.events.emit("error", this.state.error);
-		// } finally {
-		// 	this.state.loading = false;
-		// 	this.events.emit("loading:end");
-		// }
+			this.events.emit("error", this.state.error);
+		} finally {
+			this.state.loading = false;
+			this.events.emit("loading:end");
+		}
 	}
 
 	async fetchAvailableDates(params: AvailableDatesRequest) {

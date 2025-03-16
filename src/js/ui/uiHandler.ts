@@ -8,6 +8,7 @@ import { CartHandler } from "./cartHandler";
 import { FilterHandler } from "./filterHandler";
 import { ClickHandler } from "./clickHandler";
 import { ChangeHandler } from "./changeHandler";
+import { EmptyState } from "../components/Empty";
 
 export class UIHandler extends EventEmitter {
 	private clickHandler: ClickHandler;
@@ -26,6 +27,23 @@ export class UIHandler extends EventEmitter {
 		this.on("filters:reset", () => this.filterHandler.resetFilters(["sort_by", "weekly_sends", "monthly_growth"]));
 		this.on("filters:categories-reset", () => this.filterHandler.resetFilters(["categories"]));
 		this.on("filters:languages-reset", () => this.filterHandler.resetFilters(["languages"]));
+		this.on("filters:reset-all", () =>
+			this.filterHandler.resetFilters([
+				"languages",
+				"premium",
+				"price_type",
+				"price_min",
+				"price_max",
+				"dates",
+				"users_min",
+				"users_max",
+				"sort_by",
+				"weekly_sends",
+				"monthly_growth",
+				"categories",
+				"search",
+			])
+		);
 		this.on("modal:opened", this.handleModalOpened);
 
 		this.initApp();
@@ -37,8 +55,12 @@ export class UIHandler extends EventEmitter {
 		this.initCalendar();
 
 		store.subscribe("loading:start", this.showSkeleton.bind(this));
+
+		store.subscribe("cards:empty", this.showEmptyState.bind(this));
+
 		store.subscribe("cards:loaded", this.renderCards.bind(this));
 		store.subscribe("cards:loaded", this.cartHandler.handleCartUpdate.bind(this.cartHandler));
+
 		store.subscribe("cart:update", this.cartHandler.handleCartUpdate.bind(this.cartHandler));
 		store.subscribe("cart:totalUpdated", this.cartHandler.updateCartTotal.bind(this.cartHandler));
 		store.subscribe("cart:cleared", this.cartHandler.clearCartList.bind(this.cartHandler));
@@ -90,8 +112,6 @@ export class UIHandler extends EventEmitter {
 	}
 
 	private showSkeleton() {
-		console.log("start loading");
-
 		const appWrapper = document.querySelector("#app");
 
 		if (!appWrapper) return;
@@ -99,5 +119,23 @@ export class UIHandler extends EventEmitter {
 
 		const skeleton = new SkeletonCardList(3);
 		appWrapper.appendChild(skeleton.render());
+	}
+
+	private showEmptyState() {
+		const appWrapper = document.querySelector("#app");
+
+		if (!appWrapper) return;
+		appWrapper.innerHTML = "";
+		console.log();
+
+		const emptyState = new EmptyState({
+			message: "Нет результатов",
+			showButton: true,
+			buttonType: "button",
+			buttonActionOrLink: "clear-all-filters",
+			buttonText: "Очистить фильтры",
+		});
+
+		appWrapper.appendChild(emptyState.render());
 	}
 }

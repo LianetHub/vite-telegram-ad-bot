@@ -27,7 +27,7 @@
             </a>
             <button type="button" class="header__add btn btn-secondary btn-icon"></button>
           </div>
-          <div class="header__sort ">
+          <div class="header__sort">
             <a href="#select-price" data-modal class="header__sort-btn btn btn-secondary btn-sm">
               Цена
               <svg class="btn__icon-down">
@@ -47,7 +47,7 @@
               </svg>
             </a>
           </div>
-          <div class="header__bottom open-search">
+          <div class="header__bottom">
             <div class="header__filter">
               <a href="#filter" data-modal class="header__filter btn btn-white btn-icon btn-xs">
                 <svg>
@@ -55,7 +55,7 @@
                 </svg>
               </a>
             </div>
-            <form action="#" class="header__categories">
+            <div class="header__categories">
               <button type="button" class="header__categories-btn btn btn-white btn-xs">
                 Категории
                 <span class="header__categories-btn-actions">
@@ -156,15 +156,15 @@
                     <span class="input-label__field">Администрирование</span>
                   </label>
                 </div>
-                <button type="reset" class="header__categories-reset btn btn-primary btn-icon btn-rounded btn-sm">
+                <button type="button" class="header__categories-reset btn btn-primary btn-icon btn-rounded btn-sm">
                   <svg>
                     <use xlink:href="img/sprite.svg#icon-clear"></use>
                   </svg>
                 </button>
               </div>
-            </form>
-            <form action="#" class="header__search">
-              <button class="header__search-back btn btn-white btn-icon btn-xs">
+            </div>
+            <div class="header__search">
+              <button type="button" class="header__search-back btn btn-white btn-icon btn-xs">
                 <svg>
                   <use xlink:href="/img/sprite.svg#icon-arrow-left"></use>
                 </svg>
@@ -186,20 +186,11 @@
                 </div>
                 <span class="headline fw-semibold color-secondary">Нет результатов</span>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </header>
-      <main class="page" id="app">
-        <div class="cards">
-          <div class="cards__container">
-            <div class="skeleton-card">
-
-            </div>
-
-          </div>
-        </div>
-      </main>
+      <main class="page" id="app"></main>
 
       <a href="#cart" data-modal class="bag">
         <span data-total-price class="bag__total subtitle fw-semibold">0 ₽</span>

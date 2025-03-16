@@ -46,6 +46,13 @@ export class ClickHandler {
 			languageUIUpdate(0);
 		}
 
+		const allFiltersResetBtn = target.closest("[data-clear-all-filters]") as HTMLElement | null;
+		if (allFiltersResetBtn) {
+			this.eventEmitter.emit("filters:reset-all");
+			categoriesUIUpdate(0);
+			languageUIUpdate(0);
+		}
+
 		const searchBtn = target.closest(".header__search-btn") as HTMLElement | null;
 		if (searchBtn) {
 			document.querySelector(".header__bottom")?.classList.add("open-search");
