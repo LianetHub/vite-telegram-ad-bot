@@ -1,4 +1,4 @@
-import { Category } from "./../api/types";
+import { Category, SortBy, WeeklySends, MonthlyGrowth } from "./../api/types";
 import { store } from "./../store/store";
 import { ClickHandler } from "./clickHandler";
 import { ChangeHandler } from "./changeHandler";
@@ -18,7 +18,8 @@ export class UIHandler extends EventEmitter {
 
 		this.on("subMenuToggled", this.handleSubMenuToggled);
 
-		this.on("categories:change", this.handleCategoriesChanged.bind(this));
+		this.on("filters:change", this.handleFilterChanged.bind(this));
+		this.on("filters:reset", this.resetFilters.bind(this));
 
 		this.on("modalOpened", this.handleModalOpened);
 
@@ -65,7 +66,7 @@ export class UIHandler extends EventEmitter {
 	}
 
 	private renderCards(cards = store.getState().cards) {
-		console.log("render cards");
+		console.log("Рендер карточек");
 
 		const cardsContainer = document.querySelector("#app");
 		if (!cardsContainer) return;
@@ -117,18 +118,86 @@ export class UIHandler extends EventEmitter {
 		}
 	}
 
-	private getSelectedCategories(): string {
+	private getSelectedCategories(): string | undefined {
 		return Array.from(document.querySelectorAll("input[name='category']:checked"))
 			.map((input) => (input as HTMLInputElement).value as Category)
 			.join(",");
 	}
 
-	public handleCategoriesChanged() {
-		console.log("Категории Изменены");
-		const selectedCategories = this.getSelectedCategories();
-		store.setFilters({
-			categories: selectedCategories,
+	private getSelectedFilter<T>(filterName: string): T | undefined {
+		const selectedInput = document.querySelector(`input[name='${filterName}']:checked`) as HTMLInputElement;
+		return selectedInput ? (selectedInput.value as T) : undefined;
+	}
+
+	public handleFilterChanged(event: Event) {
+		const target = event.target as HTMLInputElement;
+		const filterName = target.name;
+
+		let filterValue: string | number | undefined;
+
+		switch (filterName) {
+			case "category":
+				filterValue = this.getSelectedCategories();
+				break;
+			case "sort":
+				filterValue = this.getSelectedFilter<SortBy>("sort");
+				break;
+			case "weekly_sends":
+				filterValue = this.getSelectedFilter<WeeklySends>("weekly_sends");
+				break;
+			case "monthly_growth":
+				filterValue = this.getSelectedFilter<MonthlyGrowth>("monthly_growth");
+				break;
+		}
+
+		if (filterValue) {
+			store.setFilters({
+				[filterName]: filterValue,
+			});
+
+			store.fetchCards();
+			this.toggleResetFilterBtn();
+		}
+	}
+
+	public resetFilters() {
+		console.log("Сброс фильтров");
+
+		const resetFilterNames = ["sort", "weekly_sends", "monthly_growth"];
+
+		resetFilterNames.forEach((filterName) => {
+			const input = document.querySelector(`input[name='${filterName}']:checked`) as HTMLInputElement;
+			if (input) {
+				input.checked = false;
+			}
 		});
+
+		store.setFilters({
+			sort_by: undefined,
+			weekly_sends: undefined,
+			monthly_growth: undefined,
+		});
+
 		store.fetchCards();
+		this.toggleResetFilterBtn();
+	}
+
+	private toggleResetFilterBtn() {
+		const resetFilterBtn = document.querySelector("[data-reset-filter]") as HTMLElement;
+
+		const isAnyFilterSelected = this.isFilterSelected("sort") || this.isFilterSelected("weekly_sends") || this.isFilterSelected("monthly_growth");
+
+		if (resetFilterBtn) {
+			if (isAnyFilterSelected) {
+				resetFilterBtn.classList.remove("hide");
+			} else {
+				resetFilterBtn.classList.add("hide");
+			}
+		}
+	}
+
+	private isFilterSelected(filterName: string): boolean {
+		const input = document.querySelector(`input[name='${filterName}']:checked`) as HTMLInputElement;
+		return input !== null;
 	}
 }

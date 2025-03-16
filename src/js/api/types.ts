@@ -31,6 +31,7 @@ export type LanguageCode =
 
 export type SortBy = "cheapest_first" | "most_expensive_first" | "most_users_first" | "fewest_users_first";
 export type WeeklySends = "none" | "one" | "two" | "three" | "four" | "five_or_more";
+export type MonthlyGrowth = "positive" | "negative";
 
 export type Category =
 	| "Downloads"
@@ -84,7 +85,7 @@ export interface SearchRequest {
 	users_max?: number;
 	sort_by?: SortBy;
 	weekly_sends?: WeeklySends;
-	monthly_growth?: "positive" | "negative";
+	monthly_growth?: MonthlyGrowth;
 	categories?: string;
 	search?: string;
 	limit?: number;

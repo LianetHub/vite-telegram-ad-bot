@@ -47,7 +47,7 @@
               </svg>
             </a>
           </div>
-          <div class="header__bottom open-categories">
+          <div class="header__bottom">
             <div class="header__filter">
               <a href="#filter" data-modal class="header__filter btn btn-white btn-icon btn-xs">
                 <svg>
@@ -716,7 +716,7 @@
         </div>
       </div>
 
-      <div id="filter" class="modal modal-lg">
+      <div id="filter" class="modal modal-lg active">
         <div class="modal__wrapper">
           <button type="button" data-modal-close class="modal__back">
             <svg>
@@ -729,23 +729,23 @@
                 <h2 class="filter__title title-md fw-semibold">Сортировка</h2>
                 <div class="filter__sort">
                   <label class="radio-btn">
-                    <input type="radio" name="sort" value="1" checked class="radio-btn__input hidden" hidden>
+                    <input type="radio" name="sort" value="most_popular" class="radio-btn__input hidden" hidden>
                     <span class="radio-btn__field">По популярности</span>
                   </label>
                   <label class="radio-btn">
-                    <input type="radio" name="sort" value="2" class="radio-btn__input hidden" hidden>
+                    <input type="radio" name="sort" value="cheapest_first" class="radio-btn__input hidden" hidden>
                     <span class="radio-btn__field">Сначала дешевые</span>
                   </label>
                   <label class="radio-btn">
-                    <input type="radio" name="sort" value="3" class="radio-btn__input hidden" hidden>
+                    <input type="radio" name="sort" value="most_expensive_first" class="radio-btn__input hidden" hidden>
                     <span class="radio-btn__field">Сначала дорогие</span>
                   </label>
                   <label class="radio-btn">
-                    <input type="radio" name="sort" value="4" class="radio-btn__input hidden" hidden>
+                    <input type="radio" name="sort" value="most_users_first" class="radio-btn__input hidden" hidden>
                     <span class="radio-btn__field">Сначала много пользователей</span>
                   </label>
                   <label class="radio-btn">
-                    <input type="radio" name="sort" value="5" class="radio-btn__input hidden" hidden>
+                    <input type="radio" name="sort" value="fewest_users_first" class="radio-btn__input hidden" hidden>
                     <span class="radio-btn__field">Сначала мало пользователей</span>
                   </label>
                 </div>
@@ -754,27 +754,27 @@
                 <h2 class="filter__title title-md fw-semibold">Рассылок за неделю</h2>
                 <div class="filter__labels">
                   <label class="input-label">
-                    <input type="radio" name="messages" value="none" class="input-label__control hidden" hidden>
+                    <input type="radio" name="weekly_sends" value="none" class="input-label__control hidden" hidden>
                     <span class="input-label__field">Ни одной</span>
                   </label>
                   <label class="input-label">
-                    <input type="radio" name="messages" value="1" class="input-label__control hidden" hidden>
+                    <input type="radio" name="weekly_sends" value="one" class="input-label__control hidden" hidden>
                     <span class="input-label__field">Одна</span>
                   </label>
                   <label class="input-label">
-                    <input type="radio" name="messages" value="2" class="input-label__control hidden" hidden>
+                    <input type="radio" name="weekly_sends" value="two" class="input-label__control hidden" hidden>
                     <span class="input-label__field">Две</span>
                   </label>
                   <label class="input-label">
-                    <input type="radio" name="messages" value="3" class="input-label__control hidden" hidden>
+                    <input type="radio" name="weekly_sends" value="three" class="input-label__control hidden" hidden>
                     <span class="input-label__field">Три</span>
                   </label>
                   <label class="input-label">
-                    <input type="radio" name="messages" value="4" class="input-label__control hidden" hidden>
+                    <input type="radio" name="weekly_sends" value="four" class="input-label__control hidden" hidden>
                     <span class="input-label__field">Четыре</span>
                   </label>
                   <label class="input-label">
-                    <input type="radio" name="messages" value="5" class="input-label__control hidden" hidden>
+                    <input type="radio" name="weekly_sends" value="five_or_more" class="input-label__control hidden" hidden>
                     <span class="input-label__field">Пять и более</span>
                   </label>
                 </div>
@@ -783,23 +783,22 @@
                 <h2 class="filter__title title-md fw-semibold">Прирост за месяц</h2>
                 <div class="filter__labels">
                   <label class="input-label">
-                    <input type="radio" name="profit" value="up" class="input-label__control hidden" hidden>
+                    <input type="radio" name="monthly_growth" value="positive" class="input-label__control hidden" hidden>
                     <span class="input-label__field">Положительный</span>
                   </label>
                   <label class="input-label">
-                    <input type="radio" name="profit" value="down" class="input-label__control hidden" hidden>
+                    <input type="radio" name="monthly_growth" value="positive" class="input-label__control hidden" hidden>
                     <span class="input-label__field">Отрицательный</span>
                   </label>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="complete-btn__wrapper">
-            <button class="complete-btn btn btn-primary-outline btn-sm hide">Сбросить</button>
+            <div class="complete-btn__wrapper">
+              <button data-reset-filter class="complete-btn btn btn-primary-outline btn-sm hide">Сбросить</button>
+            </div>
           </div>
         </div>
       </div>
-
 
       <div id="select-users" class="modal modal-sm">
         <div class="modal__wrapper">

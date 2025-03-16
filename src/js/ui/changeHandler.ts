@@ -6,26 +6,30 @@ export class ChangeHandler {
 		document.addEventListener("change", this.handleChange.bind(this));
 	}
 
-	private handleChange(e: Event) {
-		const target = e.target as HTMLInputElement;
+	private handleChange(event: Event) {
+		const target = event.target as HTMLInputElement;
 
-		if (target.name === "category") {
-			const categoriesQuantityElement = document.querySelector(".header__categories-quantity") as HTMLElement;
-			if (categoriesQuantityElement) {
-				updateCheckboxQuantity(categoriesQuantityElement, (count) => {
-					categoriesUIUpdate(count);
-					this.eventEmitter.emit("categories:change");
-				});
-			}
+		const filterNames = ["category", "sort", "weekly_sends", "monthly_growth", "language"];
+		if (filterNames.includes(target.name)) {
+			this.eventEmitter.emit("filters:change", event);
 		}
 
-		if (target.name === "language") {
-			const languageQuantityElement = document.querySelector(".modal__language-quantity") as HTMLElement;
-			if (languageQuantityElement) {
-				updateCheckboxQuantity(languageQuantityElement, (count) => {
-					languageUIUpdate(count);
-					this.eventEmitter.emit("languageChanged", count);
-				});
+		const uiUpdates: { [key: string]: { selector: string; callback: (count: number) => void } } = {
+			category: {
+				selector: ".header__categories-quantity",
+				callback: categoriesUIUpdate,
+			},
+			language: {
+				selector: ".modal__language-quantity",
+				callback: languageUIUpdate,
+			},
+		};
+
+		if (uiUpdates[target.name]) {
+			const { selector, callback } = uiUpdates[target.name];
+			const quantityElement = document.querySelector(selector) as HTMLElement;
+			if (quantityElement) {
+				updateCheckboxQuantity(quantityElement, (count) => callback(count));
 			}
 		}
 

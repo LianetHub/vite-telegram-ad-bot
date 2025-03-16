@@ -401,7 +401,7 @@
 			min-height: 100dvh;
 			height: 100svh;
 			border-radius: 0;
-			padding: 3.5rem 1.25rem 6rem;
+			padding: 1.5rem 1.25rem 6rem;
 			background: #fff;
 			width: 100%;
 			transition: transform 0.15s ease;
@@ -433,10 +433,10 @@
 		transform: translateY(100%);
 	}
 
+	// 	.modal__back
 	&__back {
-		position: absolute;
-		top: 1rem;
-		left: 1.25rem;
+		margin-right: auto;
+		margin-bottom: 2rem;
 	}
 	// .modal__container
 	&__container {

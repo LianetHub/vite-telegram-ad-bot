@@ -80,6 +80,12 @@ export class ClickHandler {
 			clearCartBtn.classList.add("hidden");
 		}
 
+		// clear cart
+		const resetFilterBtn = target.closest("[data-reset-filter]") as HTMLElement | null;
+		if (resetFilterBtn) {
+			this.eventEmitter.emit("filters:reset");
+		}
+
 		// Open modal
 		const modalLink = target.closest("[data-modal]") as HTMLElement | null;
 		if (modalLink) {
