@@ -14,5 +14,9 @@
     "sass-embedded": "^1.85.1",
     "typescript": "~5.7.2",
     "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "@types/nouislider": "^9.0.10",
+    "nouislider": "^15.8.1"
   }
 }

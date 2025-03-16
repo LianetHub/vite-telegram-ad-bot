@@ -25,9 +25,9 @@
                 <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
               </svg>
             </a>
-            <button type="button" class="header__add btn btn-secondary btn-icon"></button>
+            <button type="button" class="header__add btn btn-secondary btn-icon active"></button>
           </div>
-          <div class="header__sort">
+          <div class="header__sort active">
             <a href="#select-price" data-modal class="header__sort-btn btn btn-secondary btn-sm">
               Цена
               <svg class="btn__icon-down">
@@ -474,7 +474,7 @@
         </div>
       </div>
 
-      <div id="select-language" class="modal language active">
+      <div id="select-language" class="modal language">
         <div class="modal__wrapper">
           <div class="modal__header">
             <div class="resize-indicator"></div>
@@ -801,7 +801,7 @@
         </div>
       </div>
 
-      <div id="select-users" class="modal modal-sm">
+      <!-- <div id="select-users" class="modal modal-sm">
         <div class="modal__wrapper">
           <div class="modal__row">
             <div class="modal__title title-sm fw-semibold">Количество пользователей</div>
@@ -826,7 +826,7 @@
             <button type="button" class="modal__filter-btn btn btn-primary btn-sm">Показать</button>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div id="select-date" class="modal">
         <div class="modal__wrapper">
@@ -970,7 +970,7 @@
         </div>
       </div>
 
-      <div id="select-price" class="modal modal-sm">
+      <div id="select-price" class="modal modal-sm active">
         <div class="modal__wrapper">
           <div class="modal__row">
             <div class="modal__title title-sm fw-semibold">Цена рассылки</div>
@@ -984,11 +984,11 @@
             <div class="segmented-controls subtitle fw-medium">
               <div class="segmented-controls__wrapper">
                 <label class="segmented-controls__item">
-                  <input type="radio" name="audience" inputmode="numeric" value="all" checked class="segmented-controls__item-input hidden" hidden>
+                  <input type="radio" name="price_type" value="total" class="segmented-controls__item-input hidden" hidden>
                   <span class="segmented-controls__item-btn">За всех</span>
                 </label>
                 <label class="segmented-controls__item">
-                  <input type="radio" name="audience" inputmode="numeric" value="100k" class="segmented-controls__item-input hidden" hidden>
+                  <input type="radio" name="price_type" value="per_100k" class="segmented-controls__item-input hidden" hidden>
                   <span class="segmented-controls__item-btn">За 100k</span>
                 </label>
                 <div class="segmented-controls__runner"></div>
@@ -997,11 +997,11 @@
             <div class="modal__filter-inputs">
               <div class="modal__filter-field">
                 <span class="color-secondary caption-lg">от</span>
-                <input type="text" name="start-price" class="form__control" id="start-price-input" value="1000" data-unit="₽">
+                <input type="text" name="price_min" inputmode="numeric" class="form__control" id="start-price-input" value="1000" data-unit="₽">
               </div>
               <div class="modal__filter-field">
                 <span class="color-secondary caption-lg">до</span>
-                <input type="text" name="end-price" class="form__control" id="end-price-input" value="2400000" data-unit="₽">
+                <input type="text" name="price_max" inputmode="numeric" class="form__control" id="end-price-input" value="2400000" data-unit="₽">
               </div>
             </div>
             <div id="range-price" class="range"></div>

@@ -9,7 +9,7 @@ export class ChangeHandler {
 	private handleChange(event: Event) {
 		const target = event.target as HTMLInputElement;
 
-		const filterNames = ["categories", "sort_by", "weekly_sends", "monthly_growth", "languages", "premium"];
+		const filterNames = ["categories", "sort_by", "weekly_sends", "monthly_growth", "languages", "premium", "price_type", "price_min", "price_max"];
 		if (filterNames.includes(target.name)) {
 			this.eventEmitter.emit("filters:change", event);
 		}

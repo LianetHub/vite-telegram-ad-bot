@@ -1,184 +1,63 @@
+import noUiSlider, { API } from "nouislider";
 import { addThousandSeparator } from "../utils/addThousandSeparator";
+import "nouislider/dist/nouislider.css";
 
 export class RangeSlider {
 	private rangeElement: HTMLElement;
-	private leftControl: HTMLElement;
-	private rightControl: HTMLElement;
-	private fieldElement: HTMLElement;
-
-	private minValue: number = 0;
-	private maxValue: number = 100;
-	private currentMinValue: number;
-	private currentMaxValue: number;
-
-	private isDraggingLeft: boolean = false;
-	private isDraggingRight: boolean = false;
-
 	private minInput: HTMLInputElement;
 	private maxInput: HTMLInputElement;
-	private minInputUnit: string;
-	private maxInputUnit: string;
+	private slider: API;
 
 	constructor(rangeElement: HTMLElement, minInput: HTMLInputElement, maxInput: HTMLInputElement) {
 		this.rangeElement = rangeElement;
-
 		this.minInput = minInput;
 		this.maxInput = maxInput;
-		this.minInputUnit = minInput.getAttribute("data-unit") || "";
-		this.maxInputUnit = maxInput.getAttribute("data-unit") || "";
 
-		const startValue = minInput?.value;
-		const endValue = maxInput?.value;
+		const startValue = parseInt(minInput?.value.replace(/\s/g, "")) || 0;
+		const endValue = parseInt(maxInput?.value.replace(/\s/g, "")) || 100;
 
-		this.minValue = startValue ? parseInt(startValue) : this.minValue;
-		this.maxValue = endValue ? parseInt(endValue) : this.maxValue;
+		this.slider = noUiSlider.create(this.rangeElement, {
+			start: [startValue, endValue],
+			connect: true,
+			range: {
+				min: startValue,
+				max: endValue,
+			},
+			format: {
+				to: (value: number) => addThousandSeparator(Math.round(value)),
+				from: (value: string) => parseInt(value.replace(/\s/g, "")) || 0,
+			},
+		});
 
-		this.currentMinValue = this.minValue;
-		this.currentMaxValue = this.maxValue;
+		this.slider.on("update", this.onSliderUpdate);
 
-		this.leftControl = document.createElement("div");
-		this.leftControl.classList.add("range__control", "left");
-		this.leftControl.style.left = `${this.calculatePercentage(this.currentMinValue)}%`;
+		this.minInput.addEventListener("change", this.onInputChange);
+		this.maxInput.addEventListener("change", this.onInputChange);
 
-		this.rightControl = document.createElement("div");
-		this.rightControl.classList.add("range__control", "right");
-		this.rightControl.style.left = `${this.calculatePercentage(this.currentMaxValue)}%`;
-
-		this.fieldElement = document.createElement("div");
-		this.fieldElement.classList.add("range__field");
-
-		this.initialize();
+		this.minInput.addEventListener("input", this.onInputValidation);
+		this.maxInput.addEventListener("input", this.onInputValidation);
 	}
 
-	private initialize() {
-		this.rangeElement.appendChild(this.fieldElement);
-		this.rangeElement.appendChild(this.leftControl);
-		this.rangeElement.appendChild(this.rightControl);
-
-		this.addEventListeners();
-		this.updateControlsPosition();
-
-		this.minInput.value = `${addThousandSeparator(this.currentMinValue)} ${this.minInputUnit}`;
-		this.maxInput.value = `${addThousandSeparator(this.currentMaxValue)} ${this.maxInputUnit}`;
-
-		this.minInput.addEventListener("input", this.onMinInputChange);
-		this.maxInput.addEventListener("input", this.onMaxInputChange);
-	}
-
-	private addEventListeners() {
-		this.leftControl.addEventListener("mousedown", this.onLeftControlMouseDown);
-		this.rightControl.addEventListener("mousedown", this.onRightControlMouseDown);
-
-		this.leftControl.addEventListener("touchstart", this.onLeftControlTouchStart);
-		this.rightControl.addEventListener("touchstart", this.onRightControlTouchStart);
-
-		window.addEventListener("mousemove", this.onMouseMove);
-		window.addEventListener("mouseup", this.onMouseUp);
-		window.addEventListener("touchmove", this.onTouchMove);
-		window.addEventListener("touchend", this.onTouchEnd);
-	}
-
-	private onLeftControlMouseDown = (event: MouseEvent) => {
-		this.isDraggingLeft = true;
-		event.preventDefault();
+	private onSliderUpdate = (values: (string | number)[]) => {
+		this.minInput.value = String(values[0]);
+		this.maxInput.value = String(values[1]);
 	};
 
-	private onRightControlMouseDown = (event: MouseEvent) => {
-		this.isDraggingRight = true;
-		event.preventDefault();
+	private onInputChange = () => {
+		const minValue = parseInt(this.minInput.value.replace(/\s/g, "")) || 0;
+		const maxValue = parseInt(this.maxInput.value.replace(/\s/g, "")) || 100;
+		this.slider.set([minValue, maxValue]);
 	};
 
-	private onLeftControlTouchStart = (event: TouchEvent) => {
-		this.isDraggingLeft = true;
-		event.preventDefault();
-	};
+	private onInputValidation = (event: Event) => {
+		const input = event.target as HTMLInputElement;
 
-	private onRightControlTouchStart = (event: TouchEvent) => {
-		this.isDraggingRight = true;
-		event.preventDefault();
-	};
+		let value = input.value.replace(/\D/g, "");
 
-	private onMouseMove = (event: MouseEvent) => {
-		if (this.isDraggingLeft || this.isDraggingRight) {
-			this.updatePosition(event.clientX);
+		if (value === "") {
+			value = "0";
 		}
+		let numericValue = parseInt(value, 10);
+		input.value = addThousandSeparator(numericValue);
 	};
-
-	private onTouchMove = (event: TouchEvent) => {
-		if (this.isDraggingLeft || this.isDraggingRight) {
-			const touch = event.touches[0];
-			this.updatePosition(touch.clientX);
-		}
-	};
-
-	private updatePosition(clientX: number) {
-		const rangeRect = this.rangeElement.getBoundingClientRect();
-		const offsetX = clientX - rangeRect.left;
-
-		if (this.isDraggingLeft) {
-			const newLeft = Math.min(offsetX, this.rightControl.offsetLeft);
-			this.currentMinValue = this.calculateValue(Math.max(newLeft, 0));
-		}
-
-		if (this.isDraggingRight) {
-			const newRight = Math.max(offsetX, this.leftControl.offsetLeft);
-			this.currentMaxValue = this.calculateValue(Math.min(newRight, this.rangeElement.offsetWidth));
-		}
-
-		this.updateControlsPosition();
-	}
-
-	private onMouseUp = () => {
-		this.isDraggingLeft = false;
-		this.isDraggingRight = false;
-	};
-
-	private onTouchEnd = () => {
-		this.isDraggingLeft = false;
-		this.isDraggingRight = false;
-	};
-
-	private updateControlsPosition() {
-		const leftPercentage = this.calculatePercentage(this.currentMinValue);
-		const rightPercentage = this.calculatePercentage(this.currentMaxValue);
-
-		const fieldWidth = Math.min(100, rightPercentage - leftPercentage);
-		this.fieldElement.style.width = `${fieldWidth}%`;
-
-		this.leftControl.style.left = `${leftPercentage}%`;
-		this.rightControl.style.left = `${rightPercentage}%`;
-
-		this.fieldElement.style.left = `${leftPercentage}%`;
-
-		this.rangeElement.setAttribute("data-start-value", `${this.currentMinValue}`);
-		this.rangeElement.setAttribute("data-end-value", `${this.currentMaxValue}`);
-
-		this.minInput.value = `${addThousandSeparator(this.currentMinValue)} ${this.minInputUnit}`;
-		this.maxInput.value = `${addThousandSeparator(this.currentMaxValue)} ${this.maxInputUnit}`;
-	}
-
-	private onMinInputChange = () => {
-		const newValue = parseInt(this.minInput.value.replace(` ${this.minInputUnit}`, ""));
-		if (!isNaN(newValue)) {
-			this.currentMinValue = Math.min(newValue, this.currentMaxValue);
-			this.updateControlsPosition();
-		}
-	};
-
-	private onMaxInputChange = () => {
-		const newValue = parseInt(this.maxInput.value.replace(` ${this.maxInputUnit}`, ""));
-		if (!isNaN(newValue)) {
-			this.currentMaxValue = Math.max(newValue, this.currentMinValue);
-			this.updateControlsPosition();
-		}
-	};
-
-	private calculatePercentage(value: number): number {
-		return ((value - this.minValue) / (this.maxValue - this.minValue)) * 100;
-	}
-
-	private calculateValue(offset: number): number {
-		const rangeWidth = this.rangeElement.offsetWidth;
-		return Math.round((offset / rangeWidth) * (this.maxValue - this.minValue) + this.minValue);
-	}
 }

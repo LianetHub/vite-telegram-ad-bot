@@ -1,5 +1,5 @@
 import { store } from "../store/store";
-import { Category, SortBy, WeeklySends, MonthlyGrowth, LanguageCode } from "../api/types";
+import { Category, SortBy, WeeklySends, MonthlyGrowth, LanguageCode, PriceType } from "../api/types";
 
 export class FilterHandler {
 	public handleFilterChanged(event: Event) {
@@ -7,13 +7,14 @@ export class FilterHandler {
 		const filterName = target.name;
 
 		const filterValue = this.getFilterValue(filterName);
+		console.log(filterValue);
 
-		store.setFilters({ [filterName]: filterValue });
-		store.fetchCards();
-		this.toggleResetFilterBtn();
+		// store.setFilters({ [filterName]: filterValue });
+		// store.fetchCards();
+		// this.toggleResetFilterBtn();
 	}
 
-	public resetFilters(filterNames: string[] = ["sort", "weekly_sends", "monthly_growth", "languages", "categories"]) {
+	public resetFilters(filterNames: string[] = ["sort", "weekly_sends", "monthly_growth", "languages", "categories", "price_type", "price_min", "price_max"]) {
 		console.log("Сброс фильтров: ", filterNames);
 		filterNames.forEach((filterName) => this.resetFilter(filterName));
 
@@ -37,6 +38,12 @@ export class FilterHandler {
 				return this.getSelectedFilter<WeeklySends>(filterName);
 			case "monthly_growth":
 				return this.getSelectedFilter<MonthlyGrowth>(filterName);
+			case "price_type":
+				return this.getSelectedFilter<PriceType>(filterName);
+			case "price_min":
+				return this.getFieldValue(filterName);
+			case "price_max":
+				return this.getFieldValue(filterName);
 			case "languages":
 				return this.getSelectedString<LanguageCode>(filterName);
 			case "premium":
@@ -51,6 +58,11 @@ export class FilterHandler {
 			.map((input) => input.value as T)
 			.join(",");
 		return selectedValues || undefined;
+	}
+
+	private getFieldValue(name: string): string | undefined {
+		const fieldValue = document.querySelector<HTMLInputElement>(`input[name='${name}']`)?.value.trim();
+		return fieldValue || undefined;
 	}
 
 	private getSelectedBoolean(name: string): boolean {

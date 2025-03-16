@@ -32,6 +32,7 @@ export type LanguageCode =
 export type SortBy = "cheapest_first" | "most_expensive_first" | "most_users_first" | "fewest_users_first";
 export type WeeklySends = "none" | "one" | "two" | "three" | "four" | "five_or_more";
 export type MonthlyGrowth = "positive" | "negative";
+export type PriceType = "total" | "per_100k";
 
 export type Category =
 	| "Downloads"
@@ -77,7 +78,7 @@ export interface ApiError {
 export interface SearchRequest {
 	languages?: string;
 	premium?: boolean;
-	price_type?: "total" | "per_100k";
+	price_type?: PriceType;
 	price_min?: number;
 	price_max?: number;
 	dates?: string[];
