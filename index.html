@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
-  <body class="lock">
+  <body>
     <div class="wrapper">
       <header class="header">
         <div class="header__container">
@@ -25,9 +25,9 @@
                 <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
               </svg>
             </a>
-            <button type="button" class="header__add btn btn-secondary btn-icon active"></button>
+            <button type="button" class="header__add btn btn-secondary btn-icon"></button>
           </div>
-          <div class="header__sort active">
+          <div class="header__sort ">
             <a href="#select-price" data-modal class="header__sort-btn btn btn-secondary btn-sm">
               Цена
               <svg class="btn__icon-down">
@@ -47,7 +47,7 @@
               </svg>
             </a>
           </div>
-          <div class="header__bottom">
+          <div class="header__bottom open-search">
             <div class="header__filter">
               <a href="#filter" data-modal class="header__filter btn btn-white btn-icon btn-xs">
                 <svg>
@@ -190,7 +190,17 @@
           </div>
         </div>
       </header>
-      <main class="page" id="app"></main>
+      <main class="page" id="app">
+        <div class="cards">
+          <div class="cards__container">
+            <div class="skeleton-card">
+
+            </div>
+
+          </div>
+        </div>
+      </main>
+
       <a href="#cart" data-modal class="bag">
         <span data-total-price class="bag__total subtitle fw-semibold">0 ₽</span>
         <span class="bag__link btn btn-primary btn-icon btn-rounded btn-xs">
@@ -815,15 +825,15 @@
             <div class="modal__filter-inputs">
               <div class="modal__filter-field">
                 <span class="color-secondary caption-lg">от</span>
-                <input type="text" name="start-users" id="start-users-input" class="form__control" value="1000" data-unit="чел.">
+                <input type="text" name="users_min" id="start-users-input" class="form__control" value="1000" data-unit="чел.">
               </div>
               <div class="modal__filter-field">
                 <span class="color-secondary caption-lg">до</span>
-                <input type="text" name="end-users" id="end-users-input" class="form__control" value="9010000" data-unit="чел.">
+                <input type="text" name="users_max" id="end-users-input" class="form__control" value="9010000" data-unit="чел.">
               </div>
             </div>
             <div id="range-users" class="range"></div>
-            <button type="button" class="modal__filter-btn btn btn-primary btn-sm">Показать</button>
+            <button type="button" data-modal-close class="modal__filter-btn btn btn-primary btn-sm">Показать</button>
           </div>
         </div>
       </div>
@@ -861,9 +871,10 @@
             </div>
           </div>
           <div class="modal__body">
+            <!-- <input type="text" id="datepicker" readonly> -->
             <div class="calendar">
               <div class="calendar__block">
-                <div class="calendar__mounth">Октябрь</div>
+                <div class="calendar__month">Октябрь</div>
                 <div class="calendar__body">
                   <div class="calendar__item"></div>
                   <div class="calendar__item last">1</div>
@@ -903,7 +914,7 @@
                 </div>
               </div>
               <div class="calendar__block">
-                <div class="calendar__mounth">Ноябрь</div>
+                <div class="calendar__month">Ноябрь</div>
                 <div class="calendar__body">
                   <div class="calendar__item"></div>
                   <div class="calendar__item"></div>
@@ -970,7 +981,7 @@
         </div>
       </div>
 
-      <div id="select-price" class="modal modal-sm active">
+      <div id="select-price" class="modal modal-sm">
         <div class="modal__wrapper">
           <div class="modal__row">
             <div class="modal__title title-sm fw-semibold">Цена рассылки</div>
@@ -1005,7 +1016,7 @@
               </div>
             </div>
             <div id="range-price" class="range"></div>
-            <button type="button" class="modal__filter-btn btn btn-primary btn-sm">Показать</button>
+            <button type="button" data-modal-close class="modal__filter-btn btn btn-primary btn-sm">Показать</button>
           </div>
         </div>
       </div>

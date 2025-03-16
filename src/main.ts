@@ -4,5 +4,5 @@ import { store } from "./js/store/store";
 
 document.addEventListener("DOMContentLoaded", () => {
 	new UIHandler();
-	// store.fetchProducts();
+	store.fetchCards();
 });

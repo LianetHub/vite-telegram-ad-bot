@@ -1,7 +1,9 @@
 import { store } from "../store/store";
 import { EventEmitter } from "../store/EventEmitter";
 import { RangeSlider } from "../components/RangeSlider";
+import { Calendar } from "../components/Calendar";
 import { CardList } from "../components/CardList";
+import { SkeletonCardList } from "../components/Skeleton";
 import { CartHandler } from "./cartHandler";
 import { FilterHandler } from "./filterHandler";
 import { ClickHandler } from "./clickHandler";
@@ -21,7 +23,7 @@ export class UIHandler extends EventEmitter {
 		this.changeHandler = new ChangeHandler(this);
 
 		this.on("filters:change", this.filterHandler.handleFilterChanged.bind(this.filterHandler));
-		this.on("filters:reset", () => this.filterHandler.resetFilters(["sort", "weekly_sends", "monthly_growth"]));
+		this.on("filters:reset", () => this.filterHandler.resetFilters(["sort_by", "weekly_sends", "monthly_growth"]));
 		this.on("filters:categories-reset", () => this.filterHandler.resetFilters(["categories"]));
 		this.on("filters:languages-reset", () => this.filterHandler.resetFilters(["languages"]));
 		this.on("modal:opened", this.handleModalOpened);
@@ -32,12 +34,23 @@ export class UIHandler extends EventEmitter {
 	private initApp() {
 		this.initPriceRangeSlider();
 		this.initUsersRangeSlider();
+		this.initCalendar();
 
+		store.subscribe("loading:start", this.showSkeleton.bind(this));
 		store.subscribe("cards:loaded", this.renderCards.bind(this));
 		store.subscribe("cards:loaded", this.cartHandler.handleCartUpdate.bind(this.cartHandler));
 		store.subscribe("cart:update", this.cartHandler.handleCartUpdate.bind(this.cartHandler));
 		store.subscribe("cart:totalUpdated", this.cartHandler.updateCartTotal.bind(this.cartHandler));
 		store.subscribe("cart:cleared", this.cartHandler.clearCartList.bind(this.cartHandler));
+	}
+
+	private initCalendar() {
+		const calendarElement = document.getElementById("datepicker") as HTMLElement;
+
+		if (calendarElement) {
+			const calendar = new Calendar("datepicker");
+			console.log(calendar);
+		}
 	}
 
 	private initPriceRangeSlider() {
@@ -67,12 +80,24 @@ export class UIHandler extends EventEmitter {
 	private renderCards(cards = store.getState().cards) {
 		console.log("Рендер карточек");
 
-		const cardsContainer = document.querySelector("#app");
-		if (!cardsContainer) return;
+		const appWrapper = document.querySelector("#app");
+		if (!appWrapper) return;
 
-		cardsContainer.innerHTML = "";
+		appWrapper.innerHTML = "";
 
 		const cardList = new CardList(cards);
-		cardsContainer.appendChild(cardList.render());
+		appWrapper.appendChild(cardList.render());
+	}
+
+	private showSkeleton() {
+		console.log("start loading");
+
+		const appWrapper = document.querySelector("#app");
+
+		if (!appWrapper) return;
+		appWrapper.innerHTML = "";
+
+		const skeleton = new SkeletonCardList(3);
+		appWrapper.appendChild(skeleton.render());
 	}
 }

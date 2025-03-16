@@ -1,20 +1,35 @@
 import { store } from "../store/store";
-import { Category, SortBy, WeeklySends, MonthlyGrowth, LanguageCode, PriceType } from "../api/types";
+import { Category, SortBy, WeeklySends, MonthlyGrowth, LanguageCode, PriceType, SearchRequest } from "../api/types";
 
 export class FilterHandler {
 	public handleFilterChanged(event: Event) {
 		const target = event.target as HTMLInputElement;
-		const filterName = target.name;
+		const filterName = target.name as keyof SearchRequest;
 
 		const filterValue = this.getFilterValue(filterName);
-		console.log(filterValue);
 
-		// store.setFilters({ [filterName]: filterValue });
-		// store.fetchCards();
-		// this.toggleResetFilterBtn();
+		store.setFilters({ [filterName]: filterValue });
+		store.fetchCards();
+		this.toggleResetFilterBtn();
 	}
 
-	public resetFilters(filterNames: string[] = ["sort", "weekly_sends", "monthly_growth", "languages", "categories", "price_type", "price_min", "price_max"]) {
+	public resetFilters(
+		filterNames: (keyof SearchRequest)[] = [
+			"languages",
+			"premium",
+			"price_type",
+			"price_min",
+			"price_max",
+			"dates",
+			"users_min",
+			"users_max",
+			"sort_by",
+			"weekly_sends",
+			"monthly_growth",
+			"categories",
+			"search",
+		]
+	) {
 		console.log("Сброс фильтров: ", filterNames);
 		filterNames.forEach((filterName) => this.resetFilter(filterName));
 
@@ -41,9 +56,13 @@ export class FilterHandler {
 			case "price_type":
 				return this.getSelectedFilter<PriceType>(filterName);
 			case "price_min":
-				return this.getFieldValue(filterName);
+				return this.getFieldNumber(filterName);
 			case "price_max":
-				return this.getFieldValue(filterName);
+				return this.getFieldNumber(filterName);
+			case "users_min":
+				return this.getFieldNumber(filterName);
+			case "users_max":
+				return this.getFieldNumber(filterName);
 			case "languages":
 				return this.getSelectedString<LanguageCode>(filterName);
 			case "premium":
@@ -60,9 +79,15 @@ export class FilterHandler {
 		return selectedValues || undefined;
 	}
 
-	private getFieldValue(name: string): string | undefined {
-		const fieldValue = document.querySelector<HTMLInputElement>(`input[name='${name}']`)?.value.trim();
-		return fieldValue || undefined;
+	private getFieldNumber(name: string): number | undefined {
+		const fieldValue = document.querySelector<HTMLInputElement>(`input[name='${name}']`)?.value.replace(/\s+/g, "");
+
+		if (fieldValue) {
+			const parsedValue = parseFloat(fieldValue);
+			return isNaN(parsedValue) ? undefined : parsedValue;
+		}
+
+		return undefined;
 	}
 
 	private getSelectedBoolean(name: string): boolean {

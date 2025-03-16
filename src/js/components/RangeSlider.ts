@@ -30,9 +30,14 @@ export class RangeSlider {
 		});
 
 		this.slider.on("update", this.onSliderUpdate);
+		this.slider.on("set", () => {
+			const event = new Event("change", { bubbles: true, cancelable: true });
+			this.minInput.dispatchEvent(event);
+			this.maxInput.dispatchEvent(event);
+		});
 
-		this.minInput.addEventListener("change", this.onInputChange);
-		this.maxInput.addEventListener("change", this.onInputChange);
+		this.minInput.addEventListener("input", this.onInputChange);
+		this.maxInput.addEventListener("input", this.onInputChange);
 
 		this.minInput.addEventListener("input", this.onInputValidation);
 		this.maxInput.addEventListener("input", this.onInputValidation);

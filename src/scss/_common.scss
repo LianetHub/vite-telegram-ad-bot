@@ -133,6 +133,14 @@ body {
 			border-color: $tertiary;
 		}
 	}
+	&.card-skeleton {
+		padding: 0;
+		& svg {
+			width: 100%;
+			height: auto;
+		}
+	}
+
 	// .card__header
 	&__header {
 		display: flex;

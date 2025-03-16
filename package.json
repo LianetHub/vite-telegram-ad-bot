@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@types/nouislider": "^9.0.10",
+    "flatpickr": "^4.6.13",
     "nouislider": "^15.8.1"
   }
 }
