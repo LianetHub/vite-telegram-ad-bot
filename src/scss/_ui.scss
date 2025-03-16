@@ -636,12 +636,17 @@
 	// .modal__filter-field
 	&__filter-field {
 		position: relative;
+		overflow: hidden;
 		& span {
 			position: absolute;
 			top: 50%;
 			transform: translateY(-50%);
 			left: 0.75rem;
 			pointer-events: none;
+			&.form__control-unit {
+				font-size: 0.9375rem;
+				top: 48.5%;
+			}
 		}
 		.form__control {
 			border-radius: 0.625rem;
