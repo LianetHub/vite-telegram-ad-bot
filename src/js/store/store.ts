@@ -17,6 +17,7 @@ export interface StoreState {
 	loading: boolean;
 	error: string | null;
 	cart: string[];
+	filters: SearchRequest;
 	availableDates?: AvailableDatesResponse;
 	startDates?: StartDatesResponse;
 	checkAvailability?: CheckAvailabilityResponse;
@@ -29,6 +30,7 @@ class Store {
 		loading: false,
 		error: null,
 		cart: [],
+		filters: {},
 	};
 
 	private events = new EventEmitter();
@@ -51,11 +53,17 @@ class Store {
 		return this.state;
 	}
 
+	setFilters(filters: Partial<StoreState["filters"]>) {
+		this.state.filters = { ...this.state.filters, ...filters };
+		this.events.emit("filters:updated");
+		console.log("Текущий фильтр", this.state.filters);
+	}
+
 	subscribe(event: string, callback: () => void) {
 		this.events.on(event, callback);
 	}
 
-	async fetchCards(params: SearchRequest = {}): Promise<void> {
+	async fetchCards(params: SearchRequest = this.state.filters): Promise<void> {
 		this.state.loading = true;
 		this.events.emit("loading:start");
 
@@ -63,6 +71,8 @@ class Store {
 			const response: ApiResponse | ApiError = await Api.searchCatalog(params);
 
 			if ("error" in response) throw new Error(response.error);
+
+			console.log("Ответ сервера", response.data);
 
 			this.state.cards = response.data;
 
@@ -166,8 +176,6 @@ class Store {
 			return item ? sum + item.total_price : sum;
 		}, 0);
 
-		console.log(total);
-
 		this.state.total = total;
 		this.events.emit("cart:totalUpdated");
 	}
@@ -176,10 +184,11 @@ class Store {
 		return this.state.cart.includes(itemId.toString());
 	}
 
-	clearSession() {
+	clearCart() {
 		sessionStorage.removeItem("cart");
 		this.state.cart = [];
-		this.events.emit("session:cleared");
+		this.updateTotalCart();
+		this.events.emit("cart:cleared");
 	}
 }
 

@@ -386,6 +386,7 @@
 	}
 	// .checkbox__field
 	&__field {
+		position: relative;
 		width: 1.25rem;
 		height: 1.25rem;
 		background-color: rgba(8, 8, 26, 0.04);
@@ -405,6 +406,15 @@
 			background-repeat: no-repeat;
 			transform: scale(0);
 			transition: transform 0.3s ease;
+		}
+		&::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: rem(36);
+			height: rem(36);
 		}
 	}
 }

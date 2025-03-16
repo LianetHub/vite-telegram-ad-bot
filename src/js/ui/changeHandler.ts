@@ -14,7 +14,7 @@ export class ChangeHandler {
 			if (categoriesQuantityElement) {
 				updateCheckboxQuantity(categoriesQuantityElement, (count) => {
 					categoriesUIUpdate(count);
-					this.eventEmitter.emit("categoryChanged", count);
+					this.eventEmitter.emit("categories:change");
 				});
 			}
 		}

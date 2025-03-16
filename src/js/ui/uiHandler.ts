@@ -1,9 +1,11 @@
+import { Category } from "./../api/types";
 import { store } from "./../store/store";
 import { ClickHandler } from "./clickHandler";
 import { ChangeHandler } from "./changeHandler";
 import { EventEmitter } from "../store/EventEmitter";
 import { RangeSlider } from "../components/RangeSlider";
 import { CardList } from "../components/CardList";
+import { addThousandSeparator } from "../utils/addThousandSeparator";
 
 export class UIHandler extends EventEmitter {
 	private clickHandler: ClickHandler;
@@ -15,7 +17,9 @@ export class UIHandler extends EventEmitter {
 		this.changeHandler = new ChangeHandler(this);
 
 		this.on("subMenuToggled", this.handleSubMenuToggled);
-		this.on("categoriesToggled", this.handleCategoriesToggled);
+
+		this.on("categories:change", this.handleCategoriesChanged.bind(this));
+
 		this.on("modalOpened", this.handleModalOpened);
 
 		this.initApp();
@@ -29,6 +33,7 @@ export class UIHandler extends EventEmitter {
 		store.subscribe("cards:loaded", this.handleCartUpdate.bind(this));
 		store.subscribe("cart:update", this.handleCartUpdate.bind(this));
 		store.subscribe("cart:totalUpdated", this.updateCartTotal.bind(this));
+		store.subscribe("cart:cleared", this.clearCartList.bind(this));
 	}
 
 	private initPriceRangeSlider() {
@@ -55,21 +60,19 @@ export class UIHandler extends EventEmitter {
 		console.log("Подменю переключено", addButton);
 	}
 
-	private handleCategoriesToggled(categoriesBtn: HTMLElement) {
-		console.log("Категории переключены", categoriesBtn);
-	}
-
 	private handleModalOpened(modalLink: HTMLElement) {
 		console.log("Модальное окно открыто", modalLink);
 	}
 
-	private renderCards() {
+	private renderCards(cards = store.getState().cards) {
+		console.log("render cards");
+
 		const cardsContainer = document.querySelector("#app");
 		if (!cardsContainer) return;
 
 		cardsContainer.innerHTML = "";
 
-		const cardList = new CardList(store.getState().cards);
+		const cardList = new CardList(cards);
 		cardsContainer.appendChild(cardList.render());
 	}
 
@@ -87,13 +90,45 @@ export class UIHandler extends EventEmitter {
 	}
 
 	private updateCartTotal() {
-		const totalElement = document.querySelector(".bag__total");
+		const totalElements = document.querySelectorAll("[data-total-price]");
 
-		if (totalElement) {
-			const total = store.getState().total;
-			if (total) {
-				totalElement.textContent = `${total}`;
-			}
+		if (totalElements.length) {
+			let totalPrice = store.getState().total ?? 0;
+
+			totalElements.forEach((totalElement) => {
+				totalElement.textContent = `${addThousandSeparator(totalPrice)} ₽`;
+			});
 		}
+	}
+
+	private clearCartList() {
+		const cartList = document.querySelector("#cart-list") as HTMLElement | null;
+		const cartContent = document.querySelector(".cart__content") as HTMLElement | null;
+		const cartEmptyBlock = document.querySelector(".cart__empty") as HTMLElement | null;
+		cartContent?.classList.add("removed");
+		cartEmptyBlock?.classList.remove("hide");
+
+		if (cartList) {
+			setTimeout(() => {
+				cartList.innerHTML = "";
+				cartContent?.classList.add("hidden");
+				cartContent?.classList.remove("removed");
+			}, 300);
+		}
+	}
+
+	private getSelectedCategories(): string {
+		return Array.from(document.querySelectorAll("input[name='category']:checked"))
+			.map((input) => (input as HTMLInputElement).value as Category)
+			.join(",");
+	}
+
+	public handleCategoriesChanged() {
+		console.log("Категории Изменены");
+		const selectedCategories = this.getSelectedCategories();
+		store.setFilters({
+			categories: selectedCategories,
+		});
+		store.fetchCards();
 	}
 }

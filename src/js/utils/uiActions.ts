@@ -77,7 +77,6 @@ export function updateCheckboxQuantity(element: HTMLElement, callback?: (count: 
 }
 
 export function categoriesUIUpdate(count: number) {
-	console.log(`Количество выбранных категорий: ${count}`);
 	if (count > 0) {
 		document.querySelector(".header__categories-btn")?.classList.add("has-quantity");
 		document.querySelector(".header__categories-reset")?.classList.add("visible");

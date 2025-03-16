@@ -18,7 +18,7 @@ export class ClickHandler {
 		const target = e.target as HTMLElement | null;
 		if (!target) return;
 
-		console.log(target);
+		// console.log(target);
 
 		// menu actions
 		const addButton = target.closest(".header__add") as HTMLElement | null;
@@ -69,8 +69,15 @@ export class ClickHandler {
 		if (cartBtn) {
 			cartBtn.classList.toggle("active");
 			const card = cartBtn.closest(".card") as HTMLElement;
-
 			store.toggleToCart(card.id);
+			document.querySelector("[data-clear-cart]")?.classList.remove("hidden");
+		}
+
+		// clear cart
+		const clearCartBtn = target.closest("[data-clear-cart]") as HTMLElement | null;
+		if (clearCartBtn) {
+			store.clearCart();
+			clearCartBtn.classList.add("hidden");
 		}
 
 		// Open modal

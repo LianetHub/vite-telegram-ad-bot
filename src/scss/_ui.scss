@@ -408,6 +408,18 @@
 			transform: translateX(100%);
 		}
 	}
+	&.modal-xl {
+		padding-top: 0;
+		.modal__wrapper {
+			min-height: 100dvh;
+			height: 100svh;
+			border-radius: 0;
+			background: #fff;
+			width: 100%;
+			transition: transform 0.15s ease;
+			transform: translateX(100%);
+		}
+	}
 
 	// .modal__wrapper
 	&__wrapper {
