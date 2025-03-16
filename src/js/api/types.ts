@@ -57,7 +57,7 @@ export type Category =
 	| "Administration";
 
 export type CardProps = {
-	id: string;
+	id: number;
 	name: string;
 	username: string;
 	photo_url: string;

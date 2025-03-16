@@ -17,17 +17,21 @@ export class UIHandler extends EventEmitter {
 		this.on("subMenuToggled", this.handleSubMenuToggled);
 		this.on("categoriesToggled", this.handleCategoriesToggled);
 		this.on("modalOpened", this.handleModalOpened);
-		this.initApp();
 
-		store.subscribe("cards:loaded", this.renderCards.bind(this));
-		store.subscribe("cart:update", this.handleCartUpdate.bind(this));
+		this.initApp();
 	}
 
 	private initApp() {
-		store.fetchCards();
-		this.handleCartUpdate();
+		this.initPriceRangeSlider();
+		this.initUsersRangeSlider();
 
-		// init price Range Slider
+		store.subscribe("cards:loaded", this.renderCards.bind(this));
+		store.subscribe("cards:loaded", this.handleCartUpdate.bind(this));
+		store.subscribe("cart:update", this.handleCartUpdate.bind(this));
+		store.subscribe("cart:totalUpdated", this.updateCartTotal.bind(this));
+	}
+
+	private initPriceRangeSlider() {
 		const rangePrice = document.querySelector("#range-price") as HTMLElement;
 		const rangePriceMinInput = document.querySelector("#start-price-input") as HTMLInputElement;
 		const rangePriceMaxInput = document.querySelector("#end-price-input") as HTMLInputElement;
@@ -35,8 +39,9 @@ export class UIHandler extends EventEmitter {
 		if (rangePrice && rangePriceMinInput && rangePriceMaxInput) {
 			new RangeSlider(rangePrice, rangePriceMinInput, rangePriceMaxInput);
 		}
+	}
 
-		// init users Range Slider
+	private initUsersRangeSlider() {
 		const rangeUsers = document.querySelector("#range-users") as HTMLElement;
 		const rangeUsersMinInput = document.querySelector("#start-users-input") as HTMLInputElement;
 		const rangeUsersMaxInput = document.querySelector("#end-users-input") as HTMLInputElement;
@@ -69,12 +74,26 @@ export class UIHandler extends EventEmitter {
 	}
 
 	private handleCartUpdate() {
-		let cartQuantity = store.getState().cart.length;
+		const cartQuantity = store.getState().cart.length;
 
-		if (cartQuantity > 0) {
-			document.querySelector(".bag")?.classList.add("visible");
-		} else {
-			document.querySelector(".bag")?.classList.remove("visible");
+		const bagElement = document.querySelector(".bag");
+		if (bagElement) {
+			if (cartQuantity > 0) {
+				bagElement.classList.add("visible");
+			} else {
+				bagElement.classList.remove("visible");
+			}
+		}
+	}
+
+	private updateCartTotal() {
+		const totalElement = document.querySelector(".bag__total");
+
+		if (totalElement) {
+			const total = store.getState().total;
+			if (total) {
+				totalElement.textContent = `${total}`;
+			}
 		}
 	}
 }

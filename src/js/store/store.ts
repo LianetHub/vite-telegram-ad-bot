@@ -20,6 +20,7 @@ export interface StoreState {
 	availableDates?: AvailableDatesResponse;
 	startDates?: StartDatesResponse;
 	checkAvailability?: CheckAvailabilityResponse;
+	total?: number;
 }
 
 class Store {
@@ -31,6 +32,20 @@ class Store {
 	};
 
 	private events = new EventEmitter();
+
+	private loadCart() {
+		const storedCart = sessionStorage.getItem("cart");
+		this.state.cart = storedCart ? JSON.parse(storedCart) : [];
+	}
+
+	private saveCart() {
+		sessionStorage.setItem("cart", JSON.stringify(this.state.cart));
+	}
+
+	constructor() {
+		this.fetchCards();
+		this.loadCart();
+	}
 
 	getState() {
 		return this.state;
@@ -47,13 +62,15 @@ class Store {
 		try {
 			const response: ApiResponse | ApiError = await Api.searchCatalog(params);
 
-			console.log(response);
 			if ("error" in response) throw new Error(response.error);
 
 			this.state.cards = response.data;
+
 			this.events.emit("cards:loaded");
+			this.updateTotalCart();
 		} catch (error) {
 			this.state.error = error instanceof Error ? error.message : String(error);
+
 			this.events.emit("error", this.state.error);
 		} finally {
 			this.state.loading = false;
@@ -80,7 +97,6 @@ class Store {
 		}
 	}
 
-	/** Получение стартовых дат */
 	async fetchStartDates(params: StartDatesRequest) {
 		this.state.loading = true;
 		this.events.emit("loading:start");
@@ -100,7 +116,6 @@ class Store {
 		}
 	}
 
-	/** Проверка доступности */
 	async checkAvailability(params: CheckAvailabilityRequest) {
 		this.state.loading = true;
 		this.events.emit("loading:start");
@@ -123,12 +138,16 @@ class Store {
 	addToCart(itemId: string) {
 		if (!this.state.cart.includes(itemId)) {
 			this.state.cart.push(itemId);
+			this.saveCart();
+			this.updateTotalCart();
 			this.events.emit("cart:update");
 		}
 	}
 
 	removeFromCart(itemId: string) {
 		this.state.cart = this.state.cart.filter((id) => id !== itemId);
+		this.saveCart();
+		this.updateTotalCart();
 		this.events.emit("cart:update");
 	}
 
@@ -140,8 +159,27 @@ class Store {
 		}
 	}
 
-	isInCart(itemId: string): boolean {
-		return this.state.cart.includes(itemId);
+	private updateTotalCart() {
+		const total = this.state.cart.reduce((sum, itemId) => {
+			const item = this.state.cards.find((card) => card.id === +itemId);
+
+			return item ? sum + item.total_price : sum;
+		}, 0);
+
+		console.log(total);
+
+		this.state.total = total;
+		this.events.emit("cart:totalUpdated");
+	}
+
+	isInCart(itemId: number): boolean {
+		return this.state.cart.includes(itemId.toString());
+	}
+
+	clearSession() {
+		sessionStorage.removeItem("cart");
+		this.state.cart = [];
+		this.events.emit("session:cleared");
 	}
 }
 

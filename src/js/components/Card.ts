@@ -10,13 +10,13 @@ export class Card {
 
 	constructor(data: CardProps) {
 		this.data = data;
-		this.isInCart = true;
+		this.isInCart = false;
 	}
 
 	render(): HTMLElement {
 		const cardElement = document.createElement("div");
 		cardElement.classList.add("card");
-		cardElement.setAttribute("id", this.data.id);
+		cardElement.setAttribute("id", this.data.id.toString());
 
 		if (store.isInCart(this.data.id)) {
 			this.isInCart = true;
