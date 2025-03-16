@@ -16,14 +16,6 @@ export function hideCategories() {
 	document.body.classList.remove("lock");
 }
 
-export function resetCategories() {
-	document.querySelectorAll<HTMLInputElement>(".header__categories-checkbox").forEach((checkbox) => {
-		checkbox.checked = false;
-	});
-	updateCheckboxQuantity(document.querySelector(".header__categories-quantity") as HTMLElement);
-	categoriesUIUpdate(0);
-}
-
 export function createRippleEffect(button: HTMLElement, event: MouseEvent) {
 	const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
 
@@ -88,10 +80,13 @@ export function categoriesUIUpdate(count: number) {
 
 export function languageUIUpdate(count: number) {
 	console.log(`Количество выбранных языков: ${count}`);
+	const languageWrapper = document.querySelector(".language") as HTMLElement;
 	if (count > 0) {
 		document.querySelector("[data-language-submit]")?.classList.remove("hide");
+		languageWrapper?.classList.add("language-selected");
 	} else {
 		document.querySelector("[data-language-submit]")?.classList.add("hide");
+		languageWrapper?.classList.remove("language-selected");
 	}
 }
 

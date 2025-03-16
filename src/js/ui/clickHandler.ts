@@ -1,5 +1,5 @@
 import { EventEmitter } from "../store/EventEmitter";
-import { toggleSubMenu, toggleCategories, hideCategories, resetCategories, createRippleEffect, openModal, closeModal } from "../utils/uiActions";
+import { toggleSubMenu, toggleCategories, hideCategories, categoriesUIUpdate, createRippleEffect, openModal, closeModal, languageUIUpdate } from "../utils/uiActions";
 import { store } from "../store/store";
 
 export class ClickHandler {
@@ -18,13 +18,10 @@ export class ClickHandler {
 		const target = e.target as HTMLElement | null;
 		if (!target) return;
 
-		// console.log(target);
-
 		// menu actions
 		const addButton = target.closest(".header__add") as HTMLElement | null;
 		if (addButton) {
 			toggleSubMenu(addButton);
-			this.eventEmitter.emit("subMenuToggled", addButton);
 		}
 
 		const categoriesBtn = target.closest(".header__categories-btn") as HTMLElement | null;
@@ -39,8 +36,14 @@ export class ClickHandler {
 
 		const categoriesResetBtn = target.closest(".header__categories-reset") as HTMLElement | null;
 		if (categoriesResetBtn) {
-			resetCategories();
-			this.eventEmitter.emit("categoriesReset");
+			this.eventEmitter.emit("filters:categories-reset");
+			categoriesUIUpdate(0);
+		}
+
+		const languagesResetBtn = target.closest("[data-reset-languages]") as HTMLElement | null;
+		if (languagesResetBtn) {
+			this.eventEmitter.emit("filters:languages-reset");
+			languageUIUpdate(0);
 		}
 
 		const searchBtn = target.closest(".header__search-btn") as HTMLElement | null;
@@ -90,20 +93,20 @@ export class ClickHandler {
 		const modalLink = target.closest("[data-modal]") as HTMLElement | null;
 		if (modalLink) {
 			openModal(modalLink);
-			this.eventEmitter.emit("modalOpened", modalLink);
+			this.eventEmitter.emit("modal:opened", modalLink);
 		}
 
 		// Close modal
 		const closeModalButton = target.closest("[data-modal-close]") as HTMLElement | null;
 		if (closeModalButton) {
 			closeModal();
-			this.eventEmitter.emit("modalClosed", closeModalButton);
+			this.eventEmitter.emit("modal:closed", closeModalButton);
 		}
 
 		const modal = target.closest(".modal") as HTMLElement | null;
 		if (modal && !target.closest(".modal__wrapper")) {
 			closeModal();
-			this.eventEmitter.emit("modalClosed", modal);
+			this.eventEmitter.emit("modal:closed", modal);
 		}
 	}
 }

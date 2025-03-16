@@ -67,8 +67,6 @@ class Store {
 		this.state.loading = true;
 		this.events.emit("loading:start");
 
-		console.log("запрос на сервер с параметрами", params);
-
 		try {
 			const response: ApiResponse | ApiError = await Api.searchCatalog(params);
 

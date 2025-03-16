@@ -9,17 +9,17 @@ export class ChangeHandler {
 	private handleChange(event: Event) {
 		const target = event.target as HTMLInputElement;
 
-		const filterNames = ["category", "sort", "weekly_sends", "monthly_growth", "language"];
+		const filterNames = ["categories", "sort_by", "weekly_sends", "monthly_growth", "languages", "premium"];
 		if (filterNames.includes(target.name)) {
 			this.eventEmitter.emit("filters:change", event);
 		}
 
 		const uiUpdates: { [key: string]: { selector: string; callback: (count: number) => void } } = {
-			category: {
+			categories: {
 				selector: ".header__categories-quantity",
 				callback: categoriesUIUpdate,
 			},
-			language: {
+			languages: {
 				selector: ".modal__language-quantity",
 				callback: languageUIUpdate,
 			},

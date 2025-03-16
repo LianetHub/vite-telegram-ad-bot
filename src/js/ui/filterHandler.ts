@@ -1,85 +1,78 @@
 import { store } from "../store/store";
-import { Category, SortBy, WeeklySends, MonthlyGrowth } from "../api/types";
+import { Category, SortBy, WeeklySends, MonthlyGrowth, LanguageCode } from "../api/types";
 
 export class FilterHandler {
 	public handleFilterChanged(event: Event) {
 		const target = event.target as HTMLInputElement;
 		const filterName = target.name;
 
-		let filterValue: string | number | undefined;
+		const filterValue = this.getFilterValue(filterName);
 
+		store.setFilters({ [filterName]: filterValue });
+		store.fetchCards();
+		this.toggleResetFilterBtn();
+	}
+
+	public resetFilters(filterNames: string[] = ["sort", "weekly_sends", "monthly_growth", "languages", "categories"]) {
+		console.log("Сброс фильтров: ", filterNames);
+		filterNames.forEach((filterName) => this.resetFilter(filterName));
+
+		store.setFilters(Object.fromEntries(filterNames.map((name) => [name, undefined])));
+		store.fetchCards();
+		this.toggleResetFilterBtn();
+	}
+
+	private resetFilter(filterName: string) {
+		const selectedInputs = document.querySelectorAll<HTMLInputElement>(`input[name='${filterName}']:checked`);
+		selectedInputs.forEach((input) => (input.checked = false));
+	}
+
+	private getFilterValue(filterName: string): string | number | boolean | undefined {
 		switch (filterName) {
-			case "category":
-				filterValue = this.getSelectedCategories();
-				break;
+			case "categories":
+				return this.getSelectedString<Category>(filterName);
 			case "sort":
-				filterValue = this.getSelectedFilter<SortBy>("sort");
-				break;
+				return this.getSelectedFilter<SortBy>(filterName);
 			case "weekly_sends":
-				filterValue = this.getSelectedFilter<WeeklySends>("weekly_sends");
-				break;
+				return this.getSelectedFilter<WeeklySends>(filterName);
 			case "monthly_growth":
-				filterValue = this.getSelectedFilter<MonthlyGrowth>("monthly_growth");
-				break;
+				return this.getSelectedFilter<MonthlyGrowth>(filterName);
+			case "languages":
+				return this.getSelectedString<LanguageCode>(filterName);
+			case "premium":
+				return this.getSelectedBoolean(filterName);
+			default:
+				return undefined;
 		}
-
-		store.setFilters({
-			[filterName]: filterValue,
-		});
-
-		store.fetchCards();
-		this.toggleResetFilterBtn();
 	}
 
-	public resetFilters() {
-		console.log("Сброс фильтров");
-
-		const resetFilterNames = ["sort", "weekly_sends", "monthly_growth"];
-
-		resetFilterNames.forEach((filterName) => {
-			const input = document.querySelector(`input[name='${filterName}']:checked`) as HTMLInputElement;
-			if (input) {
-				input.checked = false;
-			}
-		});
-
-		store.setFilters({
-			sort_by: undefined,
-			weekly_sends: undefined,
-			monthly_growth: undefined,
-		});
-
-		store.fetchCards();
-		this.toggleResetFilterBtn();
-	}
-
-	private getSelectedCategories(): string {
-		return Array.from(document.querySelectorAll("input[name='category']:checked"))
-			.map((input) => (input as HTMLInputElement).value as Category)
+	private getSelectedString<T>(name: string): string | undefined {
+		const selectedValues = Array.from(document.querySelectorAll<HTMLInputElement>(`input[name='${name}']:checked`))
+			.map((input) => input.value as T)
 			.join(",");
+		return selectedValues || undefined;
+	}
+
+	private getSelectedBoolean(name: string): boolean {
+		const input = document.querySelector<HTMLInputElement>(`input[name='${name}']`);
+		return input?.checked ?? false;
 	}
 
 	private getSelectedFilter<T>(filterName: string): T | undefined {
-		const selectedInput = document.querySelector(`input[name='${filterName}']:checked`) as HTMLInputElement;
+		const selectedInput = document.querySelector<HTMLInputElement>(`input[name='${filterName}']:checked`);
 		return selectedInput ? (selectedInput.value as T) : undefined;
 	}
 
 	private toggleResetFilterBtn() {
-		const resetFilterBtn = document.querySelector("[data-reset-filter]") as HTMLElement;
-
-		const isAnyFilterSelected = this.isFilterSelected("sort") || this.isFilterSelected("weekly_sends") || this.isFilterSelected("monthly_growth");
+		const resetFilterBtn = document.querySelector<HTMLElement>("[data-reset-filter]");
+		const isAnyFilterSelected = ["sort", "weekly_sends", "monthly_growth"].some(this.isFilterSelected);
 
 		if (resetFilterBtn) {
-			if (isAnyFilterSelected) {
-				resetFilterBtn.classList.remove("hide");
-			} else {
-				resetFilterBtn.classList.add("hide");
-			}
+			resetFilterBtn.classList.toggle("hide", !isAnyFilterSelected);
 		}
 	}
 
-	private isFilterSelected(filterName: string): boolean {
-		const input = document.querySelector(`input[name='${filterName}']:checked`) as HTMLInputElement;
-		return input !== null;
-	}
+	private isFilterSelected = (filterName: string): boolean => {
+		return document.querySelector(`input[name='${filterName}']:checked`) !== null;
+	};
 }

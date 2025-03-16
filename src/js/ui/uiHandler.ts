@@ -20,10 +20,11 @@ export class UIHandler extends EventEmitter {
 		this.clickHandler = new ClickHandler(this);
 		this.changeHandler = new ChangeHandler(this);
 
-		this.on("subMenuToggled", this.handleSubMenuToggled);
 		this.on("filters:change", this.filterHandler.handleFilterChanged.bind(this.filterHandler));
-		this.on("filters:reset", this.filterHandler.resetFilters.bind(this.filterHandler));
-		this.on("modalOpened", this.handleModalOpened);
+		this.on("filters:reset", () => this.filterHandler.resetFilters(["sort", "weekly_sends", "monthly_growth"]));
+		this.on("filters:categories-reset", () => this.filterHandler.resetFilters(["categories"]));
+		this.on("filters:languages-reset", () => this.filterHandler.resetFilters(["languages"]));
+		this.on("modal:opened", this.handleModalOpened);
 
 		this.initApp();
 	}
@@ -57,10 +58,6 @@ export class UIHandler extends EventEmitter {
 		if (rangeUsers && rangeUsersMinInput && rangeUsersMaxInput) {
 			new RangeSlider(rangeUsers, rangeUsersMinInput, rangeUsersMaxInput);
 		}
-	}
-
-	private handleSubMenuToggled(addButton: HTMLElement) {
-		console.log("Подменю переключено", addButton);
 	}
 
 	private handleModalOpened(modalLink: HTMLElement) {
