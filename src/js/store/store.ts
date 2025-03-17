@@ -83,7 +83,7 @@ class Store {
 		} catch (error) {
 			this.state.error = error instanceof Error ? error.message : String(error);
 
-			this.events.emit("error", this.state.error);
+			this.events.emit("cards:loading-error", this.state.error);
 		} finally {
 			this.state.loading = false;
 			this.events.emit("loading:end");

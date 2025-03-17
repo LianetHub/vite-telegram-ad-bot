@@ -11,8 +11,8 @@ import { ChangeHandler } from "./changeHandler";
 import { EmptyState } from "../components/Empty";
 
 export class UIHandler extends EventEmitter {
-	private clickHandler: ClickHandler;
-	private changeHandler: ChangeHandler;
+	public clickHandler: ClickHandler;
+	public changeHandler: ChangeHandler;
 	private cartHandler: CartHandler;
 	private filterHandler: FilterHandler;
 
@@ -60,6 +60,7 @@ export class UIHandler extends EventEmitter {
 
 		store.subscribe("cards:loaded", this.renderCards.bind(this));
 		store.subscribe("cards:loaded", this.cartHandler.handleCartUpdate.bind(this.cartHandler));
+		store.subscribe("cards:loading-error", this.showErrorLoading.bind(this));
 
 		store.subscribe("cart:update", this.cartHandler.handleCartUpdate.bind(this.cartHandler));
 		store.subscribe("cart:totalUpdated", this.cartHandler.updateCartTotal.bind(this.cartHandler));
@@ -126,7 +127,6 @@ export class UIHandler extends EventEmitter {
 
 		if (!appWrapper) return;
 		appWrapper.innerHTML = "";
-		console.log();
 
 		const emptyState = new EmptyState({
 			message: "Нет результатов",
@@ -134,6 +134,22 @@ export class UIHandler extends EventEmitter {
 			buttonType: "button",
 			buttonActionOrLink: "clear-all-filters",
 			buttonText: "Очистить фильтры",
+		});
+
+		appWrapper.appendChild(emptyState.render());
+	}
+
+	private showErrorLoading() {
+		const appWrapper = document.querySelector("#app");
+
+		if (!appWrapper) return;
+		appWrapper.innerHTML = "";
+
+		const emptyState = new EmptyState({
+			imageType: "empty",
+			message: "Ошибка загрузки",
+			subtitle: "Попробуйте позднее",
+			showButton: false,
 		});
 
 		appWrapper.appendChild(emptyState.render());

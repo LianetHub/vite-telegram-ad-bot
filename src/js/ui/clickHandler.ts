@@ -3,10 +3,10 @@ import { toggleSubMenu, toggleCategories, hideCategories, categoriesUIUpdate, cr
 import { store } from "../store/store";
 
 export class ClickHandler {
-	private body: HTMLElement;
+	// private body: HTMLElement;
 
 	constructor(private eventEmitter: EventEmitter) {
-		this.body = document.body;
+		// this.body = document.body;
 		this.init();
 	}
 

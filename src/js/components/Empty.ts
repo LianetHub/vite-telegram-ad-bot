@@ -5,6 +5,7 @@ interface EmptyStateOptions {
 	buttonType?: "button" | "link";
 	buttonActionOrLink?: string;
 	buttonText?: string;
+	imageType?: "egg" | "empty" | "glasses" | "lupe";
 }
 
 export class EmptyState {
@@ -14,6 +15,7 @@ export class EmptyState {
 	private buttonType: "button" | "link";
 	private buttonActionOrLink: string;
 	private buttonText: string;
+	private imageType: string;
 
 	constructor(options: EmptyStateOptions) {
 		this.message = options.message;
@@ -22,6 +24,7 @@ export class EmptyState {
 		this.buttonType = options.buttonType ?? "button";
 		this.buttonActionOrLink = options.buttonActionOrLink ?? "";
 		this.buttonText = options.buttonText ?? "Перезагрузить";
+		this.imageType = options.imageType ?? "lupe";
 	}
 
 	render(): HTMLElement {
@@ -32,7 +35,7 @@ export class EmptyState {
 		picture.classList.add("picture");
 
 		const img = document.createElement("img");
-		img.src = "img/duck/lupe.gif";
+		img.src = `img/duck/${this.imageType}.gif`;
 		img.alt = "Duck";
 
 		picture.appendChild(img);
