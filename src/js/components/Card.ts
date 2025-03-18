@@ -22,6 +22,41 @@ export class Card {
 			this.isInCart = true;
 		}
 
+		const sortedLanguages = Object.entries(this.data.users_per_lang).sort(([, a], [, b]) => b.count - a.count);
+
+		const countriesList = sortedLanguages
+			.map(([lang, { count }]) => {
+				const flagSrc = `/img/flags/${lang}.svg`;
+				return `<li class="card__countries-item caption-lg">
+                <img src="${flagSrc}" alt="Флаг"> ${formatNumber(count)}
+              </li>`;
+			})
+			.slice(0, 3)
+			.join("");
+
+		const countriesSide =
+			sortedLanguages.length > 3
+				? `<div class="card__countries-side">
+          <button class="card__countries-more footnote"> 
+              Ещё ${sortedLanguages.length - 3} 
+              <span class="card__countries-icon">
+                <svg><use xlink:href="/img/sprite.svg#icon-chevron-down"></use></svg>
+              </span>
+          </button>
+          <ul class="card__countries-list">
+            ${sortedLanguages
+				.slice(3)
+				.map(([lang, { count }]) => {
+					const flagSrc = `/img/flags/${lang}.svg`;
+					return `<li class="card__countries-item caption-lg">
+                    <img src="${flagSrc}" alt="Флаг"> ${formatNumber(count)}
+                  </li>`;
+				})
+				.join("")}
+          </ul>
+        </div>`
+				: "";
+
 		cardElement.innerHTML = `
         <div class="card__header">
           <div class="card__thumb">
@@ -46,13 +81,9 @@ export class Card {
           <div class="card__row">
             <div class="card__countries">
               <ul class="card__countries-list">
-              
+               ${countriesList}
               </ul>
-              <div class="card__countries-side">
-                <button class="card__countries-more footnote"> Ещё 2
-                  <svg><use xlink:href="/img/sprite.svg#icon-chevron-down"></use></svg>
-                </button>
-              </div>
+              ${countriesSide}
             </div>
             <div class="card__actions">
               <div class="card__price title-sm fw-semibold">${addThousandSeparator(this.data.total_price)} ${this.data.currency}</div>

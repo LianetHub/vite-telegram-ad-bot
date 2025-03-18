@@ -116,14 +116,13 @@ export class ClickHandler {
 			clearCartBtn.classList.add("hidden");
 		}
 
-		// Open modal
+		// ================= Modal Logic ==============
 		const modalLink = target.closest("[data-modal]") as HTMLElement | null;
 		if (modalLink) {
 			openModal(modalLink);
 			this.eventEmitter.emit("modal:opened", modalLink);
 		}
 
-		// Close modal
 		const closeModalButton = target.closest("[data-modal-close]") as HTMLElement | null;
 		if (closeModalButton) {
 			closeModal();
@@ -134,6 +133,15 @@ export class ClickHandler {
 		if (modal && !target.closest(".modal__wrapper")) {
 			closeModal();
 			this.eventEmitter.emit("modal:closed", modal);
+		}
+		// ================= Modal Logic ==============
+
+		// Show more Card countries
+
+		const moreCardCountriesBtn = target.closest(".card__countries-more") as HTMLElement | null;
+		if (moreCardCountriesBtn) {
+			moreCardCountriesBtn?.classList.toggle("active");
+			moreCardCountriesBtn?.nextElementSibling?.classList.toggle("visible");
 		}
 	}
 }

@@ -13,6 +13,7 @@ import {
 } from "../api/types";
 
 export interface StoreState {
+	fullData: ApiResponse["data"];
 	cards: ApiResponse["data"];
 	loading: boolean;
 	error: string | null;
@@ -26,6 +27,7 @@ export interface StoreState {
 
 class Store {
 	private state: StoreState = {
+		fullData: [],
 		cards: [],
 		loading: false,
 		error: null,
@@ -34,6 +36,7 @@ class Store {
 	};
 
 	private events = new EventEmitter();
+	init: boolean;
 
 	private loadCart() {
 		const storedCart = sessionStorage.getItem("cart");
@@ -46,6 +49,7 @@ class Store {
 
 	constructor() {
 		this.loadCart();
+		this.init = true;
 	}
 
 	getState() {
@@ -73,12 +77,16 @@ class Store {
 			if ("error" in response) throw new Error(response.error);
 
 			this.state.cards = response.data;
+			if (this.init) {
+				this.state.fullData = response.data;
+				this.init = false;
+			}
 
 			if (this.state.cards.length === 0) {
 				console.log("Карточек с такими условиями нет");
 				this.events.emit("cards:empty");
 			} else {
-				console.log("Карточки загружены");
+				console.log("Карточки загружены", this.state.cards);
 				this.events.emit("cards:loaded");
 			}
 
@@ -177,7 +185,7 @@ class Store {
 
 	private updateTotalCart() {
 		const total = this.state.cart.reduce((sum, itemId) => {
-			const item = this.state.cards.find((card) => card.id === +itemId);
+			const item = this.state.fullData.find((card) => card.id === +itemId);
 
 			return item ? sum + item.total_price : sum;
 		}, 0);
