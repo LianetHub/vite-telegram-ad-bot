@@ -77,7 +77,7 @@ export class ClickHandler {
 			document.querySelector(".header__bottom")?.classList.remove("open-search");
 		}
 
-		const resetSearchBtn = document.querySelector(".header__search-reset") as HTMLElement | null;
+		const resetSearchBtn = target.closest(".header__search-reset") as HTMLElement | null;
 		if (resetSearchBtn) {
 			const searchInput = document.querySelector(".header__search .form__control") as HTMLInputElement;
 			searchInput.value = "";
