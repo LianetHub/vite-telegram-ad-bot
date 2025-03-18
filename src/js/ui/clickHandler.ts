@@ -1,5 +1,15 @@
 import { EventEmitter } from "../store/EventEmitter";
-import { toggleSubMenu, toggleCategories, hideCategories, categoriesUIUpdate, createRippleEffect, openModal, closeModal, languageUIUpdate } from "../utils/uiActions";
+import {
+	toggleSubMenu,
+	toggleCategories,
+	hideCategories,
+	categoriesUIUpdate,
+	createRippleEffect,
+	openModal,
+	closeModal,
+	languageUIUpdate,
+	toggleResetSearchBtn,
+} from "../utils/uiActions";
 import { store } from "../store/store";
 
 export class ClickHandler {
@@ -65,6 +75,14 @@ export class ClickHandler {
 		const searchBack = target.closest(".header__search-back") as HTMLElement | null;
 		if (searchBack) {
 			document.querySelector(".header__bottom")?.classList.remove("open-search");
+		}
+
+		const resetSearchBtn = document.querySelector(".header__search-reset") as HTMLElement | null;
+		if (resetSearchBtn) {
+			const searchInput = document.querySelector(".header__search .form__control") as HTMLInputElement;
+			searchInput.value = "";
+			toggleResetSearchBtn(searchInput.value);
+			this.eventEmitter.emit("filters:search-reset");
 		}
 
 		// Ripple-эффект

@@ -286,13 +286,41 @@
 
 		transition: width 0.3s ease, transform 0.3s ease;
 		.form__control {
-			display: none;
+			text-overflow: ellipsis;
 			height: rem(44);
+			padding-right: rem(44);
 		}
 	}
 	// .header__search-back
 	&__search-back {
 		display: none;
+	}
+	// .header__search-reset
+	&__search-reset {
+		position: absolute;
+		top: 50%;
+		right: 1rem;
+		width: rem(24);
+		height: rem(24);
+		min-height: 0;
+		border-radius: 50%;
+		background: transparent;
+		padding: 0;
+		color: #000;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 3;
+		& svg {
+			width: rem(20);
+			height: rem(20);
+			position: static;
+		}
+		transform: scale(0) translateY(-50%);
+		transform-origin: top center;
+		&.visible {
+			transform: scale(1) translateY(-50%);
+		}
 	}
 	// .header__search-input
 	&__search-input {

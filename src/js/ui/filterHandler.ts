@@ -67,6 +67,8 @@ export class FilterHandler {
 				return this.getSelectedString<LanguageCode>(filterName);
 			case "premium":
 				return this.getSelectedBoolean(filterName);
+			case "search":
+				return this.getFieldString(filterName);
 			default:
 				return undefined;
 		}
@@ -88,6 +90,12 @@ export class FilterHandler {
 		}
 
 		return undefined;
+	}
+
+	private getFieldString(name: string): string | undefined {
+		const fieldValue = document.querySelector<HTMLInputElement>(`input[name='${name}']`)?.value.toLowerCase();
+
+		return fieldValue || undefined;
 	}
 
 	private getSelectedBoolean(name: string): boolean {

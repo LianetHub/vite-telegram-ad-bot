@@ -90,6 +90,15 @@ export function languageUIUpdate(count: number) {
 	}
 }
 
+export function toggleResetSearchBtn(query: string) {
+	const resetSearchBtn = document.querySelector(".header__search-reset") as HTMLElement;
+	if (query.length > 0) {
+		resetSearchBtn?.classList.add("visible");
+	} else {
+		resetSearchBtn?.classList.remove("visible");
+	}
+}
+
 export function handleSegmentedChange(controls: HTMLElement, value: string) {
 	const buttons = controls?.querySelectorAll(".segmented-controls__item") as NodeListOf<HTMLElement>;
 	const runner = controls?.querySelector(".segmented-controls__runner") as HTMLElement;

@@ -8,11 +8,13 @@ import { CartHandler } from "./cartHandler";
 import { FilterHandler } from "./filterHandler";
 import { ClickHandler } from "./clickHandler";
 import { ChangeHandler } from "./changeHandler";
+import { InputHandler } from "./inputHandler";
 import { EmptyState } from "../components/Empty";
 
 export class UIHandler extends EventEmitter {
 	public clickHandler: ClickHandler;
 	public changeHandler: ChangeHandler;
+	public inputHandler: InputHandler;
 	private cartHandler: CartHandler;
 	private filterHandler: FilterHandler;
 
@@ -22,11 +24,13 @@ export class UIHandler extends EventEmitter {
 		this.filterHandler = new FilterHandler();
 		this.clickHandler = new ClickHandler(this);
 		this.changeHandler = new ChangeHandler(this);
+		this.inputHandler = new InputHandler(this);
 
 		this.on("filters:change", this.filterHandler.handleFilterChanged.bind(this.filterHandler));
 		this.on("filters:reset", () => this.filterHandler.resetFilters(["sort_by", "weekly_sends", "monthly_growth"]));
 		this.on("filters:categories-reset", () => this.filterHandler.resetFilters(["categories"]));
 		this.on("filters:languages-reset", () => this.filterHandler.resetFilters(["languages"]));
+		this.on("filters:search-reset", () => this.filterHandler.resetFilters(["search"]));
 		this.on("filters:reset-all", () =>
 			this.filterHandler.resetFilters([
 				"languages",

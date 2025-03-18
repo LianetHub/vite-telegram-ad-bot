@@ -20,7 +20,6 @@ export class ChangeHandler {
 			"weekly_sends",
 			"monthly_growth",
 			"categories",
-			"search",
 			"price_min",
 			"price_max",
 			"users_min",

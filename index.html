@@ -47,7 +47,7 @@
               </svg>
             </a>
           </div>
-          <div class="header__bottom">
+          <div class="header__bottom open-search">
             <div class="header__filter">
               <a href="#filter" data-modal class="header__filter btn btn-white btn-icon btn-xs">
                 <svg>
@@ -169,10 +169,15 @@
                   <use xlink:href="/img/sprite.svg#icon-arrow-left"></use>
                 </svg>
               </button>
-              <input type="text" name="search" class="form__control" placeholder="Поиск">
+              <input type="text" name="search" class="form__control" autocomplete="off" placeholder="Поиск">
               <button type="button" class="header__search-btn btn btn-white btn-icon btn-xs">
                 <svg>
                   <use xlink:href="/img/sprite.svg#icon-search"></use>
+                </svg>
+              </button>
+              <button type="button" class="header__search-reset btn">
+                <svg>
+                  <use xlink:href="/img/sprite.svg#icon-cross"></use>
                 </svg>
               </button>
               <button type="button" class="header__categories-close btn btn-icon btn-white btn-xs">
