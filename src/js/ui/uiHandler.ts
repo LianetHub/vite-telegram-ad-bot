@@ -10,6 +10,7 @@ import { ClickHandler } from "./clickHandler";
 import { ChangeHandler } from "./changeHandler";
 import { InputHandler } from "./inputHandler";
 import { EmptyState } from "../components/Empty";
+import { categoriesUIUpdate, toggleResetFilterBtn } from "../utils/uiActions";
 
 export class UIHandler extends EventEmitter {
 	public clickHandler: ClickHandler;
@@ -27,8 +28,13 @@ export class UIHandler extends EventEmitter {
 		this.inputHandler = new InputHandler(this);
 
 		this.on("filters:change", this.filterHandler.handleFilterChanged.bind(this.filterHandler));
-		this.on("filters:reset", () => this.filterHandler.resetFilters(["sort_by", "weekly_sends", "monthly_growth"]));
-		this.on("filters:categories-reset", () => this.filterHandler.resetFilters(["categories"]));
+
+		this.on("filters:reset", () => {
+			this.filterHandler.resetFilters(["sort_by", "weekly_sends", "monthly_growth"], () => toggleResetFilterBtn(["sort_by", "weekly_sends", "monthly_growth"]));
+		});
+		this.on("filters:categories-reset", () => {
+			this.filterHandler.resetFilters(["categories"], () => categoriesUIUpdate(0));
+		});
 		this.on("filters:languages-reset", () => this.filterHandler.resetFilters(["languages"]));
 		this.on("filters:search-reset", () => this.filterHandler.resetFilters(["search"]));
 		this.on("filters:reset-all", () =>

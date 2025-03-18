@@ -2,15 +2,19 @@ import { store } from "../store/store";
 import { Category, SortBy, WeeklySends, MonthlyGrowth, LanguageCode, PriceType, SearchRequest } from "../api/types";
 
 export class FilterHandler {
-	public handleFilterChanged(event: Event) {
+	public handleFilterChanged(event: Event, callback?: () => void) {
+		console.log("фильтр изменен");
+
 		const target = event.target as HTMLInputElement;
 		const filterName = target.name as keyof SearchRequest;
 
 		const filterValue = this.getFilterValue(filterName);
 
 		store.setFilters({ [filterName]: filterValue });
-		store.fetchCards();
-		this.toggleResetFilterBtn();
+
+		Promise.resolve(store.fetchCards()).then(() => {
+			if (callback) callback();
+		});
 	}
 
 	public resetFilters(
@@ -28,14 +32,17 @@ export class FilterHandler {
 			"monthly_growth",
 			"categories",
 			"search",
-		]
+		],
+		callback?: () => void
 	) {
 		console.log("Сброс фильтров: ", filterNames);
 		filterNames.forEach((filterName) => this.resetFilter(filterName));
 
 		store.setFilters(Object.fromEntries(filterNames.map((name) => [name, undefined])));
-		store.fetchCards();
-		this.toggleResetFilterBtn();
+
+		Promise.resolve(store.fetchCards()).then(() => {
+			if (callback) callback();
+		});
 	}
 
 	private resetFilter(filterName: string) {
@@ -47,7 +54,7 @@ export class FilterHandler {
 		switch (filterName) {
 			case "categories":
 				return this.getSelectedString<Category>(filterName);
-			case "sort":
+			case "sort_by":
 				return this.getSelectedFilter<SortBy>(filterName);
 			case "weekly_sends":
 				return this.getSelectedFilter<WeeklySends>(filterName);
@@ -107,17 +114,4 @@ export class FilterHandler {
 		const selectedInput = document.querySelector<HTMLInputElement>(`input[name='${filterName}']:checked`);
 		return selectedInput ? (selectedInput.value as T) : undefined;
 	}
-
-	private toggleResetFilterBtn() {
-		const resetFilterBtn = document.querySelector<HTMLElement>("[data-reset-filter]");
-		const isAnyFilterSelected = ["sort", "weekly_sends", "monthly_growth"].some(this.isFilterSelected);
-
-		if (resetFilterBtn) {
-			resetFilterBtn.classList.toggle("hide", !isAnyFilterSelected);
-		}
-	}
-
-	private isFilterSelected = (filterName: string): boolean => {
-		return document.querySelector(`input[name='${filterName}']:checked`) !== null;
-	};
 }

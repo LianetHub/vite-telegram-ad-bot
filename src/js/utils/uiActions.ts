@@ -74,7 +74,7 @@ export function categoriesUIUpdate(count: number) {
 		document.querySelector(".header__categories-reset")?.classList.add("visible");
 	} else {
 		document.querySelector(".header__categories-btn")?.classList.remove("has-quantity");
-		document.querySelector(".header__categories-reset")?.classList.remove("visible");
+		document.querySelector(".header__categories-reset")?.classList.remove("loading", "visible");
 	}
 }
 
@@ -121,5 +121,24 @@ export function handleSegmentedChange(controls: HTMLElement, value: string) {
 
 		activeButton.classList.add("active");
 		runner.style.left = `${activeIndex * 50}%`;
+	}
+}
+
+export function toggleResetFilterBtn(filterNames: string | string[]) {
+	const resetFilterBtn = document.querySelector<HTMLElement>("[data-reset-filter]");
+
+	const filters = Array.isArray(filterNames) ? filterNames : [filterNames];
+
+	const isAnyFilterSelected = filters.some(isFilterSelected);
+
+	if (!isAnyFilterSelected) {
+		resetFilterBtn?.classList.remove("loading");
+	}
+	if (resetFilterBtn) {
+		resetFilterBtn.classList.toggle("hide", !isAnyFilterSelected);
+	}
+
+	function isFilterSelected(filterName: string): boolean {
+		return document.querySelector(`input[name='${filterName}']:checked`) !== null;
 	}
 }

@@ -117,7 +117,9 @@
 	&.hide {
 		width: rem(52);
 		opacity: 0;
+		transition: all 0.25s ease-in-out;
 	}
+
 	width: 100%;
 	opacity: 1;
 	&.btn {
@@ -138,11 +140,13 @@
 		left: 0;
 		right: 0;
 		padding: 0.63rem 1.5rem 1.5rem;
-		background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.5) 20%, rgba(255, 255, 255, 0.9) 50%);
 		display: flex;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.5) 20%, rgba(255, 255, 255, 0.9) 50%);
 		&:has(.complete-btn.hide) {
-			opacity: 0;
-			visibility: hidden;
+			// opacity: 0;
+			// visibility: hidden;
+			background: transparent;
+			pointer-events: none;
 		}
 	}
 	&__price {

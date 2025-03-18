@@ -1,5 +1,5 @@
 import { EventEmitter } from "../store/EventEmitter";
-import { updateCheckboxQuantity, categoriesUIUpdate, languageUIUpdate, handleSegmentedChange } from "../utils/uiActions";
+import { updateCheckboxQuantity, categoriesUIUpdate, languageUIUpdate, handleSegmentedChange, toggleResetFilterBtn } from "../utils/uiActions";
 
 export class ChangeHandler {
 	constructor(private eventEmitter: EventEmitter) {
@@ -52,6 +52,10 @@ export class ChangeHandler {
 			const segmentedControls = target.closest(".segmented-controls") as HTMLElement;
 			handleSegmentedChange(segmentedControls, target.value);
 			this.eventEmitter.emit("audienceChanged", target.value);
+		}
+
+		if (["sort_by", "weekly_sends", "monthly_growth"].includes(target.name)) {
+			toggleResetFilterBtn([target.name]);
 		}
 	}
 }

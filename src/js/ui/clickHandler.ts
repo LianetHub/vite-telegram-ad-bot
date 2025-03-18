@@ -47,7 +47,7 @@ export class ClickHandler {
 		const categoriesResetBtn = target.closest(".header__categories-reset") as HTMLElement | null;
 		if (categoriesResetBtn) {
 			this.eventEmitter.emit("filters:categories-reset");
-			categoriesUIUpdate(0);
+			categoriesResetBtn.classList.add("loading");
 		}
 
 		const languagesResetBtn = target.closest("[data-reset-languages]") as HTMLElement | null;
@@ -63,6 +63,14 @@ export class ClickHandler {
 			languageUIUpdate(0);
 		}
 
+		// clear cart
+		const resetFilterBtn = target.closest("[data-reset-filter]") as HTMLElement | null;
+		if (resetFilterBtn) {
+			resetFilterBtn.classList.add("loading");
+			this.eventEmitter.emit("filters:reset");
+		}
+
+		// search
 		const searchBtn = target.closest(".header__search-btn") as HTMLElement | null;
 		if (searchBtn) {
 			document.querySelector(".header__bottom")?.classList.add("open-search");
@@ -106,12 +114,6 @@ export class ClickHandler {
 		if (clearCartBtn) {
 			store.clearCart();
 			clearCartBtn.classList.add("hidden");
-		}
-
-		// clear cart
-		const resetFilterBtn = target.closest("[data-reset-filter]") as HTMLElement | null;
-		if (resetFilterBtn) {
-			this.eventEmitter.emit("filters:reset");
 		}
 
 		// Open modal

@@ -64,6 +64,7 @@ class Store {
 
 	async fetchCards(params: SearchRequest = this.state.filters): Promise<void> {
 		this.state.loading = true;
+		console.log("Начало загрузки");
 		this.events.emit("loading:start");
 
 		try {
@@ -74,8 +75,10 @@ class Store {
 			this.state.cards = response.data;
 
 			if (this.state.cards.length === 0) {
+				console.log("Карточек с такими условиями нет");
 				this.events.emit("cards:empty");
 			} else {
+				console.log("Карточки загружены");
 				this.events.emit("cards:loaded");
 			}
 
@@ -83,6 +86,7 @@ class Store {
 		} catch (error) {
 			this.state.error = error instanceof Error ? error.message : String(error);
 
+			console.log("Ошибка загрузки", this.state.error);
 			this.events.emit("cards:loading-error", this.state.error);
 		} finally {
 			this.state.loading = false;
