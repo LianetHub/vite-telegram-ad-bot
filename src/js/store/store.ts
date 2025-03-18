@@ -25,6 +25,11 @@ export interface StoreState {
 	total?: number;
 }
 
+// export type CartState = {
+// 	id: number;
+// 	sending_count?: number;
+// };
+
 class Store {
 	private state: StoreState = {
 		fullData: [],
@@ -173,6 +178,9 @@ class Store {
 		this.saveCart();
 		this.updateTotalCart();
 		this.events.emit("cart:update");
+		if (this.state.cart.length === 0) {
+			this.clearCart();
+		}
 	}
 
 	toggleToCart(itemId: string) {
@@ -191,7 +199,7 @@ class Store {
 		}, 0);
 
 		this.state.total = total;
-		this.events.emit("cart:totalUpdated");
+		this.events.emit("cart:update");
 	}
 
 	isInCart(itemId: number): boolean {

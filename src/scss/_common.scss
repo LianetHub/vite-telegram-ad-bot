@@ -235,6 +235,9 @@ body {
 	&__time {
 		display: flex;
 		align-items: center;
+		padding: rem(4) rem(8);
+		gap: 0;
+		min-height: 0;
 		& svg {
 			margin: -0.25rem;
 			padding-top: 0.125rem;
@@ -271,6 +274,7 @@ body {
 	// .card__countries-side
 	&__countries-side {
 		position: relative;
+		align-self: center;
 		.card__countries-list {
 			.card__countries-item {
 				&:not(:last-child) {
@@ -315,6 +319,12 @@ body {
 		align-items: center;
 		flex-shrink: 0;
 		white-space: nowrap;
+		padding: rem(4) rem(8);
+		font-size: 0.8125rem;
+		min-height: 0;
+		gap: 0;
+		font-weight: 400;
+		border-radius: 0.25rem;
 		& svg {
 			width: 1rem;
 			height: 1rem;

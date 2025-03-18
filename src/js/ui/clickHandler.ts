@@ -106,7 +106,13 @@ export class ClickHandler {
 			cartBtn.classList.toggle("active");
 			const card = cartBtn.closest(".card") as HTMLElement;
 			store.toggleToCart(card.id);
-			document.querySelector("[data-clear-cart]")?.classList.remove("hidden");
+		}
+		// remove from cart
+		const cartRemoveBtn = target.closest(".card__remove") as HTMLButtonElement | null;
+		if (cartRemoveBtn) {
+			const card = cartRemoveBtn.closest(".card") as HTMLElement;
+			store.removeFromCart(card.id);
+			card.remove();
 		}
 
 		// clear cart
@@ -136,12 +142,21 @@ export class ClickHandler {
 		}
 		// ================= Modal Logic ==============
 
-		// Show more Card countries
+		// ================= Card Logic ===============
 
-		const moreCardCountriesBtn = target.closest(".card__countries-more") as HTMLElement | null;
+		const moreCardCountriesBtn = target.closest(".card__countries-more") as HTMLButtonElement | null;
 		if (moreCardCountriesBtn) {
 			moreCardCountriesBtn?.classList.toggle("active");
 			moreCardCountriesBtn?.nextElementSibling?.classList.toggle("visible");
 		}
+
+		const cartTimeBtn = target.closest(".card__time") as HTMLButtonElement | null;
+		if (cartTimeBtn) {
+			const currentCard = cartTimeBtn.closest(".card");
+			const currentCardId = currentCard?.id;
+			// this.eventEmitter.emit("filters:search-reset", currentCardId);
+		}
+
+		// ================= Card Logic ===============
 	}
 }

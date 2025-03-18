@@ -73,7 +73,6 @@ export class UIHandler extends EventEmitter {
 		store.subscribe("cards:loading-error", this.showErrorLoading.bind(this));
 
 		store.subscribe("cart:update", this.cartHandler.handleCartUpdate.bind(this.cartHandler));
-		store.subscribe("cart:totalUpdated", this.cartHandler.updateCartTotal.bind(this.cartHandler));
 		store.subscribe("cart:cleared", this.cartHandler.clearCartList.bind(this.cartHandler));
 	}
 

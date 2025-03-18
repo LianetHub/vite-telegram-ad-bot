@@ -1,11 +1,21 @@
 import { CardProps } from "../api/types.ts";
 import { Card } from "./Card.ts";
 
+type CardType = "default" | "cart";
+
 export class CardList {
 	private cards: Card[];
+	private cardType: CardType;
 
-	constructor(cardsData: CardProps[]) {
-		this.cards = cardsData.map((data) => new Card(data));
+	constructor(cardsData: CardProps[], cardType: CardType = "default") {
+		this.cardType = cardType;
+		this.cards = cardsData.map((data) => {
+			return new Card({
+				data: data,
+				hasSending: this.cardType === "cart",
+				hasRemoveButton: this.cardType === "cart",
+			});
+		});
 	}
 
 	render(): HTMLElement {
