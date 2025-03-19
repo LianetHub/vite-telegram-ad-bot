@@ -169,6 +169,7 @@ body {
 	}
 	// .card__app
 	&__app {
+		flex: 1 1 auto;
 	}
 	// .card__app-name
 	&__app-name {
@@ -178,7 +179,7 @@ body {
 	}
 	// .card__body
 	&__body {
-		margin-top: 1.25rem;
+		margin-top: 1rem;
 	}
 	// .card__row
 	&__row {
@@ -305,8 +306,10 @@ body {
 			}
 			&:has(.card__countries-item:nth-child(7)) {
 				grid-template-columns: repeat(3, 1fr);
-				grid-template-rows: auto;
-				grid-auto-flow: row;
+				grid-template-rows: repeat(9, 1fr);
+				// grid-template-rows: auto;
+				// grid-auto-flow: row;
+				grid-auto-flow: column;
 			}
 			box-shadow: 0 0 rem(6) 0 rgba(0, 0, 0, 0.08);
 			padding: 0.75rem;

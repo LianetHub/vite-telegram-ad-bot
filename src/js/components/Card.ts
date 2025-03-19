@@ -77,7 +77,7 @@ export class Card {
               </svg>
             </button>
           </div>`
-			: `<button type="button" class="card__time subtitle fw-medium">
+			: `<button type="button" class="card__time subtitle fw-medium btn btn-white">
             <span class="card__time-value">${formatDate(this.data.next_available_date)}</span>
             <svg><use xlink:href="/img/sprite.svg#icon-chevron-right"></use></svg>
           </button>`;
@@ -128,7 +128,7 @@ export class Card {
             ${countriesSide}
           </div>
           <div class="card__actions">
-            <div class="card__price title-sm fw-semibold">${addThousandSeparator(this.data.total_price)} ${this.data.currency}</div>
+            <div class="card__price title-sm fw-semibold">${addThousandSeparator(this.data.total_price)}&nbsp;${this.data.currency === "RUB" ? "₽" : this.data.currency}</div>
             ${actionButtonBlock}
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { CardList } from "../components/CardList";
 import { store } from "../store/store";
 import { addThousandSeparator } from "../utils/addThousandSeparator";
-import { formatDate } from "../utils/formatDate";
+
 import { formatNumber } from "../utils/formatNumber";
 
 interface CartItem {

@@ -145,15 +145,29 @@ export class ClickHandler {
 		// ================= Card Logic ===============
 
 		const moreCardCountriesBtn = target.closest(".card__countries-more") as HTMLButtonElement | null;
+		const allCardLists = document.querySelectorAll(".card__countries-list.visible");
+		const allActiveButtons = document.querySelectorAll(".card__countries-more.active");
+
 		if (moreCardCountriesBtn) {
-			moreCardCountriesBtn?.classList.toggle("active");
-			moreCardCountriesBtn?.nextElementSibling?.classList.toggle("visible");
+			const currentList = moreCardCountriesBtn.nextElementSibling as HTMLElement | null;
+			const isAlreadyOpen = currentList?.classList.contains("visible");
+
+			allCardLists.forEach((list) => list.classList.remove("visible"));
+			allActiveButtons.forEach((btn) => btn.classList.remove("active"));
+
+			if (!isAlreadyOpen) {
+				moreCardCountriesBtn.classList.add("active");
+				currentList?.classList.add("visible");
+			}
+		} else {
+			allCardLists.forEach((list) => list.classList.remove("visible"));
+			allActiveButtons.forEach((btn) => btn.classList.remove("active"));
 		}
 
 		const cartTimeBtn = target.closest(".card__time") as HTMLButtonElement | null;
 		if (cartTimeBtn) {
-			const currentCard = cartTimeBtn.closest(".card");
-			const currentCardId = currentCard?.id;
+			// const currentCard = cartTimeBtn.closest(".card");
+			// const currentCardId = currentCard?.id;
 			// this.eventEmitter.emit("filters:search-reset", currentCardId);
 		}
 
