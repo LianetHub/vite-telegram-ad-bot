@@ -80,7 +80,10 @@ export class UIHandler extends EventEmitter {
 		const calendarElement = document.getElementById("datepicker") as HTMLElement;
 
 		if (calendarElement) {
-			const calendar = new Calendar("datepicker");
+			const calendar = new Calendar(calendarElement, {
+				range: false,
+				initialDate: new Date(),
+			});
 			console.log(calendar);
 		}
 	}
@@ -139,10 +142,7 @@ export class UIHandler extends EventEmitter {
 
 		const emptyState = new EmptyState({
 			message: "Нет результатов",
-			showButton: true,
-			buttonType: "button",
-			buttonActionOrLink: "clear-all-filters",
-			buttonText: "Очистить фильтры",
+			showButton: false,
 		});
 
 		appWrapper.appendChild(emptyState.render());

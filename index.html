@@ -47,7 +47,7 @@
               </svg>
             </a>
           </div>
-          <div class="header__bottom">
+          <div class="header__bottom ">
             <div class="header__filter">
               <a href="#filter" data-modal class="header__filter btn btn-white btn-icon btn-xs">
                 <svg>
@@ -169,7 +169,7 @@
                   <use xlink:href="/img/sprite.svg#icon-arrow-left"></use>
                 </svg>
               </button>
-              <input type="text" name="search" class="form__control" autocomplete="off" placeholder="Поиск">
+              <input type="text" name="search" class="form__control" inputmode="text" placeholder="Поиск">
               <button type="button" class="header__search-btn btn btn-white btn-icon btn-xs">
                 <svg>
                   <use xlink:href="/img/sprite.svg#icon-search"></use>
@@ -207,7 +207,6 @@
       </a>
 
       <div id="cart" class="modal modal-xl ">
-
         <div class="modal__wrapper">
           <div class="cart">
             <div class="cart__header">
@@ -309,207 +308,222 @@
                   <input type="checkbox" name="languages" value="ru" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/russian.svg" alt="Флаг">
-                    </span> Русский </span>
+                      <img src="img/flags/ru.svg" alt="Флаг">
+                    </span> Русский
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="en" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/english.svg" alt="Флаг">
-                    </span> English </span>
+                      <img src="img/flags/en.svg" alt="Флаг">
+                    </span> English
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="ar" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/arabic.svg" alt="Флаг">
-                    </span> Arabic </span>
+                      <img src="img/flags/ar.svg" alt="Флаг">
+                    </span> Arabic
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="be" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/belarusian.svg" alt="Флаг">
-                    </span> Belarusian </span>
+                      <img src="img/flags/be.svg" alt="Флаг">
+                    </span> Belarusian
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="ca" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/catalan.svg" alt="Флаг">
-                    </span> Catalan </span>
+                      <img src="img/flags/ca.svg" alt="Флаг">
+                    </span> Catalan
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="hr" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/croatian.svg" alt="Флаг">
-                    </span> Croatian </span>
+                      <img src="img/flags/hr.svg" alt="Флаг">
+                    </span> Croatian
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="cs" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/czech.svg" alt="Флаг">
-                    </span> Czech </span>
+                      <img src="img/flags/cs.svg" alt="Флаг">
+                    </span> Czech
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="nl" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/nederlands.svg" alt="Флаг">
-                    </span> Nederlands </span>
+                      <img src="img/flags/nl.svg" alt="Флаг">
+                    </span> Nederlands
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="fi" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/finnish.svg" alt="Флаг">
-                    </span> Finnish </span>
+                      <img src="img/flags/fi.svg" alt="Флаг">
+                    </span> Finnish
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="fr" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/french.svg" alt="Флаг">
-                    </span> French </span>
+                      <img src="img/flags/fr.svg" alt="Флаг">
+                    </span> French
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="hu" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/hungarian.svg" alt="Флаг">
-                    </span> Hungarian </span>
+                      <img src="img/flags/hu.svg" alt="Флаг">
+                    </span> Hungarian
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="id" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/indonesian.svg" alt="Флаг">
-                    </span> Indonesian </span>
+                      <img src="img/flags/id.svg" alt="Флаг">
+                    </span> Indonesian
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="it" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/italian.svg" alt="Флаг">
-                    </span> Italian </span>
+                      <img src="img/flags/it.svg" alt="Флаг">
+                    </span> Italian
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="kk" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/kazakh.svg" alt="Флаг">
-                    </span> Kazakh </span>
+                      <img src="img/flags/kk.svg" alt="Флаг">
+                    </span> Kazakh
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="ko" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/korean.svg" alt="Флаг">
-                    </span> Korean </span>
+                      <img src="img/flags/ko.svg" alt="Флаг">
+                    </span> Korean
+                  </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="ms" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/malay.svg" alt="Флаг">
+                      <img src="img/flags/ms.svg" alt="Флаг">
                     </span> Malay </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="he" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/hebrew.svg" alt="Флаг">
+                      <img src="img/flags/he.svg" alt="Флаг">
                     </span> Hebrew </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="nb" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/norwegian.svg" alt="Флаг">
+                      <img src="img/flags/nb.svg" alt="Флаг">
                     </span> Norwegian </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="fa" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/persian.svg" alt="Флаг">
+                      <img src="img/flags/fa.svg" alt="Флаг">
                     </span> Persian </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="pl" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/polish.svg" alt="Флаг">
+                      <img src="img/flags/pl.svg" alt="Флаг">
                     </span> Polish </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="sr" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/serbian.svg" alt="Флаг">
+                      <img src="img/flags/sr.svg" alt="Флаг">
                     </span> Serbian </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="sk" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/slovak.svg" alt="Флаг">
+                      <img src="img/flags/sk.svg" alt="Флаг">
                     </span> Slovak </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="sv" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/swedish.svg" alt="Флаг">
+                      <img src="img/flags/sv.svg" alt="Флаг">
                     </span> Swedish </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="tr" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/turkish.svg" alt="Флаг">
+                      <img src="img/flags/tr.svg" alt="Флаг">
                     </span> Turkish </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="uk" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/ukrainian.svg" alt="Флаг">
+                      <img src="img/flags/uk.svg" alt="Флаг">
                     </span> Ukrainian </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="uz" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
-                      <img src="img/flags/uzbek.svg" alt="Флаг">
+                      <img src="img/flags/uz.svg" alt="Флаг">
                     </span> Uzbek </span>
                 </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="languages" value="others" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <svg>
+                        <use xlink:href="img/sprite.svg#icon-language"></use>
+                      </svg>
+                    </span> Others </span>
+                </label>
               </div>
-              <label class="language__item input-label">
-                <input type="checkbox" name="languages" value="others" class="input-label__control hidden" hidden>
-                <span class="input-label__field">
-                  <span class="input-label__icon">
-                    <svg>
-                      <use xlink:href="img/sprite.svg#icon-language"></use>
-                    </svg>
-                  </span> Others </span>
-              </label>
             </div>
-            <div class="language__bottom">
-              <div class="language__bottom-icon">
+            <label class="language__bottom btn btn-white">
+              <span class="language__bottom-icon">
                 <svg>
                   <use xlink:href="img/sprite.svg#icon-crown"></use>
                 </svg>
-              </div>
-              <div class="language__bottom-text subtitle fw-semibold">Telegram Premium</div>
-              <label class="switch">
+              </span>
+              <span class="language__bottom-text subtitle fw-semibold">Telegram Premium</span>
+              <span class="switch">
                 <input type="checkbox" name="premium" class="switch__input hidden" hidden>
                 <span class="switch__field"></span>
-              </label>
-            </div>
+              </span>
+            </label>
             <div class="complete-btn__wrapper">
               <button data-language-submit data-modal-close class="complete-btn btn btn-primary btn-sm hide">Показать</button>
             </div>
@@ -517,7 +531,7 @@
         </div>
       </div>
 
-      <div id="filter" class="modal modal-lg">
+      <div id="filter" class="modal modal-lg ">
         <div class="modal__wrapper">
           <button type="button" data-modal-close class="modal__back">
             <svg>
@@ -530,7 +544,7 @@
                 <h2 class="filter__title title-md fw-semibold">Сортировка</h2>
                 <div class="filter__sort">
                   <label class="radio-btn">
-                    <input type="radio" name="sort_by" value="most_popular" class="radio-btn__input hidden" hidden>
+                    <input type="radio" name="sort_by" checked value="most_popular" class="radio-btn__input hidden" hidden>
                     <span class="radio-btn__field">По популярности</span>
                   </label>
                   <label class="radio-btn">
@@ -628,7 +642,7 @@
         </div>
       </div>
 
-      <div id="select-date" class="modal">
+      <div id="select-date" class="modal ">
         <div class="modal__wrapper">
           <div class="modal__header">
             <div class="resize-indicator"></div>
@@ -661,8 +675,8 @@
             </div>
           </div>
           <div class="modal__body">
-            <!-- <input type="text" id="datepicker" readonly> -->
-            <div class="calendar">
+            <div class="calendar" data-date="01/25/2020" id="datepicker"></div>
+            <!-- <div class="calendar">
               <div class="calendar__block">
                 <div class="calendar__month">Октябрь</div>
                 <div class="calendar__body">
@@ -743,7 +757,7 @@
                   <div class="calendar__item"></div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

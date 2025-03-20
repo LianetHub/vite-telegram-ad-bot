@@ -113,6 +113,10 @@ body {
 		z-index: 1;
 		flex: 1 1 auto;
 	}
+	&:has(.empty) {
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0.4) 40%, rgba(255, 255, 255, 0.6) 90%),
+			linear-gradient(0deg, rgba(8, 8, 26, 0.02) 0%, rgba(8, 8, 26, 0.02) 100%), #fff;
+	}
 }
 
 .cards {
@@ -252,7 +256,8 @@ body {
 	&__countries {
 		display: flex;
 		align-items: center;
-		gap: 1rem;
+		justify-content: space-between;
+		gap: 0.5rem;
 	}
 	// .card__countries-list
 	&__countries-list {
@@ -349,7 +354,10 @@ body {
 	&__actions {
 		display: flex;
 		align-items: center;
+		justify-content: flex-end;
+		flex-wrap: wrap;
 		gap: 0.5rem;
+
 		&:has(.card__btn) {
 			align-self: flex-end;
 		}
@@ -357,6 +365,7 @@ body {
 	// .card__price
 	&__price {
 		text-align: right;
+		flex-shrink: 0;
 	}
 	// .card__btn
 	&__btn {

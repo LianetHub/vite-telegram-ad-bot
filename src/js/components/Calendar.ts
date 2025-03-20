@@ -1,119 +1,65 @@
+import { Datepicker } from "vanillajs-datepicker";
+import "../../scss/_datepicker.scss";
+
+interface CalendarOptions {
+	range: boolean; // Возможность выбора диапазона
+	initialDate: Date; // Начальная дата для отображения
+}
+
 export class Calendar {
-	private calendarElement: HTMLElement;
-	private inputElement: HTMLInputElement | null;
-	private static months = [
-		{ name: "Январь", days: [] },
-		{ name: "Февраль", days: [] },
-		{ name: "Март", days: [] },
-		{ name: "Апрель", days: [] },
-		{ name: "Май", days: [] },
-		{ name: "Июнь", days: [] },
-		{ name: "Июль", days: [] },
-		{ name: "Август", days: [] },
-		{ name: "Сентябрь", days: [] },
-		{ name: "Октябрь", days: [] },
-		{ name: "Ноябрь", days: [] },
-		{ name: "Декабрь", days: [] },
-	];
+	private datepicker: Datepicker;
+	private container: HTMLElement;
 
-	constructor(inputId: string) {
-		this.inputElement = document.getElementById(inputId) as HTMLInputElement;
-		this.calendarElement = this.createCalendar();
-		this.inputElement.parentNode?.appendChild(this.calendarElement);
+	constructor(container: HTMLElement, options: CalendarOptions) {
+		this.container = container;
+
+		// Инициализация календаря
+		this.datepicker = new Datepicker(container, {
+			container: ".calendar",
+			autohide: false,
+			format: "dd.mm.yyyy", // формат даты
+			todayButton: false, // скрытие кнопки "Сегодня"
+			clearButton: false, // скрытие кнопки очистки
+			daysOfWeekDisabled: [], // нет отключенных дней недели
+			title: undefined, // отключение заголовка с месяцем (для кастомного отображения)
+			weekStart: 1, // начало недели с понедельника
+			// range: options.range, // возможность выбора диапазона
+			// Обработчик на изменение даты (если нужно)
+			// onSelect: (selectedDate: Date) => {
+			// 	this.onDateSelect(selectedDate);
+			// },
+		});
+
+		// Устанавливаем начальную дату
+		this.setMonthForDate(options.initialDate);
 	}
 
-	private createCalendar(): HTMLElement {
-		const calendarContainer = document.createElement("div");
-		calendarContainer.classList.add("calendar");
+	private onDateSelect(date: Date) {
+		// Обработчик выбора даты
+		console.log("Selected date:", date);
+	}
 
-		// Получаем текущий месяц и следующий
+	// Устанавливаем месяц на основе выбранной даты
+	public setMonthForDate(date: Date) {
+		const month = date.getMonth(); // Месяц из переданной даты
+		const year = date.getFullYear(); // Год из переданной даты
+
+		// Получаем текущую дату
 		const currentDate = new Date();
-		const currentMonthIndex = currentDate.getMonth();
-		const nextMonthIndex = (currentMonthIndex + 1) % 12;
+		currentDate.setFullYear(year);
+		currentDate.setMonth(month);
 
-		const monthsToRender = [currentMonthIndex, nextMonthIndex];
-
-		monthsToRender.forEach((monthIndex) => {
-			const monthBlock = this.createMonthBlock(monthIndex);
-			calendarContainer.appendChild(monthBlock);
-		});
-
-		return calendarContainer;
+		// Программно переключаем месяц, задаем новую дату
+		this.datepicker.setDate(currentDate, { autohide: true });
 	}
 
-	private createMonthBlock(monthIndex: number): HTMLElement {
-		const monthData = Calendar.months[monthIndex];
-		const monthBlock = document.createElement("div");
-		monthBlock.classList.add("calendar__block");
-
-		const monthName = document.createElement("div");
-		monthName.classList.add("calendar__month");
-		monthName.innerText = monthData.name;
-
-		const monthBody = document.createElement("div");
-		monthBody.classList.add("calendar__body");
-
-		const firstDay = new Date(new Date().getFullYear(), monthIndex, 1);
-		const lastDay = new Date(new Date().getFullYear(), monthIndex + 1, 0);
-
-		const daysInMonth = lastDay.getDate();
-		const firstDayOfWeek = firstDay.getDay();
-
-		// Заполнение пустыми днями до первого дня месяца
-		for (let i = 0; i < firstDayOfWeek; i++) {
-			monthBody.appendChild(this.createEmptyDay());
-		}
-
-		// Добавление всех дней месяца
-		for (let day = 1; day <= daysInMonth; day++) {
-			monthBody.appendChild(this.createDay(day));
-		}
-
-		monthBlock.appendChild(monthName);
-		monthBlock.appendChild(monthBody);
-
-		return monthBlock;
+	// Открыть календарь
+	public open() {
+		this.datepicker.show();
 	}
 
-	private createEmptyDay(): HTMLElement {
-		const emptyDay = document.createElement("div");
-		emptyDay.classList.add("calendar__item");
-		return emptyDay;
-	}
-
-	private createDay(day: number): HTMLElement {
-		const dayElement = document.createElement("div");
-		dayElement.classList.add("calendar__item");
-
-		const currentDate = new Date();
-		if (currentDate.getDate() === day && currentDate.getMonth() === new Date().getMonth()) {
-			dayElement.classList.add("today");
-		}
-
-		dayElement.innerText = day.toString();
-
-		dayElement.addEventListener("click", () => {
-			this.selectDay(day);
-		});
-
-		return dayElement;
-	}
-
-	private selectDay(day: number): void {
-		const selectedDay = this.calendarElement.querySelector(".calendar__item.selected");
-		if (selectedDay) {
-			selectedDay.classList.remove("selected");
-		}
-
-		const dayElements = this.calendarElement.querySelectorAll(".calendar__item");
-		dayElements.forEach((item) => {
-			if (item.innerHTML == day.toString()) {
-				item.classList.add("selected");
-			}
-		});
-
-		if (this.inputElement) {
-			this.inputElement.value = `${day}`;
-		}
+	// Закрыть календарь
+	public close() {
+		this.datepicker.hide();
 	}
 }

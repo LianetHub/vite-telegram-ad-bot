@@ -175,3 +175,15 @@ $dimensions: (
 // @function vwm($value) {
 // 	@return pxToVw($value, mobile);
 // }
+
+@mixin dp-header-button-common {
+	border-color: transparent;
+	font-weight: bold;
+}
+
+@mixin dp-footer-button-common {
+	flex: auto;
+	margin: calc(0.375rem - 1px) 0.375rem;
+	border-radius: $dp-border-radius-small;
+	font-size: $dp-font-size-small;
+}

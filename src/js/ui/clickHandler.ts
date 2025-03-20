@@ -70,28 +70,33 @@ export class ClickHandler {
 			this.eventEmitter.emit("filters:reset");
 		}
 
-		// search
+		// ========== Search Logic =============
 		const searchBtn = target.closest(".header__search-btn") as HTMLElement | null;
+		const searchBottom = document.querySelector(".header__bottom") as HTMLElement | null;
+		const searchInput = document.querySelector(".header__search .form__control") as HTMLInputElement;
 		if (searchBtn) {
-			document.querySelector(".header__bottom")?.classList.add("open-search");
-			setTimeout(() => {
-				const searchInput = document.querySelector(".header__search .form__control") as HTMLInputElement;
-				searchInput?.focus();
-			}, 300);
+			searchBottom?.classList.add("open-search");
+			searchInput?.focus();
 		}
 
 		const searchBack = target.closest(".header__search-back") as HTMLElement | null;
 		if (searchBack) {
-			document.querySelector(".header__bottom")?.classList.remove("open-search");
+			searchBottom?.classList.remove("open-search");
+			const currentValue = searchInput.value;
+			if (currentValue.length > 0) {
+				searchInput.value = "";
+				toggleResetSearchBtn(searchInput.value);
+				this.eventEmitter.emit("filters:search-reset");
+			}
 		}
 
 		const resetSearchBtn = target.closest(".header__search-reset") as HTMLElement | null;
 		if (resetSearchBtn) {
-			const searchInput = document.querySelector(".header__search .form__control") as HTMLInputElement;
 			searchInput.value = "";
 			toggleResetSearchBtn(searchInput.value);
 			this.eventEmitter.emit("filters:search-reset");
 		}
+		// ========== Search Logic =============
 
 		// Ripple-эффект
 		const button = (target.closest(".btn") || target.closest(".radio-btn__field")) as HTMLElement | null;

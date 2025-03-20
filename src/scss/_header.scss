@@ -181,7 +181,7 @@
 		z-index: 3;
 		max-width: rem(142);
 		margin: 0 auto;
-
+		border-radius: 2.5rem;
 		&.has-quantity {
 			.header__categories-down {
 				margin-top: rem(-22);
@@ -285,7 +285,7 @@
 		display: flex;
 		align-items: center;
 		width: 2.5rem;
-
+		overflow: hidden;
 		transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 		.form__control {
 			text-overflow: ellipsis;
@@ -313,6 +313,7 @@
 		justify-content: center;
 		align-items: center;
 		z-index: 3;
+		color: $secondary;
 		& svg {
 			width: rem(20);
 			height: rem(20);
@@ -321,7 +322,9 @@
 		transform: scale(0) translateY(-50%);
 		transform-origin: top center;
 		&.visible {
-			transform: scale(1) translateY(-50%);
+			.header__bottom.open-search & {
+				transform: scale(1) translateY(-50%);
+			}
 		}
 	}
 	// .header__search-input

@@ -387,7 +387,7 @@
 			margin: auto;
 			width: 100%;
 			max-width: calc(100vw - 1.5rem);
-			transform: scale(0);
+			transform: scale(0.7);
 			transition: transform 0.3s $gentle-easing;
 		}
 	}
@@ -420,7 +420,7 @@
 
 	// .modal__wrapper
 	&__wrapper {
-		border-radius: 0.25rem 0.25rem 0 0;
+		border-radius: 1rem 1rem 0 0;
 		height: 80svh;
 		overflow-y: auto;
 
@@ -538,7 +538,7 @@
 	&__body {
 		flex: 1 1 auto;
 		background: #fff;
-		padding: 1.5rem 1.25rem 6rem;
+		padding: 1.5rem 1.25rem rem(128);
 		display: flex;
 		flex-direction: column;
 	}
@@ -651,8 +651,10 @@
 		gap: 0.5rem;
 		padding: 0.875rem 1.25rem;
 		min-height: rem(60);
-		border-radius: 2.5rem;
 		background: rgba(8, 8, 26, 0.02);
+		&.btn {
+			border-radius: 2.5rem;
+		}
 	}
 	// .language__bottom-icon
 	&__bottom-icon {
