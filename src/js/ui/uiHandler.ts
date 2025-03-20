@@ -80,11 +80,12 @@ export class UIHandler extends EventEmitter {
 		const calendarElement = document.getElementById("datepicker") as HTMLElement;
 
 		if (calendarElement) {
-			const calendar = new Calendar(calendarElement, {
+			new Calendar(calendarElement, {
 				range: false,
-				initialDate: new Date(),
+				onDateSelect: (date) => {
+					console.log("Callback Выбрана дата:", date);
+				},
 			});
-			console.log(calendar);
 		}
 	}
 

@@ -133,6 +133,7 @@ body {
 	background: #fff;
 	padding: 1rem;
 	border-radius: 0.75rem;
+	display: container;
 	&.card-disabled {
 		.card__body {
 			pointer-events: none;
@@ -190,6 +191,7 @@ body {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+
 		&:not(:last-child) {
 			margin-bottom: 1rem;
 		}
