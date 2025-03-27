@@ -1,4 +1,8 @@
 import moment from "moment";
+// @ts-ignore
+import "moment/dist/locale/ru";
+moment.locale("ru");
+
 import "../../scss/_datepicker.scss";
 
 interface CalendarOptions {
@@ -26,7 +30,6 @@ export class Calendar {
 		this.resetBtn = this.wrapper?.querySelector("[data-reset-calendar]") || null;
 		this.submitBtn = this.wrapper?.querySelector("[data-calendar-submit]") || null;
 
-		moment.locale("ru");
 		this.renderCalendar();
 	}
 
