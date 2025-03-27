@@ -10,13 +10,11 @@ import {
 	languageUIUpdate,
 	toggleResetSearchBtn,
 } from "../utils/uiActions";
+
 import { store } from "../store/store";
 
 export class ClickHandler {
-	// private body: HTMLElement;
-
 	constructor(private eventEmitter: EventEmitter) {
-		// this.body = document.body;
 		this.init();
 	}
 

@@ -10,7 +10,7 @@ import { ClickHandler } from "./clickHandler";
 import { ChangeHandler } from "./changeHandler";
 import { InputHandler } from "./inputHandler";
 import { EmptyState } from "../components/Empty";
-import { categoriesUIUpdate, toggleResetFilterBtn, calendarUIUpdate } from "../utils/uiActions";
+import { categoriesUIUpdate, toggleResetFilterBtn, calendarUIUpdate, closeModal } from "../utils/uiActions";
 
 export class UIHandler extends EventEmitter {
 	public clickHandler: ClickHandler;
@@ -18,6 +18,7 @@ export class UIHandler extends EventEmitter {
 	public inputHandler: InputHandler;
 	private cartHandler: CartHandler;
 	private filterHandler: FilterHandler;
+	private isFirstLoad: boolean;
 
 	constructor() {
 		super();
@@ -27,7 +28,15 @@ export class UIHandler extends EventEmitter {
 		this.changeHandler = new ChangeHandler(this);
 		this.inputHandler = new InputHandler(this);
 
+		this.isFirstLoad = true;
+
 		this.on("filters:change", this.filterHandler.handleFilterChanged.bind(this.filterHandler));
+		this.on("filters:change-datepicker", (selectedDate: string[] | undefined) => {
+			this.filterHandler.handleDateChange(selectedDate, () => {
+				document.querySelector("[data-calendar-submit]")?.classList.remove("loading");
+				closeModal();
+			});
+		});
 
 		this.on("filters:reset", () => {
 			this.filterHandler.resetFilters(["sort_by", "weekly_sends", "monthly_growth"], () => toggleResetFilterBtn(["sort_by", "weekly_sends", "monthly_growth"]));
@@ -69,7 +78,14 @@ export class UIHandler extends EventEmitter {
 		store.subscribe("cards:empty", this.showEmptyState.bind(this));
 
 		store.subscribe("cards:loaded", this.renderCards.bind(this));
-		store.subscribe("cards:loaded", this.cartHandler.handleCartUpdate.bind(this.cartHandler));
+
+		store.subscribe("cards:loaded", () => {
+			if (this.isFirstLoad) {
+				this.cartHandler.handleCartUpdate.bind(this.cartHandler);
+				this.isFirstLoad = false;
+			}
+		});
+
 		store.subscribe("cards:loading-error", this.showErrorLoading.bind(this));
 
 		store.subscribe("cart:update", this.cartHandler.handleCartUpdate.bind(this.cartHandler));
@@ -81,9 +97,12 @@ export class UIHandler extends EventEmitter {
 
 		if (calendarElement) {
 			new Calendar(calendarElement, {
-				// mode: "range",
-				// range: false,
-				onDateChange: calendarUIUpdate,
+				onDateChange: (selectedDate) => {
+					calendarUIUpdate(selectedDate);
+				},
+				onDateSubmit: (selectedDate) => {
+					this.emit("filters:change-datepicker", selectedDate);
+				},
 			});
 		}
 	}

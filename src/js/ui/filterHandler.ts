@@ -17,6 +17,18 @@ export class FilterHandler {
 		});
 	}
 
+	public handleDateChange(date: string[] | undefined, callback?: () => void) {
+		if (date === null) return;
+
+		console.log("фильтр даты изменен");
+
+		store.setFilters({ ["dates"]: date });
+
+		Promise.resolve(store.fetchCards()).then(() => {
+			if (callback) callback();
+		});
+	}
+
 	public resetFilters(
 		filterNames: (keyof SearchRequest)[] = [
 			"languages",

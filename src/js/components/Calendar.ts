@@ -3,21 +3,26 @@ import "../../scss/_datepicker.scss";
 
 interface CalendarOptions {
 	monthsToRender?: number;
-	onDateChange?: (selectedDate: number | number[] | null) => void;
+	onDateChange?: (selectedDate: string[] | undefined) => void;
+	onDateSubmit?: (selectedDate: string[] | undefined) => void;
 }
 
 export class Calendar {
 	private container: HTMLElement;
 	private monthsToRender: number;
-	private selectedDate: number | null = null;
-	private onDateChange: (selectedDate: number | null) => void;
+	private selectedDate: string[] | undefined = undefined;
+	private onDateChange: (selectedDate: string[] | undefined) => void;
+	private onDateSubmit: (selectedDate: string[] | undefined) => void;
 	private resetBtn: HTMLElement | null = null;
+	private submitBtn: HTMLElement | null = null;
 
 	constructor(container: HTMLElement, options: CalendarOptions = {}) {
 		this.container = container;
 		this.monthsToRender = options.monthsToRender || 24;
 		this.onDateChange = options.onDateChange || (() => {});
+		this.onDateSubmit = options.onDateSubmit || (() => {});
 		this.resetBtn = document.querySelector("[data-reset-calendar]") || null;
+		this.submitBtn = document.querySelector("[data-calendar-submit]") || null;
 
 		moment.locale("ru");
 		this.renderCalendar();
@@ -88,41 +93,63 @@ export class Calendar {
 		this.container.addEventListener("click", (event) => {
 			const target = event.target as HTMLElement;
 
-			if (target && target.closest(".calendar__item")) {
-				this.selectDay(target);
+			const calendarCell = target.closest(".calendar__item") as HTMLElement;
+			if (calendarCell) {
+				this.selectDay(calendarCell);
 			}
 		});
 
 		this.resetBtn?.addEventListener("click", () => {
-			console.log("clear calendar");
+			this.clearSelectedDate();
+			this.onDateChange(undefined);
+		});
 
-			this.selectedDate = null;
-			this.onDateChange(null);
+		this.submitBtn?.addEventListener("click", (e) => {
+			this.submitBtn?.classList.add("loading");
+			this.onDateSubmit(this.selectedDate);
 		});
 	}
 
 	private selectDay(dayElement: HTMLElement) {
 		const allDays = this.container.querySelectorAll(".calendar__item");
-		allDays.forEach((day) => (day as HTMLElement).classList.remove("selected"));
-		dayElement.classList.add("selected");
+		const isSelected = dayElement.classList.contains("selected");
 
-		const dayMoment = moment(dayElement.textContent, "D");
-		this.selectedDate = dayMoment.unix();
+		if (isSelected) {
+			dayElement.classList.remove("selected");
+			this.clearSelectedDate();
+		} else {
+			allDays.forEach((day) => (day as HTMLElement).classList.remove("selected"));
+			dayElement.classList.add("selected");
+
+			this.addDayToSelected(dayElement);
+		}
+	}
+
+	private addDayToSelected(dayElement: HTMLElement) {
+		const dayMoment = moment(dayElement.textContent, "D").unix().toString();
+
+		if (this.selectedDate === undefined) {
+			this.selectedDate = [dayMoment];
+		} else if (Array.isArray(this.selectedDate)) {
+			this.selectedDate = [dayMoment];
+		} else {
+			this.selectedDate = [this.selectedDate as string, dayMoment];
+		}
 
 		this.onDateChange(this.selectedDate);
 	}
 
-	public getSelectedDate(): number | null {
-		return this.selectedDate;
-	}
-
-	public clearSelectedDate() {
-		this.selectedDate = null;
+	private clearSelectedDate() {
+		this.selectedDate = undefined;
 		const selectedDay = this.container.querySelector(".calendar__item.selected");
 		if (selectedDay) {
 			selectedDay.classList.remove("selected");
 		}
 
-		this.onDateChange(null);
+		this.onDateChange(undefined);
+	}
+
+	public getSelectedDate(): string[] | string | undefined {
+		return this.selectedDate;
 	}
 }

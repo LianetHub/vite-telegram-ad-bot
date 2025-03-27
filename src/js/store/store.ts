@@ -25,11 +25,6 @@ export interface StoreState {
 	total?: number;
 }
 
-// export type CartState = {
-// 	id: number;
-// 	sending_count?: number;
-// };
-
 class Store {
 	private state: StoreState = {
 		fullData: [],
@@ -165,6 +160,8 @@ class Store {
 	}
 
 	addToCart(itemId: string) {
+		console.log(`Товар ${itemId} добавлен в корзину`);
+
 		if (!this.state.cart.includes(itemId)) {
 			this.state.cart.push(itemId);
 			this.saveCart();
@@ -174,6 +171,8 @@ class Store {
 	}
 
 	removeFromCart(itemId: string) {
+		console.log(`Товар ${itemId} удален в корзину`);
+
 		this.state.cart = this.state.cart.filter((id) => id !== itemId);
 		this.saveCart();
 		this.updateTotalCart();
@@ -184,6 +183,8 @@ class Store {
 	}
 
 	toggleToCart(itemId: string) {
+		console.log(`Товар ${itemId} toggle в корзину`);
+
 		if (this.state.cart.includes(itemId)) {
 			this.removeFromCart(itemId);
 		} else {
@@ -199,6 +200,9 @@ class Store {
 		}, 0);
 
 		this.state.total = total;
+
+		console.log("Количество товар в корзине обновлено", total);
+
 		this.events.emit("cart:update");
 	}
 
