@@ -81,10 +81,10 @@ export class UIHandler extends EventEmitter {
 
 		if (calendarElement) {
 			new Calendar(calendarElement, {
-				range: false,
-				onDateSelect: (date) => {
-					console.log("Callback Выбрана дата:", date);
-				},
+				// range: false,
+				// onDateSelect: (date) => {
+				// 	console.log("Callback Выбрана дата:", date);
+				// },
 			});
 		}
 	}

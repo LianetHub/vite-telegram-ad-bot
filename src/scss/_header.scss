@@ -277,6 +277,10 @@
 			visibility: visible;
 			transform: scale(1);
 		}
+
+		.ripple {
+			display: none;
+		}
 	}
 	// .header__search
 	&__search {

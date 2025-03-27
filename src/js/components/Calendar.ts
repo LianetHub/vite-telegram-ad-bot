@@ -1,67 +1,85 @@
-import { Datepicker } from "vanillajs-datepicker";
+import moment from "moment";
 import "../../scss/_datepicker.scss";
 
-const myLocales = {
-	ru: {
-		days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
-		daysShort: ["Вск", "Пнд", "Втр", "Срд", "Чтв", "Птн", "Суб"],
-		daysMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
-		months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
-		monthsShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
-		today: "Сегодня",
-		clear: "Очистить",
-		format: "dd.mm.yyyy",
-		weekStart: 1,
-		monthsTitle: "Месяцы",
-	},
-};
-
-Object.assign(Datepicker.locales, myLocales);
-
 interface CalendarOptions {
-	range: boolean;
-	initialDate?: Date;
-	onDateSelect?: (date: string | null) => void;
+	monthsToRender?: number;
 }
 
 export class Calendar {
-	private datepicker: Datepicker;
 	private container: HTMLElement;
-	private onDateSelect?: (date: string | null) => void;
-	private selectedDate: string | null = null;
+	private monthsToRender: number;
 
-	constructor(container: HTMLElement, options: CalendarOptions) {
+	constructor(container: HTMLElement, options: CalendarOptions = {}) {
 		this.container = container;
-		this.onDateSelect = options.onDateSelect;
-
-		this.datepicker = new Datepicker(this.container, {
-			language: "ru",
-			container: ".calendar",
-			autohide: false,
-			format: "dd.mm.yyyy",
-			todayButton: false,
-			clearButton: false,
-			showDaysOfWeek: false,
-			todayHighlight: true,
-			title: undefined,
-			weekStart: 1,
-		});
-
-		this.init();
+		this.monthsToRender = options.monthsToRender || 24;
+		moment.locale("ru");
+		this.renderCalendar();
 	}
 
-	private init() {
-		this.container.addEventListener("changeDate", (event: Event) => {
-			const selectedDate = (event as CustomEvent).detail.date;
-			this.selectedDate = selectedDate ? this.formatDate(selectedDate) : null;
-			this.onDateSelect?.(this.selectedDate);
-		});
+	private renderCalendar() {
+		this.container.innerHTML = "";
+		let currentMonth = moment();
+
+		for (let i = 0; i < this.monthsToRender; i++) {
+			const monthContainer = this.createMonth(currentMonth);
+			this.container.appendChild(monthContainer);
+			currentMonth.add(1, "month");
+		}
 	}
 
-	private formatDate(date: Date): string {
-		const dd = String(date.getDate()).padStart(2, "0");
-		const mm = String(date.getMonth() + 1).padStart(2, "0");
-		const yyyy = date.getFullYear();
-		return `${dd}.${mm}.${yyyy}`;
+	private createMonth(month: moment.Moment): HTMLElement {
+		const monthBlock = document.createElement("div");
+		monthBlock.classList.add("calendar__block");
+
+		const monthName = document.createElement("div");
+		monthName.classList.add("calendar__month");
+		monthName.textContent = month.format("MMMM YYYY");
+		monthBlock.appendChild(monthName);
+
+		const monthBody = document.createElement("div");
+		monthBody.classList.add("calendar__body");
+
+		const firstDayOfMonth = month.clone().startOf("month");
+		const lastDayOfMonth = month.clone().endOf("month");
+		const daysInMonth = lastDayOfMonth.date();
+
+		const emptyCells = firstDayOfMonth.isoWeekday() - 1;
+
+		for (let i = 0; i < emptyCells; i++) {
+			const emptyCell = document.createElement("div");
+			emptyCell.classList.add("calendar__item");
+			monthBody.appendChild(emptyCell);
+		}
+
+		for (let day = 1; day <= daysInMonth; day++) {
+			const dayItem = document.createElement("div");
+			dayItem.classList.add("calendar__item");
+
+			const dayMoment = month.clone().date(day);
+			if (dayMoment.isSame(moment(), "day")) {
+				dayItem.classList.add("today");
+			}
+
+			if (dayMoment.isBefore(moment(), "day")) {
+				dayItem.classList.add("last");
+			}
+
+			const daySpan = document.createElement("span");
+			daySpan.textContent = String(day);
+			dayItem.appendChild(daySpan);
+
+			dayItem.addEventListener("click", () => this.selectDay(dayItem));
+
+			monthBody.appendChild(dayItem);
+		}
+
+		monthBlock.appendChild(monthBody);
+		return monthBlock;
+	}
+
+	private selectDay(dayElement: HTMLElement) {
+		const allDays = this.container.querySelectorAll(".calendar__item");
+		allDays.forEach((day) => (day as HTMLElement).classList.remove("selected"));
+		dayElement.classList.add("selected");
 	}
 }
