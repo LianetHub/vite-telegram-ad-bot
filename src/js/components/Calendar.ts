@@ -67,7 +67,11 @@ export class Calendar {
 
 		const monthName = document.createElement("div");
 		monthName.classList.add("calendar__month");
-		monthName.textContent = month.format("MMMM YYYY");
+		if (month.isSame(moment(), "year")) {
+			monthName.textContent = month.format("MMMM");
+		} else {
+			monthName.textContent = month.format("MMMM YYYY");
+		}
 		monthBlock.appendChild(monthName);
 
 		const monthBody = document.createElement("div");
