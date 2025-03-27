@@ -94,20 +94,23 @@ export class UIHandler extends EventEmitter {
 	}
 
 	private initCalendar() {
-		const calendarElement = document.getElementById("datepicker") as HTMLElement;
-		const calendarWrapper = calendarElement.closest(".calendar") as HTMLElement;
+		const calendarElements = document.querySelectorAll(".calendar__wrapper") as NodeListOf<HTMLElement>;
 
-		if (calendarElement) {
-			const calendarInstanse = new Calendar(calendarElement, {
-				onDateChange: (selectedDate) => {
-					calendarUIUpdate(selectedDate, calendarWrapper, calendarInstanse);
-					console.log(calendarInstanse.mode);
-				},
-				onDateSubmit: (selectedDate) => {
-					this.emit("filters:change-datepicker", selectedDate);
-				},
-			});
-		}
+		calendarElements?.forEach((calendarElement) => {
+			const calendarWrapper = calendarElement.closest(".calendar") as HTMLElement;
+
+			if (calendarElement) {
+				const calendarInstanse = new Calendar(calendarElement, {
+					onDateChange: (selectedDate) => {
+						calendarUIUpdate(selectedDate, calendarWrapper, calendarInstanse);
+						console.log(calendarInstanse.mode);
+					},
+					onDateSubmit: (selectedDate) => {
+						this.emit("filters:change-datepicker", selectedDate);
+					},
+				});
+			}
+		});
 	}
 
 	private changeDatepickerType(event: Event) {

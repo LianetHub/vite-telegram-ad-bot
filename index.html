@@ -206,7 +206,7 @@
         </span>
       </a>
 
-      <div id="cart" class="modal modal-xl ">
+      <div id="cart" class="modal modal-xl">
         <div class="modal__wrapper">
           <div class="cart">
             <div class="cart__header">
@@ -531,7 +531,7 @@
         </div>
       </div>
 
-      <div id="filter" class="modal modal-lg ">
+      <div id="filter" class="modal modal-lg">
         <div class="modal__wrapper">
           <button type="button" data-modal-close class="modal__back">
             <svg>
@@ -615,7 +615,7 @@
         </div>
       </div>
 
-      <div id="select-users" class="modal modal-sm">
+      <div id="select-users" class="modal modal-sm active">
         <div class="modal__wrapper">
           <div class="modal__row">
             <div class="modal__title title-sm fw-semibold">Количество пользователей</div>
@@ -696,70 +696,124 @@
             <div class="complete-btn__wrapper"><button data-calendar-submit class="complete-btn btn btn-primary btn-sm hide">Применить</button></div>
           </div>
         </div>
+      </div>
 
-        <div id="select-time" class="modal modal-sm">
-          <div class="time-select">
-            <div class="time-select__header">
-              <div class="time-select__current title-lg">12:20</div>
-              <div class="time-select__date color-secondary caption-lg">05 сентября</div>
+      <div id="select-time" class="modal modal-sm">
+        <div class="time-select">
+          <div class="time-select__header">
+            <div class="time-select__current title-lg">12:20</div>
+            <div class="time-select__date color-secondary caption-lg">05 сентября</div>
+          </div>
+          <div class="time-select__body title-xl">
+            <div class="time-select__column">
+              <div class="time-select__value">11</div>
+              <div class="time-select__value active">12</div>
+              <div class="time-select__value">13</div>
             </div>
-            <div class="time-select__body title-xl">
-              <div class="time-select__column">
-                <div class="time-select__value">11</div>
-                <div class="time-select__value active">12</div>
-                <div class="time-select__value">13</div>
-              </div>
-              <span class="time-select__separator"></span>
-              <div class="time-select__column">
-                <div class="time-select__value">19</div>
-                <div class="time-select__value active">20</div>
-                <div class="time-select__value">21</div>
+            <span class="time-select__separator"></span>
+            <div class="time-select__column">
+              <div class="time-select__value">19</div>
+              <div class="time-select__value active">20</div>
+              <div class="time-select__value">21</div>
+            </div>
+          </div>
+          <button type="button" class="time-select__btn btn btn-sm btn-secondary">Готово</button>
+        </div>
+      </div>
+
+      <div id="select-price" class="modal modal-sm">
+        <div class="modal__wrapper">
+          <div class="modal__row">
+            <div class="modal__title title-sm fw-semibold">Цена рассылки</div>
+            <button type="button" class="modal__close" data-modal-close>
+              <svg>
+                <use xlink:href="img/sprite.svg#icon-cross"></use>
+              </svg>
+            </button>
+          </div>
+          <div class="modal__filter">
+            <div class="segmented-controls subtitle fw-medium">
+              <div class="segmented-controls__wrapper">
+                <label class="segmented-controls__item">
+                  <input type="radio" name="price_type" value="total" class="segmented-controls__item-input hidden" hidden>
+                  <span class="segmented-controls__item-btn">За всех</span>
+                </label>
+                <label class="segmented-controls__item">
+                  <input type="radio" name="price_type" value="per_100k" class="segmented-controls__item-input hidden" hidden>
+                  <span class="segmented-controls__item-btn">За 100k</span>
+                </label>
+                <div class="segmented-controls__runner"></div>
               </div>
             </div>
-            <button type="button" class="time-select__btn btn btn-sm btn-secondary">Готово</button>
+            <div class="modal__filter-inputs">
+              <div class="modal__filter-field">
+                <span class="color-secondary caption-lg">от</span>
+                <input type="text" name="price_min" inputmode="numeric" class="form__control" id="start-price-input" value="1000" data-unit="₽">
+              </div>
+              <div class="modal__filter-field">
+                <span class="color-secondary caption-lg">до</span>
+                <input type="text" name="price_max" inputmode="numeric" class="form__control" id="end-price-input" value="2400000" data-unit="₽">
+              </div>
+            </div>
+            <div id="range-price" class="range"></div>
+            <button type="button" data-modal-close class="modal__filter-btn btn btn-primary btn-sm">Показать</button>
           </div>
         </div>
+      </div>
 
-        <div id="select-price" class="modal modal-sm">
-          <div class="modal__wrapper">
+      <div id="check-available-date" class="modal modal-xl calendar">
+        <div class="modal__wrapper">
+          <div class="modal__header">
             <div class="modal__row">
-              <div class="modal__title title-sm fw-semibold">Цена рассылки</div>
-              <button type="button" class="modal__close" data-modal-close>
-                <svg>
-                  <use xlink:href="img/sprite.svg#icon-cross"></use>
-                </svg>
-              </button>
+              <div class="modal__title title-sm fw-semibold">
+                <span class="modal__title-default">
+                  Выберите дату
+                </span>
+                <span class="modal__title-selected">
+                  <span class="modal__title-selected">
+                    <span class="modal__language-quantity" data-name="selected-days">1</span>
+                    <span data-text="selected-days">день</span>
+                  </span>
+                </span>
+              </div>
+              <div class="modal__types">
+                <label class="modal__type">
+                  <input type="radio" name="calendar-type" checked value="single" class="modal__type-input hidden" hidden>
+                  <span class="modal__type-field"></span>
+                </label>
+                <label class="modal__type">
+                  <input type="radio" name="calendar-type" value="range" class="modal__type-input hidden" hidden>
+                  <span class="modal__type-field"></span>
+                </label>
+              </div>
+              <div class="modal__row-actions">
+                <div class="modal__row-action-default">
+                  <button type="button" data-modal-close class="modal__close">
+                    <svg>
+                      <use xlink:href="img/sprite.svg#icon-cross"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="modal__row-action-selected">
+                  <button type="button" data-reset-calendar class="modal__clear subtitle">Очистить</button>
+                </div>
+              </div>
             </div>
-            <div class="modal__filter">
-              <div class="segmented-controls subtitle fw-medium">
-                <div class="segmented-controls__wrapper">
-                  <label class="segmented-controls__item">
-                    <input type="radio" name="price_type" value="total" class="segmented-controls__item-input hidden" hidden>
-                    <span class="segmented-controls__item-btn">За всех</span>
-                  </label>
-                  <label class="segmented-controls__item">
-                    <input type="radio" name="price_type" value="per_100k" class="segmented-controls__item-input hidden" hidden>
-                    <span class="segmented-controls__item-btn">За 100k</span>
-                  </label>
-                  <div class="segmented-controls__runner"></div>
-                </div>
-              </div>
-              <div class="modal__filter-inputs">
-                <div class="modal__filter-field">
-                  <span class="color-secondary caption-lg">от</span>
-                  <input type="text" name="price_min" inputmode="numeric" class="form__control" id="start-price-input" value="1000" data-unit="₽">
-                </div>
-                <div class="modal__filter-field">
-                  <span class="color-secondary caption-lg">до</span>
-                  <input type="text" name="price_max" inputmode="numeric" class="form__control" id="end-price-input" value="2400000" data-unit="₽">
-                </div>
-              </div>
-              <div id="range-price" class="range"></div>
-              <button type="button" data-modal-close class="modal__filter-btn btn btn-primary btn-sm">Показать</button>
+            <div class="calendar__days">
+              <div class="calendar__day">пн</div>
+              <div class="calendar__day">вт</div>
+              <div class="calendar__day">ср</div>
+              <div class="calendar__day">чт</div>
+              <div class="calendar__day">пт</div>
+              <div class="calendar__day">сб</div>
+              <div class="calendar__day">вс</div>
             </div>
           </div>
+          <div class="modal__body">
+            <div class="calendar__wrapper" id="datepicker-available"></div>
+            <div class="complete-btn__wrapper"><button data-calendar-submit class="complete-btn btn btn-primary btn-sm hide">Применить</button></div>
+          </div>
         </div>
-
       </div>
 
       <script type="module" src="/src/main.ts"></script>

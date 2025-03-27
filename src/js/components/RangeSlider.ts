@@ -36,8 +36,8 @@ export class RangeSlider {
 			this.maxInput.dispatchEvent(event);
 		});
 
-		this.minInput.addEventListener("input", this.onInputChange);
-		this.maxInput.addEventListener("input", this.onInputChange);
+		this.minInput.addEventListener("blur", this.onInputChange);
+		this.maxInput.addEventListener("blur", this.onInputChange);
 
 		this.minInput.addEventListener("input", this.onInputValidation);
 		this.maxInput.addEventListener("input", this.onInputValidation);
@@ -55,6 +55,8 @@ export class RangeSlider {
 	};
 
 	private onInputChange = () => {
+		console.log("change");
+
 		const minValue = parseInt(this.minInput.value.replace(/\s/g, "")) || 0;
 		const maxValue = parseInt(this.maxInput.value.replace(/\s/g, "")) || 100;
 		this.slider.set([minValue, maxValue]);

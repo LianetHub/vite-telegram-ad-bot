@@ -77,10 +77,10 @@ export class Card {
               </svg>
             </button>
           </div>`
-			: `<button type="button" class="card__time subtitle fw-medium btn btn-white">
+			: `<a href="#check-available-date" data-modal class="card__time subtitle fw-medium btn btn-white">
             <span class="card__time-value">${formatDate(this.data.next_available_date)}</span>
             <svg><use xlink:href="/img/sprite.svg#icon-chevron-right"></use></svg>
-          </button>`;
+          </a>`;
 
 		const actionButtonBlock = this.hasRemoveButton
 			? `<button type="button" class="card__remove">
