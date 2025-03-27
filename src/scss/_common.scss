@@ -612,18 +612,12 @@ body {
 
 .time-start {
 	min-height: 100vh;
-	padding-bottom: 5rem;
 	display: flex;
 	flex-direction: column;
-	// .time-start__header
-	&__header {
-		padding: 0.75rem 1.25rem 0.75rem;
-		background: #fff;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 1rem;
-	}
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.06) 20%, rgba(255, 255, 255, 0.08) 40%, rgba(255, 255, 255, 0.12) 90%),
+		linear-gradient(0deg, var(--bg-secondary, rgba(8, 8, 26, 0.04)) 0%, var(--bg-secondary, rgba(8, 8, 26, 0.04)) 100%), #fff;
+	min-height: calc(100svh - rem(54));
+	padding: rem(8) rem(12) rem(128);
 	// .time-start__title
 	&__title {
 	}
@@ -637,13 +631,6 @@ body {
 		&.active {
 			color: $accent;
 		}
-	}
-	// .time-start__body
-	&__body {
-		padding: 0.5rem 0.75rem 0;
-		flex: 1 1 auto;
-		display: flex;
-		flex-direction: column;
 	}
 	// .time-start__list
 	&__list {

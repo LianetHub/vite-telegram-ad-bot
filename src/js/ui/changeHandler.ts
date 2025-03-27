@@ -53,7 +53,7 @@ export class ChangeHandler {
 			handleSegmentedChange(segmentedControls, target.value);
 		}
 
-		if (target.name === "calendar-type") {
+		if (target.classList.contains("modal__type-input")) {
 			this.eventEmitter.emit("change-datepicker-type", event);
 		}
 

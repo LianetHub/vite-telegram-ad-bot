@@ -10,7 +10,7 @@ import { ClickHandler } from "./clickHandler";
 import { ChangeHandler } from "./changeHandler";
 import { InputHandler } from "./inputHandler";
 import { EmptyState } from "../components/Empty";
-import { categoriesUIUpdate, toggleResetFilterBtn, calendarUIUpdate, closeModal } from "../utils/uiActions";
+import { categoriesUIUpdate, toggleResetFilterBtn, calendarUIUpdate, closeModal, openModal } from "../utils/uiActions";
 
 export class UIHandler extends EventEmitter {
 	public clickHandler: ClickHandler;
@@ -94,23 +94,36 @@ export class UIHandler extends EventEmitter {
 	}
 
 	private initCalendar() {
-		const calendarElements = document.querySelectorAll(".calendar__wrapper") as NodeListOf<HTMLElement>;
+		const calendarElement = document.getElementById("datepicker") as HTMLElement;
 
-		calendarElements?.forEach((calendarElement) => {
+		if (calendarElement) {
 			const calendarWrapper = calendarElement.closest(".calendar") as HTMLElement;
+			const calendarInstanse = new Calendar(calendarElement, {
+				onDateChange: (selectedDate) => {
+					calendarUIUpdate(selectedDate, calendarWrapper, calendarInstanse);
+					console.log(calendarInstanse.mode);
+				},
+				onDateSubmit: (selectedDate) => {
+					this.emit("filters:change-datepicker", selectedDate);
+				},
+			});
+		}
 
-			if (calendarElement) {
-				const calendarInstanse = new Calendar(calendarElement, {
-					onDateChange: (selectedDate) => {
-						calendarUIUpdate(selectedDate, calendarWrapper, calendarInstanse);
-						console.log(calendarInstanse.mode);
-					},
-					onDateSubmit: (selectedDate) => {
-						this.emit("filters:change-datepicker", selectedDate);
-					},
-				});
-			}
-		});
+		const calendarAvailableElement = document.getElementById("datepicker-available") as HTMLElement;
+
+		if (calendarAvailableElement) {
+			const calendarAvailableWrapper = calendarAvailableElement.closest(".calendar") as HTMLElement;
+			const calendarInstanse = new Calendar(calendarAvailableElement, {
+				onDateChange: (selectedDate) => {
+					calendarUIUpdate(selectedDate, calendarAvailableWrapper, calendarInstanse);
+					console.log(calendarInstanse.mode);
+				},
+				onDateSubmit: (selectedDate) => {
+					closeModal();
+					openModal("#check-available-time");
+				},
+			});
+		}
 	}
 
 	private changeDatepickerType(event: Event) {

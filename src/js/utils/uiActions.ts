@@ -40,8 +40,15 @@ export function createRippleEffect(button: HTMLElement, event: MouseEvent) {
 	}, 600);
 }
 
-export function openModal(link: HTMLElement) {
-	const modalId = link.getAttribute("href")?.replace("#", "");
+export function openModal(link: HTMLElement | string) {
+	let modalId: string | undefined;
+
+	if (typeof link === "string") {
+		modalId = link.replace("#", "");
+	} else {
+		modalId = link.getAttribute("href")?.replace("#", "");
+	}
+
 	if (!modalId) return;
 
 	const modal = document.getElementById(modalId);
@@ -52,9 +59,13 @@ export function openModal(link: HTMLElement) {
 }
 
 export function closeModal() {
-	const modal = document.querySelector(".modal.active") as HTMLElement | null;
-	if (modal) {
-		modal.classList.remove("active");
+	const modals = document.querySelectorAll(".modal.active") as NodeListOf<HTMLElement>;
+	if (modals.length === 0) return;
+
+	const lastModal = modals[modals.length - 1];
+	lastModal.classList.remove("active");
+
+	if (modals.length === 1) {
 		document.body.classList.remove("lock");
 	}
 }
@@ -126,7 +137,7 @@ export function calendarUIUpdate(date: string[] | undefined, calendarWrapper: HT
 	selectedDaysBlock.textContent = String(selectedDayValue);
 	selectedDaysText.textContent = selectedDayTextValue;
 
-	const submitButton = document.querySelector("[data-calendar-submit]");
+	const submitButton = calendarWrapper.querySelector("[data-calendar-submit]");
 	if (date?.length && calendarWrapper) {
 		submitButton?.classList.remove("hide");
 		calendarWrapper?.classList.add("modal-selected");

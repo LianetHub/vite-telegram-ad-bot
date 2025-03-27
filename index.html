@@ -642,7 +642,7 @@
         </div>
       </div>
 
-      <div id="select-date" class="modal calendar active">
+      <div id="select-date" class="modal calendar">
         <div class="modal__wrapper">
           <div class="modal__header">
             <div class="resize-indicator"></div>
@@ -698,28 +698,7 @@
         </div>
       </div>
 
-      <div id="select-time" class="modal modal-sm">
-        <div class="time-select">
-          <div class="time-select__header">
-            <div class="time-select__current title-lg">12:20</div>
-            <div class="time-select__date color-secondary caption-lg">05 сентября</div>
-          </div>
-          <div class="time-select__body title-xl">
-            <div class="time-select__column">
-              <div class="time-select__value">11</div>
-              <div class="time-select__value active">12</div>
-              <div class="time-select__value">13</div>
-            </div>
-            <span class="time-select__separator"></span>
-            <div class="time-select__column">
-              <div class="time-select__value">19</div>
-              <div class="time-select__value active">20</div>
-              <div class="time-select__value">21</div>
-            </div>
-          </div>
-          <button type="button" class="time-select__btn btn btn-sm btn-secondary">Готово</button>
-        </div>
-      </div>
+
 
       <div id="select-price" class="modal modal-sm">
         <div class="modal__wrapper">
@@ -778,11 +757,11 @@
               </div>
               <div class="modal__types">
                 <label class="modal__type">
-                  <input type="radio" name="calendar-type" checked value="single" class="modal__type-input hidden" hidden>
+                  <input type="radio" name="calendar-available-type" checked value="single" class="modal__type-input hidden" hidden>
                   <span class="modal__type-field"></span>
                 </label>
                 <label class="modal__type">
-                  <input type="radio" name="calendar-type" value="range" class="modal__type-input hidden" hidden>
+                  <input type="radio" name="calendar-available-type" value="range" class="modal__type-input hidden" hidden>
                   <span class="modal__type-field"></span>
                 </label>
               </div>
@@ -811,7 +790,154 @@
           </div>
           <div class="modal__body">
             <div class="calendar__wrapper" id="datepicker-available"></div>
-            <div class="complete-btn__wrapper"><button data-calendar-submit class="complete-btn btn btn-primary btn-sm hide">Применить</button></div>
+            <div class="complete-btn__wrapper"><button data-calendar-submit class="complete-btn btn btn-primary btn-sm hide">Далее</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="check-available-time" class="modal modal-xl">
+        <div class="modal__wrapper">
+          <div class="modal__header">
+            <div class="modal__row">
+              <div class="modal__title title-sm fw-semibold">
+                <span class="modal__title-default">
+                  Время запуска
+                </span>
+                <span class="modal__title-selected">
+                  Выбрано <span data-name="selected-times">1</span>
+                </span>
+              </div>
+              <div class="modal__row-actions">
+                <div class="modal__row-action-default">
+                  <button type="button" class="time-start__btn">
+                    <svg>
+                      <use xlink:href="img/sprite.svg#icon-list-check"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="modal__row-action-selected">
+                  <button type="button" data-reset-calendar class="modal__clear subtitle">Очистить</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="time-start">
+            <ul class="time-start__list">
+              <li class="time-start__item">
+                <div class="time-start__column">
+                  <div class="time-start__value title-lg">10:30</div>
+                  <div class="time-start__date caption-lg">02 сентября</div>
+                </div>
+                <a href="#select-time" data-modal class="time-start__btn">
+                  <svg>
+                    <use xlink:href="img/sprite.svg#icon-chevron-right"></use>
+                  </svg>
+                </a>
+                <label class="time-start__checkbox checkbox hidden">
+                  <input type="checkbox" name="time" value="10:30" class="checkbox__input hidden" hidden>
+                  <span class="checkbox__field"></span>
+                </label>
+              </li>
+              <li class="time-start__item">
+                <div class="time-start__column">
+                  <div class="time-start__value title-lg">12:20</div>
+                  <div class="time-start__date caption-lg">05 сентября</div>
+                </div>
+                <a href="#select-time" data-modal class="time-start__btn">
+                  <svg>
+                    <use xlink:href="img/sprite.svg#icon-chevron-right"></use>
+                  </svg>
+                </a>
+                <label class="time-start__checkbox checkbox hidden">
+                  <input type="checkbox" name="time" value="12:30" class="checkbox__input hidden" hidden>
+                  <span class="checkbox__field"></span>
+                </label>
+              </li>
+              <li class="time-start__item">
+                <div class="time-start__column">
+                  <div class="time-start__value title-lg">05:16</div>
+                  <div class="time-start__date caption-lg">14 октября</div>
+                </div>
+                <a href="#select-time" data-modal class="time-start__btn">
+                  <svg>
+                    <use xlink:href="img/sprite.svg#icon-chevron-right"></use>
+                  </svg>
+                </a>
+                <label class="time-start__checkbox checkbox hidden">
+                  <input type="checkbox" name="time" value="05:16" class="checkbox__input hidden" hidden>
+                  <span class="checkbox__field"></span>
+                </label>
+              </li>
+              <li class="time-start__item">
+                <div class="time-start__column">
+                  <div class="time-start__value title-lg">16:50</div>
+                  <div class="time-start__date caption-lg">20 октября</div>
+                </div>
+                <a href="#select-time" data-modal class="time-start__btn">
+                  <svg>
+                    <use xlink:href="img/sprite.svg#icon-chevron-right"></use>
+                  </svg>
+                </a>
+                <label class="time-start__checkbox checkbox hidden">
+                  <input type="checkbox" name="time" value="16:50" class="checkbox__input hidden" hidden>
+                  <span class="checkbox__field"></span>
+                </label>
+              </li>
+              <li class="time-start__item">
+                <div class="time-start__column">
+                  <div class="time-start__value title-lg">08:20</div>
+                  <div class="time-start__date caption-lg">21 октября</div>
+                </div>
+                <a href="#select-time" data-modal class="time-start__btn">
+                  <svg>
+                    <use xlink:href="img/sprite.svg#icon-chevron-right"></use>
+                  </svg>
+                </a>
+                <label class="time-start__checkbox checkbox hidden">
+                  <input type="checkbox" name="time" value="08:20" class="checkbox__input hidden" hidden>
+                  <span class="checkbox__field"></span>
+                </label>
+              </li>
+            </ul>
+            <button class="time-start__settings hidden">
+              <span class="time-start__settings-icon">
+                <svg>
+                  <use xlink:href="img/sprite.svg#icon-filter"></use>
+                </svg>
+              </span>
+              <span class="headline"> Настроить 1 </span>
+              <span class="time-start__settings-icon color-tertiary">
+                <svg>
+                  <use xlink:href="img/sprite.svg#icon-arrow-right"></use>
+                </svg>
+              </span>
+            </button>
+            <div class="complete-btn__wrapper"><button class="complete-btn btn btn-primary-outline btn-sm hide">Удалить</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="select-time" class="modal modal-sm">
+        <div class="modal__wrapper">
+          <div class="time-select">
+            <div class="time-select__header">
+              <div class="time-select__current title-lg">12:20</div>
+              <div class="time-select__date color-secondary caption-lg">05 сентября</div>
+            </div>
+            <div class="time-select__body title-xl">
+              <div class="time-select__column">
+                <div class="time-select__value">11</div>
+                <div class="time-select__value active">12</div>
+                <div class="time-select__value">13</div>
+              </div>
+              <span class="time-select__separator"></span>
+              <div class="time-select__column">
+                <div class="time-select__value">19</div>
+                <div class="time-select__value active">20</div>
+                <div class="time-select__value">21</div>
+              </div>
+            </div>
+            <button type="button" class="time-select__btn btn btn-sm btn-secondary">Готово</button>
           </div>
         </div>
       </div>

@@ -55,8 +55,6 @@ export class RangeSlider {
 	};
 
 	private onInputChange = () => {
-		console.log("change");
-
 		const minValue = parseInt(this.minInput.value.replace(/\s/g, "")) || 0;
 		const maxValue = parseInt(this.maxInput.value.replace(/\s/g, "")) || 100;
 		this.slider.set([minValue, maxValue]);
