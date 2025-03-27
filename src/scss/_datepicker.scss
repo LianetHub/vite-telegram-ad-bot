@@ -97,14 +97,16 @@
 				margin-bottom: -0.25rem;
 				z-index: 1;
 				transition: transform 0.3s ease;
-				.selected & {
-					transform: translateY(1rem);
-				}
 			}
 		}
 		&.selected {
 			color: #0d81ff;
-			// background: #e8f1ff;
+			&.today {
+				overflow: hidden;
+				&::before {
+					transform: translateY(1rem);
+				}
+			}
 			&::after {
 				opacity: 1;
 				transform: translate(-50%, -50%) scale(1);

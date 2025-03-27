@@ -5,28 +5,34 @@ moment.locale("ru");
 
 import "../../scss/_datepicker.scss";
 
-interface CalendarOptions {
+export interface CalendarOptions {
 	monthsToRender?: number;
 	onDateChange?: (selectedDate: string[] | undefined) => void;
 	onDateSubmit?: (selectedDate: string[] | undefined) => void;
 	mode?: "single" | "range";
 }
 
+export interface HTMLElementWithDatepicker extends HTMLElement {
+	datepicker: Calendar;
+}
+
 export class Calendar {
-	private container: HTMLElement;
-	private wrapper: HTMLElement | null;
+	public container: HTMLElement;
+	public options: CalendarOptions;
+	private wrapper: HTMLElementWithDatepicker | null;
 	private monthsToRender: number;
 	private selectedDate: string[] | undefined = undefined;
-	private onDateChange: (selectedDate: string[] | undefined) => void;
-	private onDateSubmit: (selectedDate: string[] | undefined) => void;
 	private resetBtn: HTMLElement | null = null;
 	private submitBtn: HTMLElement | null = null;
-	private mode: "single" | "range";
+	public mode: "single" | "range";
 	private rangeStart: HTMLElement | null = null;
 	private rangeEnd: HTMLElement | null = null;
+	public onDateChange: (selectedDate: string[] | undefined) => void;
+	public onDateSubmit: (selectedDate: string[] | undefined) => void;
 
 	constructor(container: HTMLElement, options: CalendarOptions = {}) {
 		this.container = container;
+		this.options = options;
 		this.wrapper = container.closest(".calendar");
 		this.monthsToRender = options.monthsToRender || 24;
 		this.onDateChange = options.onDateChange || (() => {});
@@ -34,6 +40,10 @@ export class Calendar {
 		this.mode = options.mode || "single";
 		this.resetBtn = this.wrapper?.querySelector("[data-reset-calendar]") || null;
 		this.submitBtn = this.wrapper?.querySelector("[data-calendar-submit]") || null;
+
+		if (this.wrapper) {
+			this.wrapper.datepicker = this;
+		}
 
 		this.renderCalendar();
 	}
@@ -106,6 +116,7 @@ export class Calendar {
 		this.container.addEventListener("click", (event) => {
 			const target = event.target as HTMLElement;
 			const calendarCell = target.closest(".calendar__item") as HTMLElement;
+
 			if (calendarCell) {
 				this.selectDay(calendarCell);
 			}
@@ -148,8 +159,10 @@ export class Calendar {
 				}
 			}
 		}
+
 		this.onDateChange(this.selectedDate);
 	}
+
 	private updateRange() {
 		if (!this.rangeStart || !this.rangeEnd) return;
 
@@ -179,5 +192,30 @@ export class Calendar {
 			day.classList.remove("selected", "start", "end");
 		});
 		this.onDateChange(undefined);
+	}
+
+	public getQuantitySelectedDays(): number {
+		if (this.mode === "single") {
+			return this.selectedDate && this.selectedDate.length > 0 ? 1 : 0;
+		} else if (this.mode === "range" && this.selectedDate) {
+			if (this.rangeStart && this.rangeEnd) {
+				const startDate = parseInt(this.rangeStart.dataset.value || "0", 10);
+				const endDate = parseInt(this.rangeEnd.dataset.value || "0", 10);
+
+				return Math.max(0, moment(endDate * 1000).diff(moment(startDate * 1000), "days") + 1);
+			}
+			return 0;
+		}
+		return 0;
+	}
+
+	public getInstance(): Calendar {
+		return this;
+	}
+
+	public setMode(type: "single" | "range") {
+		this.mode = type;
+		this.clearSelectedDate();
+		this.onDateChange(this.selectedDate);
 	}
 }

@@ -642,7 +642,7 @@
         </div>
       </div>
 
-      <div id="select-date" class="modal calendar active">
+      <div id="select-date" class="modal calendar">
         <div class="modal__wrapper">
           <div class="modal__header">
             <div class="resize-indicator"></div>
@@ -652,7 +652,10 @@
                   Выберите дату
                 </span>
                 <span class="modal__title-selected">
-                  <span class="modal__language-quantity" data-name="languages">1</span> день
+                  <span class="modal__title-selected">
+                    <span class="modal__language-quantity" data-name="selected-days">1</span>
+                    <span data-text="selected-days">день</span>
+                  </span>
                 </span>
               </div>
               <div class="modal__types">
@@ -661,7 +664,7 @@
                   <span class="modal__type-field"></span>
                 </label>
                 <label class="modal__type">
-                  <input type="radio" name="calendar-type" value="single" class="modal__type-input hidden" hidden>
+                  <input type="radio" name="calendar-type" value="range" class="modal__type-input hidden" hidden>
                   <span class="modal__type-field"></span>
                 </label>
               </div>

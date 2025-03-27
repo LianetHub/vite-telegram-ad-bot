@@ -1,7 +1,7 @@
 import { store } from "../store/store";
 import { EventEmitter } from "../store/EventEmitter";
 import { RangeSlider } from "../components/RangeSlider";
-import { Calendar } from "../components/Calendar";
+import { Calendar, HTMLElementWithDatepicker } from "../components/Calendar";
 import { CardList } from "../components/CardList";
 import { SkeletonCardList } from "../components/Skeleton";
 import { CartHandler } from "./cartHandler";
@@ -64,6 +64,7 @@ export class UIHandler extends EventEmitter {
 			])
 		);
 		this.on("modal:opened", this.handleModalOpened);
+		this.on("change-datepicker-type", this.changeDatepickerType.bind(this));
 
 		this.initApp();
 	}
@@ -97,15 +98,25 @@ export class UIHandler extends EventEmitter {
 		const calendarWrapper = calendarElement.closest(".calendar") as HTMLElement;
 
 		if (calendarElement) {
-			new Calendar(calendarElement, {
-				mode: "range",
+			const calendarInstanse = new Calendar(calendarElement, {
 				onDateChange: (selectedDate) => {
-					calendarUIUpdate(selectedDate, calendarWrapper);
+					calendarUIUpdate(selectedDate, calendarWrapper, calendarInstanse);
+					console.log(calendarInstanse.mode);
 				},
 				onDateSubmit: (selectedDate) => {
 					this.emit("filters:change-datepicker", selectedDate);
 				},
 			});
+		}
+	}
+
+	private changeDatepickerType(event: Event) {
+		const target = event.target as HTMLInputElement;
+		const type = target.value as "single" | "range";
+		const currentDatepicker = target.closest(".calendar") as HTMLElementWithDatepicker;
+		const DatepickerIntanse = currentDatepicker?.datepicker as Calendar | null;
+		if (DatepickerIntanse) {
+			DatepickerIntanse.setMode(type);
 		}
 	}
 

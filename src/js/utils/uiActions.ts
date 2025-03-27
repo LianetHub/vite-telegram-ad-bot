@@ -1,3 +1,5 @@
+import { Calendar } from "../components/Calendar";
+
 export function toggleSubMenu(addButton: HTMLElement) {
 	addButton.classList.toggle("active");
 	const sortElement = document.querySelector(".header__sort") as HTMLElement | null;
@@ -90,14 +92,46 @@ export function languageUIUpdate(count: number) {
 	}
 }
 
-export function calendarUIUpdate(date: string[] | undefined, calendarWrapper: HTMLElement) {
+export function calendarUIUpdate(date: string[] | undefined, calendarWrapper: HTMLElement, instance: Calendar | null = null) {
 	console.log(`Обновление UI Календаря. Выбранно: ${date}`);
 
+	const selectedDaysBlock = calendarWrapper.querySelector('[data-name="selected-days"]') as HTMLElement;
+	const selectedDaysText = calendarWrapper.querySelector('[data-text="selected-days"]') as HTMLElement;
+
+	let selectedDayValue = 1;
+	let selectedDayTextValue = "день";
+
+	if (instance?.mode === "range") {
+		const quantitySelectedDays = instance?.getQuantitySelectedDays() || 0;
+
+		if (quantitySelectedDays > 1) {
+			selectedDayValue = quantitySelectedDays;
+			selectedDayTextValue = getCorrectDayDeclension(quantitySelectedDays);
+		} else if (date?.length) {
+			selectedDayValue = 1;
+			selectedDayTextValue = "день";
+		}
+	}
+
+	function getCorrectDayDeclension(count: number): string {
+		if (count === 1) {
+			return "день";
+		} else if (count >= 2 && count <= 4) {
+			return "дня";
+		} else {
+			return "дней";
+		}
+	}
+
+	selectedDaysBlock.textContent = String(selectedDayValue);
+	selectedDaysText.textContent = selectedDayTextValue;
+
+	const submitButton = document.querySelector("[data-calendar-submit]");
 	if (date?.length && calendarWrapper) {
-		document.querySelector("[data-calendar-submit]")?.classList.remove("hide");
+		submitButton?.classList.remove("hide");
 		calendarWrapper?.classList.add("modal-selected");
 	} else {
-		document.querySelector("[data-calendar-submit]")?.classList.add("hide");
+		submitButton?.classList.add("hide");
 		calendarWrapper?.classList.remove("modal-selected");
 	}
 }

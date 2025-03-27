@@ -51,7 +51,10 @@ export class ChangeHandler {
 		if (target.classList.contains("segmented-controls__item-input")) {
 			const segmentedControls = target.closest(".segmented-controls") as HTMLElement;
 			handleSegmentedChange(segmentedControls, target.value);
-			this.eventEmitter.emit("audienceChanged", target.value);
+		}
+
+		if (target.name === "calendar-type") {
+			this.eventEmitter.emit("change-datepicker-type", event);
 		}
 
 		if (["sort_by", "weekly_sends", "monthly_growth"].includes(target.name)) {
