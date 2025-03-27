@@ -90,10 +90,10 @@ export function languageUIUpdate(count: number) {
 	}
 }
 
-export function calendarUIUpdate(date: string[] | undefined) {
+export function calendarUIUpdate(date: string[] | undefined, calendarWrapper: HTMLElement) {
 	console.log(`Обновление UI Календаря. Выбранно: ${date}`);
-	const calendarWrapper = document.querySelector(".calendar") as HTMLElement;
-	if (date?.length) {
+
+	if (date?.length && calendarWrapper) {
 		document.querySelector("[data-calendar-submit]")?.classList.remove("hide");
 		calendarWrapper?.classList.add("modal-selected");
 	} else {

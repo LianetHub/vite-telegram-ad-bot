@@ -94,11 +94,12 @@ export class UIHandler extends EventEmitter {
 
 	private initCalendar() {
 		const calendarElement = document.getElementById("datepicker") as HTMLElement;
+		const calendarWrapper = calendarElement.closest(".calendar") as HTMLElement;
 
 		if (calendarElement) {
 			new Calendar(calendarElement, {
 				onDateChange: (selectedDate) => {
-					calendarUIUpdate(selectedDate);
+					calendarUIUpdate(selectedDate, calendarWrapper);
 				},
 				onDateSubmit: (selectedDate) => {
 					this.emit("filters:change-datepicker", selectedDate);

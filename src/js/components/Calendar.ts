@@ -9,6 +9,7 @@ interface CalendarOptions {
 
 export class Calendar {
 	private container: HTMLElement;
+	private wrapper: HTMLElement | null;
 	private monthsToRender: number;
 	private selectedDate: string[] | undefined = undefined;
 	private onDateChange: (selectedDate: string[] | undefined) => void;
@@ -18,11 +19,12 @@ export class Calendar {
 
 	constructor(container: HTMLElement, options: CalendarOptions = {}) {
 		this.container = container;
+		this.wrapper = container.closest(".calendar");
 		this.monthsToRender = options.monthsToRender || 24;
 		this.onDateChange = options.onDateChange || (() => {});
 		this.onDateSubmit = options.onDateSubmit || (() => {});
-		this.resetBtn = document.querySelector("[data-reset-calendar]") || null;
-		this.submitBtn = document.querySelector("[data-calendar-submit]") || null;
+		this.resetBtn = this.wrapper?.querySelector("[data-reset-calendar]") || null;
+		this.submitBtn = this.wrapper?.querySelector("[data-calendar-submit]") || null;
 
 		moment.locale("ru");
 		this.renderCalendar();
@@ -101,7 +103,6 @@ export class Calendar {
 
 		this.resetBtn?.addEventListener("click", () => {
 			this.clearSelectedDate();
-			this.onDateChange(undefined);
 		});
 
 		this.submitBtn?.addEventListener("click", (e) => {
