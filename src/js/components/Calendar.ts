@@ -9,6 +9,7 @@ interface CalendarOptions {
 	monthsToRender?: number;
 	onDateChange?: (selectedDate: string[] | undefined) => void;
 	onDateSubmit?: (selectedDate: string[] | undefined) => void;
+	mode?: "single" | "range";
 }
 
 export class Calendar {
@@ -20,6 +21,9 @@ export class Calendar {
 	private onDateSubmit: (selectedDate: string[] | undefined) => void;
 	private resetBtn: HTMLElement | null = null;
 	private submitBtn: HTMLElement | null = null;
+	private mode: "single" | "range";
+	private rangeStart: HTMLElement | null = null;
+	private rangeEnd: HTMLElement | null = null;
 
 	constructor(container: HTMLElement, options: CalendarOptions = {}) {
 		this.container = container;
@@ -27,6 +31,7 @@ export class Calendar {
 		this.monthsToRender = options.monthsToRender || 24;
 		this.onDateChange = options.onDateChange || (() => {});
 		this.onDateSubmit = options.onDateSubmit || (() => {});
+		this.mode = options.mode || "single";
 		this.resetBtn = this.wrapper?.querySelector("[data-reset-calendar]") || null;
 		this.submitBtn = this.wrapper?.querySelector("[data-calendar-submit]") || null;
 
@@ -75,6 +80,7 @@ export class Calendar {
 			dayItem.classList.add("calendar__item");
 
 			const dayMoment = month.clone().date(day);
+
 			if (dayMoment.isSame(moment(), "day")) {
 				dayItem.classList.add("today");
 			}
@@ -82,6 +88,8 @@ export class Calendar {
 			if (dayMoment.isBefore(moment(), "day")) {
 				dayItem.classList.add("last");
 			}
+
+			dayItem.setAttribute("data-value", dayMoment.unix().toString());
 
 			const daySpan = document.createElement("span");
 			daySpan.textContent = String(day);
@@ -97,7 +105,6 @@ export class Calendar {
 	private addEventListeners() {
 		this.container.addEventListener("click", (event) => {
 			const target = event.target as HTMLElement;
-
 			const calendarCell = target.closest(".calendar__item") as HTMLElement;
 			if (calendarCell) {
 				this.selectDay(calendarCell);
@@ -108,52 +115,69 @@ export class Calendar {
 			this.clearSelectedDate();
 		});
 
-		this.submitBtn?.addEventListener("click", (e) => {
+		this.submitBtn?.addEventListener("click", () => {
 			this.submitBtn?.classList.add("loading");
 			this.onDateSubmit(this.selectedDate);
 		});
 	}
 
 	private selectDay(dayElement: HTMLElement) {
-		const allDays = this.container.querySelectorAll(".calendar__item");
-		const isSelected = dayElement.classList.contains("selected");
-
-		if (isSelected) {
-			dayElement.classList.remove("selected");
+		if (this.mode === "single") {
 			this.clearSelectedDate();
-		} else {
-			allDays.forEach((day) => (day as HTMLElement).classList.remove("selected"));
 			dayElement.classList.add("selected");
-
-			this.addDayToSelected(dayElement);
-		}
-	}
-
-	private addDayToSelected(dayElement: HTMLElement) {
-		const dayMoment = moment(dayElement.textContent, "D").unix().toString();
-
-		if (this.selectedDate === undefined) {
-			this.selectedDate = [dayMoment];
-		} else if (Array.isArray(this.selectedDate)) {
-			this.selectedDate = [dayMoment];
+			this.selectedDate = [`${dayElement.dataset.value}`];
 		} else {
-			this.selectedDate = [this.selectedDate as string, dayMoment];
-		}
+			if (!this.rangeStart || this.rangeEnd) {
+				this.clearSelectedDate();
+				this.rangeStart = dayElement;
+				this.rangeStart.classList.add("selected", "start");
+				this.selectedDate = [`${this.rangeStart.dataset.value}`];
+			} else {
+				const clickedDate = parseInt(dayElement.dataset.value || "0", 10);
+				const startDate = parseInt(this.rangeStart.dataset.value || "0", 10);
 
+				if (clickedDate < startDate) {
+					this.clearSelectedDate();
+					this.rangeStart = dayElement;
+					this.rangeStart.classList.add("selected", "start");
+					this.selectedDate = [`${this.rangeStart.dataset.value}`];
+				} else {
+					this.rangeEnd = dayElement;
+					this.rangeEnd.classList.add("selected", "end");
+					this.updateRange();
+				}
+			}
+		}
 		this.onDateChange(this.selectedDate);
+	}
+	private updateRange() {
+		if (!this.rangeStart || !this.rangeEnd) return;
+
+		const startUnix = this.rangeStart.dataset.value;
+		const endUnix = this.rangeEnd.dataset.value;
+
+		this.selectedDate = [`${startUnix}-${endUnix}`];
+
+		const allDays = this.container.querySelectorAll(".calendar__item");
+
+		allDays.forEach((day) => {
+			const dayValue = parseInt(day.getAttribute("data-value") || "0", 10);
+			const startValue = parseInt(startUnix || "0", 10);
+			const endValue = parseInt(endUnix || "0", 10);
+
+			if (dayValue >= startValue && dayValue <= endValue) {
+				day.classList.add("selected");
+			}
+		});
 	}
 
 	private clearSelectedDate() {
 		this.selectedDate = undefined;
-		const selectedDay = this.container.querySelector(".calendar__item.selected");
-		if (selectedDay) {
-			selectedDay.classList.remove("selected");
-		}
-
+		this.rangeStart = null;
+		this.rangeEnd = null;
+		this.container.querySelectorAll(".calendar__item").forEach((day) => {
+			day.classList.remove("selected", "start", "end");
+		});
 		this.onDateChange(undefined);
-	}
-
-	public getSelectedDate(): string[] | string | undefined {
-		return this.selectedDate;
 	}
 }

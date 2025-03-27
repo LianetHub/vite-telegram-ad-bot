@@ -98,6 +98,7 @@ export class UIHandler extends EventEmitter {
 
 		if (calendarElement) {
 			new Calendar(calendarElement, {
+				mode: "range",
 				onDateChange: (selectedDate) => {
 					calendarUIUpdate(selectedDate, calendarWrapper);
 				},
