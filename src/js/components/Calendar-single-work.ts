@@ -3,22 +3,15 @@ import "../../scss/_datepicker.scss";
 
 interface CalendarOptions {
 	monthsToRender?: number;
-	onDateChange?: (selectedDate: number | number[] | null) => void;
 }
 
 export class Calendar {
 	private container: HTMLElement;
 	private monthsToRender: number;
-	private selectedDate: number | null = null;
-	private onDateChange: (selectedDate: number | null) => void;
-	private resetBtn: HTMLElement | null = null;
 
 	constructor(container: HTMLElement, options: CalendarOptions = {}) {
 		this.container = container;
 		this.monthsToRender = options.monthsToRender || 24;
-		this.onDateChange = options.onDateChange || (() => {});
-		this.resetBtn = document.querySelector("[data-reset-calendar]") || null;
-
 		moment.locale("ru");
 		this.renderCalendar();
 	}
@@ -32,8 +25,6 @@ export class Calendar {
 			this.container.appendChild(monthContainer);
 			currentMonth.add(1, "month");
 		}
-
-		this.addEventListeners();
 	}
 
 	private createMonth(month: moment.Moment): HTMLElement {
@@ -77,6 +68,8 @@ export class Calendar {
 			daySpan.textContent = String(day);
 			dayItem.appendChild(daySpan);
 
+			dayItem.addEventListener("click", () => this.selectDay(dayItem));
+
 			monthBody.appendChild(dayItem);
 		}
 
@@ -84,45 +77,9 @@ export class Calendar {
 		return monthBlock;
 	}
 
-	private addEventListeners() {
-		this.container.addEventListener("click", (event) => {
-			const target = event.target as HTMLElement;
-
-			if (target && target.closest(".calendar__item")) {
-				this.selectDay(target);
-			}
-		});
-
-		this.resetBtn?.addEventListener("click", () => {
-			console.log("clear calendar");
-
-			this.selectedDate = null;
-			this.onDateChange(null);
-		});
-	}
-
 	private selectDay(dayElement: HTMLElement) {
 		const allDays = this.container.querySelectorAll(".calendar__item");
 		allDays.forEach((day) => (day as HTMLElement).classList.remove("selected"));
 		dayElement.classList.add("selected");
-
-		const dayMoment = moment(dayElement.textContent, "D");
-		this.selectedDate = dayMoment.unix();
-
-		this.onDateChange(this.selectedDate);
-	}
-
-	public getSelectedDate(): number | null {
-		return this.selectedDate;
-	}
-
-	public clearSelectedDate() {
-		this.selectedDate = null;
-		const selectedDay = this.container.querySelector(".calendar__item.selected");
-		if (selectedDay) {
-			selectedDay.classList.remove("selected");
-		}
-
-		this.onDateChange(null);
 	}
 }

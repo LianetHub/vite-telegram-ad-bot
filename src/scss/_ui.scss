@@ -391,7 +391,6 @@
 			transition: transform 0.3s $gentle-easing;
 		}
 	}
-
 	&.modal-lg {
 		padding-top: 0;
 		.modal__wrapper {
@@ -415,6 +414,12 @@
 			width: 100%;
 			transition: transform 0.15s ease;
 			transform: translateX(100%);
+		}
+	}
+
+	&.modal-selected {
+		.modal__row-actions {
+			width: rem(70);
 		}
 	}
 
@@ -466,7 +471,7 @@
 	&__title-default {
 		flex-shrink: 0;
 		transition: all 0.15s $smooth-accelerate-easing;
-		.language-selected & {
+		.modal-selected & {
 			width: 0;
 			height: 0;
 			overflow: hidden;
@@ -482,7 +487,7 @@
 		visibility: hidden;
 		transform: translateX(50%);
 		transition: all 0.15s $smooth-accelerate-easing;
-		.language-selected & {
+		.modal-selected & {
 			width: auto;
 			height: auto;
 			overflow: visible;
@@ -494,12 +499,14 @@
 	// .modal__row-actions
 	&__row-actions {
 		display: flex;
+		transition: all 0.15s $smooth-accelerate-easing;
+		width: rem(24);
 	}
 	// .modal__row-action-default
 	&__row-action-default {
 		flex-shrink: 0;
 		transition: all 0.15s $smooth-accelerate-easing;
-		.language-selected & {
+		.modal-selected & {
 			width: 0;
 			height: 0;
 			overflow: hidden;
@@ -514,7 +521,7 @@
 		visibility: hidden;
 		transform: translateX(100%);
 		transition: all 0.15s $smooth-accelerate-easing;
-		.language-selected & {
+		.modal-selected & {
 			width: auto;
 			height: auto;
 			overflow: visible;
@@ -545,6 +552,7 @@
 
 	// .modal__types
 	&__types {
+		transition: all 0.15s $smooth-accelerate-easing;
 		display: flex;
 		gap: 0.25rem;
 	}

@@ -83,10 +83,22 @@ export function languageUIUpdate(count: number) {
 	const languageWrapper = document.querySelector(".language") as HTMLElement;
 	if (count > 0) {
 		document.querySelector("[data-language-submit]")?.classList.remove("hide");
-		languageWrapper?.classList.add("language-selected");
+		languageWrapper?.classList.add("modal-selected");
 	} else {
 		document.querySelector("[data-language-submit]")?.classList.add("hide");
-		languageWrapper?.classList.remove("language-selected");
+		languageWrapper?.classList.remove("modal-selected");
+	}
+}
+
+export function calendarUIUpdate(date: number | number[] | null) {
+	console.log(`Количество выбранных языков: ${date}`);
+	const calendarWrapper = document.querySelector(".calendar") as HTMLElement;
+	if (date) {
+		document.querySelector("[data-calendar-submit]")?.classList.remove("hide");
+		calendarWrapper?.classList.add("modal-selected");
+	} else {
+		document.querySelector("[data-calendar-submit]")?.classList.add("hide");
+		calendarWrapper?.classList.remove("modal-selected");
 	}
 }
 

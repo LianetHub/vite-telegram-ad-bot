@@ -10,7 +10,7 @@ import { ClickHandler } from "./clickHandler";
 import { ChangeHandler } from "./changeHandler";
 import { InputHandler } from "./inputHandler";
 import { EmptyState } from "../components/Empty";
-import { categoriesUIUpdate, toggleResetFilterBtn } from "../utils/uiActions";
+import { categoriesUIUpdate, toggleResetFilterBtn, calendarUIUpdate } from "../utils/uiActions";
 
 export class UIHandler extends EventEmitter {
 	public clickHandler: ClickHandler;
@@ -81,10 +81,9 @@ export class UIHandler extends EventEmitter {
 
 		if (calendarElement) {
 			new Calendar(calendarElement, {
+				// mode: "range",
 				// range: false,
-				// onDateSelect: (date) => {
-				// 	console.log("Callback Выбрана дата:", date);
-				// },
+				onDateChange: calendarUIUpdate,
 			});
 		}
 	}

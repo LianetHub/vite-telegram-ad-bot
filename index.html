@@ -642,12 +642,19 @@
         </div>
       </div>
 
-      <div id="select-date" class="modal active">
+      <div id="select-date" class="modal calendar active">
         <div class="modal__wrapper">
           <div class="modal__header">
             <div class="resize-indicator"></div>
             <div class="modal__row">
-              <div class="modal__title title-sm fw-semibold">Выберите дату</div>
+              <div class="modal__title title-sm fw-semibold">
+                <span class="modal__title-default">
+                  Выберите дату
+                </span>
+                <span class="modal__title-selected">
+                  <span class="modal__language-quantity" data-name="languages">1</span> день
+                </span>
+              </div>
               <div class="modal__types">
                 <label class="modal__type">
                   <input type="radio" name="calendar-type" checked value="single" class="modal__type-input hidden" hidden>
@@ -658,12 +665,21 @@
                   <span class="modal__type-field"></span>
                 </label>
               </div>
-              <button type="button" data-modal-close class="modal__close">
-                <svg>
-                  <use xlink:href="img/sprite.svg#icon-cross"></use>
-                </svg>
-              </button>
+              <div class="modal__row-actions">
+                <div class="modal__row-action-default">
+                  <button type="button" data-modal-close class="modal__close">
+                    <svg>
+                      <use xlink:href="img/sprite.svg#icon-cross"></use>
+                    </svg>
+                  </button>
+                </div>
+                <div class="modal__row-action-selected">
+                  <button type="button" data-reset-calendar class="modal__clear subtitle">Очистить</button>
+                </div>
+              </div>
             </div>
+
+
             <div class="calendar__days">
               <div class="calendar__day">пн</div>
               <div class="calendar__day">вт</div>
@@ -761,7 +777,8 @@
                 </div>
               </div>
             </div> -->
-            <div class="calendar" id="datepicker"></div>
+            <div class="calendar__wrapper" id="datepicker"></div>
+            <div class="complete-btn__wrapper"><button data-calendar-submit class="complete-btn btn btn-primary btn-sm hide">Применить</button></div>
           </div>
         </div>
 
