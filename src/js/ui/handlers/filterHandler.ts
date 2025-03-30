@@ -1,7 +1,100 @@
 import { store } from "../../store/store";
 import { Category, SortBy, WeeklySends, MonthlyGrowth, LanguageCode, PriceType, SearchRequest } from "../../api/types";
+import { EventEmitter } from "../../store/EventEmitter";
 
 export class FilterHandler {
+	constructor(private eventEmitter: EventEmitter) {
+		this.initEventListeners();
+	}
+
+	private initEventListeners() {
+		document.addEventListener("click", (event: MouseEvent) => {
+			const target = event.target as HTMLElement | null;
+			if (!target) return;
+
+			const categoriesResetBtn = target.closest("[data-categories-reset]") as HTMLElement | null;
+			if (categoriesResetBtn) {
+				this.eventEmitter.emit("filters:categories-reset");
+				categoriesResetBtn.classList.add("loading");
+			}
+
+			const languagesResetBtn = target.closest("[data-reset-languages]") as HTMLElement | null;
+			if (languagesResetBtn) {
+				this.eventEmitter.emit("filters:languages-reset");
+				this.languageUIUpdate(0);
+			}
+
+			const allFiltersResetBtn = target.closest("[data-clear-all-filters]") as HTMLElement | null;
+			if (allFiltersResetBtn) {
+				this.eventEmitter.emit("filters:reset-all");
+				this.categoriesUIUpdate(0);
+				this.languageUIUpdate(0);
+			}
+
+			const resetFilterBtn = target.closest("[data-reset-filter]") as HTMLElement | null;
+			if (resetFilterBtn) {
+				resetFilterBtn.classList.add("loading");
+				this.eventEmitter.emit("filters:reset");
+			}
+		});
+
+		document.addEventListener("change", (event: Event) => {
+			const target = event.target as HTMLInputElement;
+
+			const filterNames = [
+				"languages",
+				"premium",
+				"price_type",
+				"dates",
+				"users_min",
+				"users_max",
+				"sort_by",
+				"weekly_sends",
+				"monthly_growth",
+				"categories",
+				"price_min",
+				"price_max",
+				"users_min",
+				"users_max",
+			];
+			if (filterNames.includes(target.name)) {
+				this.eventEmitter.emit("filters:change", event);
+			}
+
+			const uiUpdates: { [key: string]: { selector: string; callback: (count: number) => void } } = {
+				categories: {
+					selector: ".header__categories-quantity",
+					callback: this.categoriesUIUpdate,
+				},
+				languages: {
+					selector: ".modal__language-quantity",
+					callback: this.languageUIUpdate,
+				},
+			};
+
+			if (uiUpdates[target.name]) {
+				const { selector, callback } = uiUpdates[target.name];
+				const quantityElement = document.querySelector(selector) as HTMLElement;
+				if (quantityElement) {
+					this.updateCountersQuantity(quantityElement, (count) => callback(count));
+				}
+			}
+
+			if (target.classList.contains("segmented-controls__item-input")) {
+				const segmentedControls = target.closest(".segmented-controls") as HTMLElement;
+				this.handleSegmentedChange(segmentedControls, target.value);
+			}
+
+			if (target.classList.contains("modal__type-input")) {
+				this.eventEmitter.emit("change-datepicker-type", event);
+			}
+
+			if (["sort_by", "weekly_sends", "monthly_growth"].includes(target.name)) {
+				this.checkVisiblityResetFilterBtn([target.name]);
+			}
+		});
+	}
+
 	public handleFilterChanged(event: Event, callback?: () => void) {
 		console.log("фильтр изменен");
 
@@ -125,5 +218,84 @@ export class FilterHandler {
 	private getSelectedFilter<T>(filterName: string): T | undefined {
 		const selectedInput = document.querySelector<HTMLInputElement>(`input[name='${filterName}']:checked`);
 		return selectedInput ? (selectedInput.value as T) : undefined;
+	}
+
+	// ui actions
+
+	public checkVisiblityResetFilterBtn(filterNames: string | string[]) {
+		const resetFilterBtn = document.querySelector<HTMLElement>("[data-reset-filter]");
+
+		const filters = Array.isArray(filterNames) ? filterNames : [filterNames];
+
+		const isAnyFilterSelected = filters.some(isFilterSelected);
+
+		if (!isAnyFilterSelected) {
+			resetFilterBtn?.classList.remove("loading");
+		}
+		if (resetFilterBtn) {
+			resetFilterBtn.classList.toggle("hide", !isAnyFilterSelected);
+		}
+
+		function isFilterSelected(filterName: string): boolean {
+			return document.querySelector(`input[name='${filterName}']:checked`) !== null;
+		}
+	}
+
+	public categoriesUIUpdate(count: number) {
+		if (count > 0) {
+			document.querySelector(".header__categories-btn")?.classList.add("has-quantity");
+			document.querySelector(".header__categories-reset")?.classList.add("visible");
+		} else {
+			document.querySelector(".header__categories-btn")?.classList.remove("has-quantity");
+			document.querySelector(".header__categories-reset")?.classList.remove("loading", "visible");
+		}
+	}
+
+	public updateCountersQuantity(element: HTMLElement, callback?: (count: number) => void) {
+		const checkboxes = document.querySelectorAll<HTMLInputElement>('input[name="' + element.getAttribute("data-name") + '"]');
+		const checkedCount = Array.from(checkboxes).filter((checkbox) => checkbox.checked).length;
+
+		element.innerText = checkedCount.toString();
+
+		if (callback) {
+			callback(checkedCount);
+		}
+	}
+
+	public languageUIUpdate(count: number) {
+		console.log(`Количество выбранных языков: ${count}`);
+		const languageWrapper = document.querySelector(".language") as HTMLElement;
+		if (count > 0) {
+			document.querySelector("[data-language-submit]")?.classList.remove("hide");
+			languageWrapper?.classList.add("modal-selected");
+		} else {
+			document.querySelector("[data-language-submit]")?.classList.add("hide");
+			languageWrapper?.classList.remove("modal-selected");
+		}
+	}
+
+	public handleSegmentedChange(controls: HTMLElement, value: string) {
+		const buttons = controls?.querySelectorAll(".segmented-controls__item") as NodeListOf<HTMLElement>;
+		const runner = controls?.querySelector(".segmented-controls__runner") as HTMLElement;
+
+		let activeIndex = 0;
+
+		buttons.forEach((button, index) => {
+			const input = button.querySelector("input") as HTMLInputElement;
+			if (input && input.value === value) {
+				activeIndex = index;
+			}
+		});
+
+		if (buttons.length > 0 && runner) {
+			const activeButton = buttons[activeIndex];
+
+			buttons.forEach((button) => {
+				button.classList.remove("active");
+			});
+
+			activeButton.classList.add("active");
+			runner.style.left = `${activeIndex * 50}%`;
+		}
 	}
 }

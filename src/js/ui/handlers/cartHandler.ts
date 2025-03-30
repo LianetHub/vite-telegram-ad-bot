@@ -22,6 +22,39 @@ interface LanguageData {
 }
 
 export class CartHandler {
+	constructor() {
+		this.initEventListeners();
+	}
+
+	private initEventListeners() {
+		document.addEventListener("click", (e: MouseEvent) => {
+			const target = e.target as HTMLElement | null;
+			if (!target) return;
+
+			// add to cart
+			const cartBtn = target.closest(".card__btn") as HTMLElement | null;
+			if (cartBtn) {
+				cartBtn.classList.toggle("active");
+				const card = cartBtn.closest(".card") as HTMLElement;
+				store.toggleToCart(card.id);
+			}
+			// remove from cart
+			const cartRemoveBtn = target.closest(".card__remove") as HTMLButtonElement | null;
+			if (cartRemoveBtn) {
+				const card = cartRemoveBtn.closest(".card") as HTMLElement;
+				store.removeFromCart(card.id);
+				card.remove();
+			}
+
+			// clear cart
+			const clearCartBtn = target.closest("[data-clear-cart]") as HTMLElement | null;
+			if (clearCartBtn) {
+				store.clearCart();
+				clearCartBtn.classList.add("hidden");
+			}
+		});
+	}
+
 	public handleCartUpdate() {
 		const cartQuantity = store.getState().cart.length;
 		const bagElement = document.querySelector(".bag");

@@ -1,9 +1,9 @@
 import { Calendar, HTMLElementWithDatepicker } from "../../components/Calendar";
+import { Modal } from "../../components/Modal";
 import { EventEmitter } from "../../store/EventEmitter";
-import { calendarUIUpdate, closeModal, openModal } from "../../utils/uiActions";
 
 export class CalendarInitializer {
-	constructor(private eventEmitter: EventEmitter) {}
+	constructor(private eventEmitter: EventEmitter, private modalInstanse: Modal) {}
 
 	initializeCalendars() {
 		this.initMainCalendar();
@@ -17,7 +17,7 @@ export class CalendarInitializer {
 			const calendarWrapper = calendarElement.closest(".calendar") as HTMLElement;
 			const calendarInstance = new Calendar(calendarElement, {
 				onDateChange: (selectedDate) => {
-					calendarUIUpdate(selectedDate, calendarWrapper, calendarInstance);
+					this.calendarUIUpdate(selectedDate, calendarWrapper, calendarInstance);
 				},
 				onDateSubmit: (selectedDate) => {
 					this.eventEmitter.emit("filters:change-datepicker", selectedDate);
@@ -33,11 +33,11 @@ export class CalendarInitializer {
 			const calendarAvailableWrapper = calendarAvailableElement.closest(".calendar") as HTMLElement;
 			const calendarInstance = new Calendar(calendarAvailableElement, {
 				onDateChange: (selectedDate) => {
-					calendarUIUpdate(selectedDate, calendarAvailableWrapper, calendarInstance);
+					this.calendarUIUpdate(selectedDate, calendarAvailableWrapper, calendarInstance);
 				},
 				onDateSubmit: () => {
-					closeModal();
-					openModal("#check-available-time");
+					this.modalInstanse.closeModal();
+					this.modalInstanse.openModal("#check-available-time");
 				},
 			});
 		}
@@ -50,6 +50,50 @@ export class CalendarInitializer {
 		const DatepickerIntanse = currentDatepicker?.datepicker as Calendar | null;
 		if (DatepickerIntanse) {
 			DatepickerIntanse.setMode(type);
+		}
+	}
+
+	private calendarUIUpdate(date: string[] | undefined, calendarWrapper: HTMLElement, instance: Calendar | null = null) {
+		console.log(`Обновление UI Календаря. Выбранно: ${date}`);
+
+		const selectedDaysBlock = calendarWrapper.querySelector('[data-name="selected-days"]') as HTMLElement;
+		const selectedDaysText = calendarWrapper.querySelector('[data-text="selected-days"]') as HTMLElement;
+
+		let selectedDayValue = 1;
+		let selectedDayTextValue = "день";
+
+		if (instance?.mode === "range") {
+			const quantitySelectedDays = instance?.getQuantitySelectedDays() || 0;
+
+			if (quantitySelectedDays > 1) {
+				selectedDayValue = quantitySelectedDays;
+				selectedDayTextValue = getCorrectDayDeclension(quantitySelectedDays);
+			} else if (date?.length) {
+				selectedDayValue = 1;
+				selectedDayTextValue = "день";
+			}
+		}
+
+		function getCorrectDayDeclension(count: number): string {
+			if (count === 1) {
+				return "день";
+			} else if (count >= 2 && count <= 4) {
+				return "дня";
+			} else {
+				return "дней";
+			}
+		}
+
+		selectedDaysBlock.textContent = String(selectedDayValue);
+		selectedDaysText.textContent = selectedDayTextValue;
+
+		const submitButton = calendarWrapper.querySelector("[data-calendar-submit]");
+		if (date?.length && calendarWrapper) {
+			submitButton?.classList.remove("hide");
+			calendarWrapper?.classList.add("modal-selected");
+		} else {
+			submitButton?.classList.add("hide");
+			calendarWrapper?.classList.remove("modal-selected");
 		}
 	}
 }

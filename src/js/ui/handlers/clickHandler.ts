@@ -1,17 +1,4 @@
 import { EventEmitter } from "../../store/EventEmitter";
-import {
-	toggleSubMenu,
-	toggleCategories,
-	hideCategories,
-	categoriesUIUpdate,
-	createRippleEffect,
-	openModal,
-	closeModal,
-	languageUIUpdate,
-	toggleResetSearchBtn,
-} from "../../utils/uiActions";
-
-import { store } from "../../store/store";
 
 export class ClickHandler {
 	constructor(private eventEmitter: EventEmitter) {
@@ -26,126 +13,26 @@ export class ClickHandler {
 		const target = e.target as HTMLElement | null;
 		if (!target) return;
 
-		// menu actions
+		// Ripple-effect
+		const button = (target.closest(".btn") || target.closest(".radio-btn__field")) as HTMLElement | null;
+		if (button) {
+			this.createRippleEffect(button, e);
+		}
+
 		const addButton = target.closest(".header__add") as HTMLElement | null;
 		if (addButton) {
-			toggleSubMenu(addButton);
+			this.toggleSubMenu(addButton);
 		}
 
 		const categoriesBtn = target.closest(".header__categories-btn") as HTMLElement | null;
 		if (categoriesBtn) {
-			toggleCategories();
+			this.toggleCategories();
 		}
 
 		const categoriesHideBtn = target.closest(".header__categories-close") as HTMLElement | null;
 		if (categoriesHideBtn) {
-			hideCategories();
+			this.hideCategories();
 		}
-
-		const categoriesResetBtn = target.closest(".header__categories-reset") as HTMLElement | null;
-		if (categoriesResetBtn) {
-			this.eventEmitter.emit("filters:categories-reset");
-			categoriesResetBtn.classList.add("loading");
-		}
-
-		const languagesResetBtn = target.closest("[data-reset-languages]") as HTMLElement | null;
-		if (languagesResetBtn) {
-			this.eventEmitter.emit("filters:languages-reset");
-			languageUIUpdate(0);
-		}
-
-		const allFiltersResetBtn = target.closest("[data-clear-all-filters]") as HTMLElement | null;
-		if (allFiltersResetBtn) {
-			this.eventEmitter.emit("filters:reset-all");
-			categoriesUIUpdate(0);
-			languageUIUpdate(0);
-		}
-
-		// clear cart
-		const resetFilterBtn = target.closest("[data-reset-filter]") as HTMLElement | null;
-		if (resetFilterBtn) {
-			resetFilterBtn.classList.add("loading");
-			this.eventEmitter.emit("filters:reset");
-		}
-
-		// ========== Search Logic =============
-		const searchBtn = target.closest(".header__search-btn") as HTMLElement | null;
-		const searchBottom = document.querySelector(".header__bottom") as HTMLElement | null;
-		const searchInput = document.querySelector(".header__search .form__control") as HTMLInputElement;
-		if (searchBtn) {
-			searchBottom?.classList.add("open-search");
-			searchInput?.focus();
-		}
-
-		const searchBack = target.closest(".header__search-back") as HTMLElement | null;
-		if (searchBack) {
-			searchBottom?.classList.remove("open-search");
-			const currentValue = searchInput.value;
-			if (currentValue.length > 0) {
-				searchInput.value = "";
-				toggleResetSearchBtn(searchInput.value);
-				this.eventEmitter.emit("filters:search-reset");
-			}
-		}
-
-		const resetSearchBtn = target.closest(".header__search-reset") as HTMLElement | null;
-		if (resetSearchBtn) {
-			searchInput.value = "";
-			toggleResetSearchBtn(searchInput.value);
-			this.eventEmitter.emit("filters:search-reset");
-		}
-		// ========== Search Logic =============
-
-		// Ripple-эффект
-		const button = (target.closest(".btn") || target.closest(".radio-btn__field")) as HTMLElement | null;
-		if (button) {
-			createRippleEffect(button, e);
-			this.eventEmitter.emit("rippleEffect", button);
-		}
-
-		// add to cart
-		const cartBtn = target.closest(".card__btn") as HTMLElement | null;
-		if (cartBtn) {
-			cartBtn.classList.toggle("active");
-			const card = cartBtn.closest(".card") as HTMLElement;
-			store.toggleToCart(card.id);
-		}
-		// remove from cart
-		const cartRemoveBtn = target.closest(".card__remove") as HTMLButtonElement | null;
-		if (cartRemoveBtn) {
-			const card = cartRemoveBtn.closest(".card") as HTMLElement;
-			store.removeFromCart(card.id);
-			card.remove();
-		}
-
-		// clear cart
-		const clearCartBtn = target.closest("[data-clear-cart]") as HTMLElement | null;
-		if (clearCartBtn) {
-			store.clearCart();
-			clearCartBtn.classList.add("hidden");
-		}
-
-		// ================= Modal Logic ==============
-		const modalLink = target.closest("[data-modal]") as HTMLElement | null;
-		if (modalLink) {
-			openModal(modalLink);
-			this.eventEmitter.emit("modal:opened", modalLink);
-		}
-
-		const closeModalButton = target.closest("[data-modal-close]") as HTMLElement | null;
-		if (closeModalButton) {
-			closeModal();
-			this.eventEmitter.emit("modal:closed", closeModalButton);
-		}
-
-		const modal = target.closest(".modal") as HTMLElement | null;
-		if (modal && !target.closest(".modal__wrapper")) {
-			closeModal();
-			this.eventEmitter.emit("modal:closed", modal);
-		}
-		// ================= Modal Logic ==============
-
-		// ================= Card Logic ===============
 
 		const moreCardCountriesBtn = target.closest(".card__countries-more") as HTMLButtonElement | null;
 		const allCardLists = document.querySelectorAll(".card__countries-list.visible");
@@ -173,7 +60,45 @@ export class ClickHandler {
 			// const currentCardId = currentCard?.id;
 			// this.eventEmitter.emit("filters:search-reset", currentCardId);
 		}
+	}
 
-		// ================= Card Logic ===============
+	private toggleSubMenu(addButton: HTMLElement) {
+		addButton.classList.toggle("active");
+		const sortElement = document.querySelector(".header__sort") as HTMLElement | null;
+		sortElement?.classList.toggle("active");
+	}
+
+	private toggleCategories() {
+		const wrapper = document.querySelector(".header__bottom") as HTMLElement | null;
+		wrapper?.classList.toggle("open-categories");
+		document.body.classList.toggle("lock");
+	}
+
+	private hideCategories() {
+		const wrapper = document.querySelector(".header__bottom") as HTMLElement | null;
+		wrapper?.classList.remove("open-categories");
+		document.body.classList.remove("lock");
+	}
+
+	private createRippleEffect(button: HTMLElement, event: MouseEvent) {
+		const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+
+		const ripple = document.createElement("span");
+		ripple.classList.add("ripple");
+
+		const rect = button.getBoundingClientRect();
+		const size = Math.max(rect.width, rect.height);
+		ripple.style.width = ripple.style.height = `${size}px`;
+
+		const x = (event.clientX - rect.left - size / 2) / rootFontSize;
+		const y = (event.clientY - rect.top - size / 2) / rootFontSize;
+		ripple.style.left = `${x}rem`;
+		ripple.style.top = `${y}rem`;
+
+		button.appendChild(ripple);
+
+		setTimeout(() => {
+			ripple.remove();
+		}, 600);
 	}
 }
