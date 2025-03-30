@@ -247,7 +247,7 @@
 	bottom: 1rem;
 	left: 50%;
 	transform: translateX(-50%);
-	z-index: 2;
+	z-index: $ui-index-2;
 	display: flex;
 	align-items: center;
 	overflow: hidden;
@@ -275,6 +275,7 @@
 	&__total {
 		margin-right: -50%;
 		opacity: 0;
+		white-space: nowrap;
 		@keyframes bagTextAnimation {
 			0% {
 				margin-right: -50%;
@@ -288,10 +289,11 @@
 	}
 	// .bag__link
 	&__link {
-		display: block;
+		display: flex;
 		&.btn.btn-icon.btn-xs {
 			width: 3rem;
 			height: 3rem;
+			padding-bottom: 0.25rem;
 
 			& svg {
 				width: 2rem;
@@ -370,6 +372,9 @@
 	transition: all 0.3s ease;
 	padding-top: 20svh;
 	z-index: 999;
+	body:not(.init-app) & {
+		display: none;
+	}
 	&.active {
 		opacity: 1;
 		visibility: visible;

@@ -5,6 +5,7 @@ import { store } from "./js/store/store";
 
 document.addEventListener("DOMContentLoaded", () => {
 	new UIHandler();
-
-	store.fetchCards();
+	store.fetchCards().then(() => {
+		document.body.classList.add("init-app");
+	});
 });

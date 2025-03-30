@@ -244,10 +244,13 @@ export class FilterHandler {
 	public categoriesUIUpdate(count: number) {
 		if (count > 0) {
 			document.querySelector(".header__categories-btn")?.classList.add("has-quantity");
-			document.querySelector(".header__categories-reset")?.classList.add("visible");
+			document.querySelector("[data-categories-reset]")?.classList.add("visible");
 		} else {
 			document.querySelector(".header__categories-btn")?.classList.remove("has-quantity");
-			document.querySelector(".header__categories-reset")?.classList.remove("loading", "visible");
+			document.querySelector("[data-categories-reset]")?.classList.remove("visible");
+			setTimeout(() => {
+				document.querySelector("[data-categories-reset]")?.classList.remove("loading");
+			}, 400);
 		}
 	}
 

@@ -79,7 +79,7 @@ export class CartHandler {
 			let totalPrice = store.getState().total ?? 0;
 			document.querySelector("[data-clear-cart]")?.classList.remove("hidden");
 			totalElements.forEach((totalElement) => {
-				totalElement.textContent = `${addThousandSeparator(totalPrice)} ₽`;
+				totalElement.textContent = `${addThousandSeparator(totalPrice)}\u205F₽`;
 			});
 		} else {
 			document.querySelector("[data-clear-cart]")?.classList.remove("hidden");
@@ -132,7 +132,7 @@ export class CartHandler {
 
 		const totalPriceElement: HTMLElement | null = document.querySelector("[data-total-price]");
 		if (totalPriceElement) {
-			totalPriceElement.textContent = `${addThousandSeparator(totalPrice)} ₽`;
+			totalPriceElement.textContent = `${addThousandSeparator(totalPrice)}\u205F₽`;
 		}
 
 		// Обновление текстового описания

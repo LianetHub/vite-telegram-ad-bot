@@ -127,7 +127,7 @@ export class Card {
 
 		const cardPrice = document.createElement("div");
 		cardPrice.classList.add("card__price", "title-sm", "fw-semibold");
-		cardPrice.innerHTML = `${addThousandSeparator(this.data.total_price)}&nbsp;${this.data.currency === "RUB" ? "₽" : this.data.currency}`;
+		cardPrice.textContent = `${addThousandSeparator(this.data.total_price, true)}\u205F${this.data.currency === "RUB" ? "₽" : this.data.currency}`;
 
 		const actionButtonBlock = this.hasRemoveButton ? this.createRemoveBtn() : this.createAddBtn();
 
