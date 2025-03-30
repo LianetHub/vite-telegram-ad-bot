@@ -1,8 +1,8 @@
-import { CardList } from "../components/CardList";
-import { store } from "../store/store";
-import { addThousandSeparator } from "../utils/addThousandSeparator";
+import { CardList } from "../../components/CardList";
+import { store } from "../../store/store";
+import { addThousandSeparator } from "../../utils/addThousandSeparator";
 
-import { formatNumber } from "../utils/formatNumber";
+import { formatNumber } from "../../utils/formatNumber";
 
 interface CartItem {
 	currency: string;

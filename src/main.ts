@@ -1,5 +1,5 @@
 import "./scss/style.scss";
-import { UIHandler } from "./js/ui/uiHandler";
+import { UIHandler } from "./js/ui";
 
 import { store } from "./js/store/store";
 

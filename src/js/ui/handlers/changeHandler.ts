@@ -1,5 +1,5 @@
-import { EventEmitter } from "../store/EventEmitter";
-import { updateCheckboxQuantity, categoriesUIUpdate, languageUIUpdate, handleSegmentedChange, toggleResetFilterBtn } from "../utils/uiActions";
+import { EventEmitter } from "../../store/EventEmitter";
+import { updateCheckboxQuantity, categoriesUIUpdate, languageUIUpdate, handleSegmentedChange, toggleResetFilterBtn } from "../../utils/uiActions";
 
 export class ChangeHandler {
 	constructor(private eventEmitter: EventEmitter) {

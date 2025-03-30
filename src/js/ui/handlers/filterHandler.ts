@@ -1,5 +1,5 @@
-import { store } from "../store/store";
-import { Category, SortBy, WeeklySends, MonthlyGrowth, LanguageCode, PriceType, SearchRequest } from "../api/types";
+import { store } from "../../store/store";
+import { Category, SortBy, WeeklySends, MonthlyGrowth, LanguageCode, PriceType, SearchRequest } from "../../api/types";
 
 export class FilterHandler {
 	public handleFilterChanged(event: Event, callback?: () => void) {

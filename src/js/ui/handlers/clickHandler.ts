@@ -1,4 +1,4 @@
-import { EventEmitter } from "../store/EventEmitter";
+import { EventEmitter } from "../../store/EventEmitter";
 import {
 	toggleSubMenu,
 	toggleCategories,
@@ -9,9 +9,9 @@ import {
 	closeModal,
 	languageUIUpdate,
 	toggleResetSearchBtn,
-} from "../utils/uiActions";
+} from "../../utils/uiActions";
 
-import { store } from "../store/store";
+import { store } from "../../store/store";
 
 export class ClickHandler {
 	constructor(private eventEmitter: EventEmitter) {

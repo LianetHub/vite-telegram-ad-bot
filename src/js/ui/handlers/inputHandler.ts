@@ -1,5 +1,5 @@
-import { EventEmitter } from "../store/EventEmitter";
-import { toggleResetSearchBtn } from "../utils/uiActions";
+import { EventEmitter } from "../../store/EventEmitter";
+import { toggleResetSearchBtn } from "../../utils/uiActions";
 import debounce from "lodash.debounce";
 
 export class InputHandler {
