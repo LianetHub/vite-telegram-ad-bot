@@ -662,9 +662,11 @@
 		gap: 0.5rem;
 		padding: 0.875rem 1.25rem;
 		min-height: rem(60);
-		background: rgba(8, 8, 26, 0.02);
 		&.btn {
 			border-radius: 2.5rem;
+			&.btn-white {
+				background: rgba(8, 8, 26, 0.02);
+			}
 		}
 	}
 	// .language__bottom-icon
