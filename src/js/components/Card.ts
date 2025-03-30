@@ -19,6 +19,7 @@ export class Card {
 	private hasSending: boolean;
 	private hasRemoveButton: boolean;
 	private isDisabled: boolean;
+	private isOneLanguageCard: boolean;
 
 	constructor(options: CardOptions) {
 		this.data = options.data;
@@ -26,6 +27,7 @@ export class Card {
 		this.hasSending = options.hasSending ?? false;
 		this.hasRemoveButton = options.hasRemoveButton ?? false;
 		this.isDisabled = options.isDisabled ?? false;
+		this.isOneLanguageCard = Object.keys(this.data.users_per_lang).length === 1;
 	}
 
 	render(): HTMLElement {
@@ -74,6 +76,11 @@ export class Card {
 		cardHeader.appendChild(cardThumb);
 		cardHeader.appendChild(cardApp);
 
+		if (this.isOneLanguageCard) {
+			const sendingBlock = this.createSendingBlock();
+			cardHeader.appendChild(sendingBlock);
+		}
+
 		return cardHeader;
 	}
 
@@ -81,8 +88,10 @@ export class Card {
 		const cardBody = document.createElement("div");
 		cardBody.classList.add("card__body");
 
-		const cardBodyTop = this.createCardBodyTop();
-		cardBody.appendChild(cardBodyTop);
+		if (!this.isOneLanguageCard) {
+			const cardBodyTop = this.createCardBodyTop();
+			cardBody.appendChild(cardBodyTop);
+		}
 
 		const cardBodyBottom = this.createCardBodyBottom();
 		cardBody.appendChild(cardBodyBottom);
@@ -94,6 +103,51 @@ export class Card {
 		const cardRow = document.createElement("div");
 		cardRow.className = "card__row";
 
+		const cardActive = this.createActiveBlock();
+
+		cardRow.appendChild(cardActive);
+
+		const sendingBlock = this.createSendingBlock();
+		cardRow.appendChild(sendingBlock);
+
+		return cardRow;
+	}
+
+	private createSendingBlock(): HTMLElement {
+		const sendingBlock = this.hasSending ? this.createSending() : this.createTimeLink();
+		return sendingBlock;
+	}
+
+	private createCardBodyBottom(): HTMLElement {
+		const cardRow = document.createElement("div");
+		cardRow.className = "card__row";
+
+		const cardActions = document.createElement("div");
+		cardActions.classList.add("card__actions");
+
+		const cardPrice = document.createElement("div");
+		cardPrice.classList.add("card__price", "title-sm", "fw-semibold");
+		cardPrice.innerHTML = `${addThousandSeparator(this.data.total_price)}&nbsp;${this.data.currency === "RUB" ? "₽" : this.data.currency}`;
+
+		const actionButtonBlock = this.hasRemoveButton ? this.createRemoveBtn() : this.createAddBtn();
+
+		cardActions.appendChild(cardPrice);
+		cardActions.appendChild(actionButtonBlock);
+
+		if (this.isOneLanguageCard) {
+			const activeBlock = this.createActiveBlock(true);
+			cardRow.appendChild(activeBlock);
+		} else {
+			const cardCountries = this.createCountriesBlock();
+			cardRow.appendChild(cardCountries);
+		}
+
+		cardRow.appendChild(cardActions);
+
+		return cardRow;
+	}
+
+	private createActiveBlock(hasCountryIcon: boolean = false): HTMLElement {
 		const cardActive = document.createElement("div");
 		cardActive.className = "card__active subtitle";
 
@@ -108,36 +162,20 @@ export class Card {
 		cardActive.appendChild(activeLabel);
 		cardActive.appendChild(activeUsers);
 
-		const sendingBlock = this.hasSending ? this.createSending() : this.createTimeLink();
+		if (hasCountryIcon) {
+			const countryIconBlock = document.createElement("span");
+			countryIconBlock.classList.add("card__active-flag");
+			const countryIcon = document.createElement("img");
+			const countryFlag = Object.keys(this.data.users_per_lang)[0];
+			countryIcon.src = `/img/flags/${countryFlag}.svg`;
+			countryIcon.alt = "Флаг";
 
-		cardRow.appendChild(cardActive);
-		cardRow.appendChild(sendingBlock);
+			countryIconBlock.appendChild(countryIcon);
 
-		return cardRow;
-	}
+			cardActive.appendChild(countryIconBlock);
+		}
 
-	private createCardBodyBottom(): HTMLElement {
-		const cardRow = document.createElement("div");
-		cardRow.className = "card__row";
-
-		const cardCountries = this.createCountriesBlock();
-
-		const cardActions = document.createElement("div");
-		cardActions.classList.add("card__actions");
-
-		const cardPrice = document.createElement("div");
-		cardPrice.classList.add("card__price", "title-sm", "fw-semibold");
-		cardPrice.innerHTML = `${addThousandSeparator(this.data.total_price)}&nbsp;${this.data.currency === "RUB" ? "₽" : this.data.currency}`;
-
-		const actionButtonBlock = this.hasRemoveButton ? this.createRemoveBtn() : this.createAddBtn();
-
-		cardActions.appendChild(cardPrice);
-		cardActions.appendChild(actionButtonBlock);
-
-		cardRow.appendChild(cardCountries);
-		cardRow.appendChild(cardActions);
-
-		return cardRow;
+		return cardActive;
 	}
 
 	private createCountriesBlock(): HTMLElement {
