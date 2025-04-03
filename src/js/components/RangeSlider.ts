@@ -39,6 +39,9 @@ export class RangeSlider {
 		this.minInput.addEventListener("blur", this.onInputChange);
 		this.maxInput.addEventListener("blur", this.onInputChange);
 
+		this.minInput.addEventListener("reset", () => this.slider.reset());
+		this.maxInput.addEventListener("reset", () => this.slider.reset());
+
 		this.minInput.addEventListener("input", this.onInputValidation);
 		this.maxInput.addEventListener("input", this.onInputValidation);
 

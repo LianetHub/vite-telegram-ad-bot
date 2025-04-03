@@ -22,6 +22,7 @@ export class ClickHandler {
 		const addButton = target.closest(".header__add") as HTMLElement | null;
 		if (addButton) {
 			this.toggleSubMenu(addButton);
+			this.eventEmitter.emit("test");
 		}
 
 		const categoriesBtn = target.closest(".header__categories-btn") as HTMLElement | null;
@@ -52,13 +53,6 @@ export class ClickHandler {
 		} else {
 			allCardLists.forEach((list) => list.classList.remove("visible"));
 			allActiveButtons.forEach((btn) => btn.classList.remove("active"));
-		}
-
-		const cartTimeBtn = target.closest(".card__time") as HTMLButtonElement | null;
-		if (cartTimeBtn) {
-			// const currentCard = cartTimeBtn.closest(".card");
-			// const currentCardId = currentCard?.id;
-			// this.eventEmitter.emit("filters:search-reset", currentCardId);
 		}
 	}
 

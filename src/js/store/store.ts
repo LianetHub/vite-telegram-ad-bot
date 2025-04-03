@@ -15,7 +15,6 @@ import {
 export interface StoreState {
 	fullData: ApiResponse["data"];
 	cards: ApiResponse["data"];
-	loading: boolean;
 	error: string | null;
 	cart: string[];
 	filters: SearchRequest;
@@ -29,7 +28,6 @@ class Store {
 	private state: StoreState = {
 		fullData: [],
 		cards: [],
-		loading: false,
 		error: null,
 		cart: [],
 		filters: {},
@@ -67,7 +65,6 @@ class Store {
 	}
 
 	async fetchCards(params: SearchRequest = this.state.filters): Promise<void> {
-		this.state.loading = true;
 		console.log("Начало загрузки");
 		this.events.emit("loading:start");
 
@@ -89,21 +86,17 @@ class Store {
 				console.log("Карточки загружены", this.state.cards);
 				this.events.emit("cards:loaded");
 			}
-
-			this.updateTotalCart();
 		} catch (error) {
 			this.state.error = error instanceof Error ? error.message : String(error);
 
 			console.log("Ошибка загрузки", this.state.error);
 			this.events.emit("cards:loading-error", this.state.error);
 		} finally {
-			this.state.loading = false;
 			this.events.emit("loading:end");
 		}
 	}
 
 	async fetchAvailableDates(params: AvailableDatesRequest) {
-		this.state.loading = true;
 		this.events.emit("loading:start");
 
 		try {
@@ -116,13 +109,11 @@ class Store {
 			// this.state.error = error.message;
 			// this.events.emit("error", error.message);
 		} finally {
-			this.state.loading = false;
 			this.events.emit("loading:end");
 		}
 	}
 
 	async fetchStartDates(params: StartDatesRequest) {
-		this.state.loading = true;
 		this.events.emit("loading:start");
 
 		try {
@@ -135,13 +126,11 @@ class Store {
 			// this.state.error = error.message;
 			// this.events.emit("error", error.message);
 		} finally {
-			this.state.loading = false;
 			this.events.emit("loading:end");
 		}
 	}
 
 	async checkAvailability(params: CheckAvailabilityRequest) {
-		this.state.loading = true;
 		this.events.emit("loading:start");
 
 		try {
@@ -154,7 +143,6 @@ class Store {
 			// this.state.error = error.message;
 			// this.events.emit("error", error.message);
 		} finally {
-			this.state.loading = false;
 			this.events.emit("loading:end");
 		}
 	}

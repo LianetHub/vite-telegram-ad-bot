@@ -36,6 +36,25 @@ export class FilterHandler {
 				resetFilterBtn.classList.add("loading");
 				this.eventEmitter.emit("filters:reset");
 			}
+
+			const completePricesBtn = target.closest("[data-prices-complete]") as HTMLButtonElement | null;
+			if (completePricesBtn) {
+				if (store.getState().cards.length == 0) {
+					this.setLoading(completePricesBtn);
+					this.eventEmitter.emit("filters:prices-reset");
+				} else {
+					this.eventEmitter.emit("filters:complete");
+				}
+			}
+			const completeUsersBtn = target.closest("[data-users-complete]") as HTMLButtonElement | null;
+			if (completeUsersBtn) {
+				if (store.getState().cards.length == 0) {
+					this.setLoading(completeUsersBtn);
+					this.eventEmitter.emit("filters:users-reset");
+				} else {
+					this.eventEmitter.emit("filters:complete");
+				}
+			}
 		});
 
 		document.addEventListener("change", (event: Event) => {
@@ -44,41 +63,41 @@ export class FilterHandler {
 			const filterNames = [
 				"languages",
 				"premium",
-				"price_type",
 				"dates",
-				"users_min",
-				"users_max",
 				"sort_by",
 				"weekly_sends",
 				"monthly_growth",
 				"categories",
-				"price_min",
-				"price_max",
+				"price_type",
 				"users_min",
 				"users_max",
+				"price_min",
+				"price_max",
 			];
+
 			if (filterNames.includes(target.name)) {
-				this.eventEmitter.emit("filters:change", event);
+				this.handleUIUpdate(target.name);
+				this.handleFilterChanged(event, () => this.getFilterСallback(target.name));
 			}
 
-			const uiUpdates: { [key: string]: { selector: string; callback: (count: number) => void } } = {
-				categories: {
-					selector: ".header__categories-quantity",
-					callback: this.categoriesUIUpdate,
-				},
-				languages: {
-					selector: ".modal__language-quantity",
-					callback: this.languageUIUpdate,
-				},
-			};
+			// const uiUpdates: { [key: string]: { selector: string; callback: (count: number) => void } } = {
+			// 	categories: {
+			// 		selector: ".header__categories-quantity",
+			// 		callback: this.categoriesUIUpdate,
+			// 	},
+			// 	languages: {
+			// 		selector: ".modal__language-quantity",
+			// 		callback: this.languageUIUpdate,
+			// 	},
+			// };
 
-			if (uiUpdates[target.name]) {
-				const { selector, callback } = uiUpdates[target.name];
-				const quantityElement = document.querySelector(selector) as HTMLElement;
-				if (quantityElement) {
-					this.updateCountersQuantity(quantityElement, (count) => callback(count));
-				}
-			}
+			// if (uiUpdates[target.name]) {
+			// 	const { selector, callback } = uiUpdates[target.name];
+			// 	const quantityElement = document.querySelector(selector) as HTMLElement;
+			// 	if (quantityElement) {
+			// 		this.updateCountersQuantity(quantityElement, (count) => callback(count));
+			// 	}
+			// }
 
 			if (target.classList.contains("segmented-controls__item-input")) {
 				const segmentedControls = target.closest(".segmented-controls") as HTMLElement;
@@ -122,6 +141,74 @@ export class FilterHandler {
 		});
 	}
 
+	private handleUIUpdate(filterName: string): undefined | void {
+		const completePricesBtn = document.querySelector("[data-prices-complete]") as HTMLButtonElement;
+		const completeUsersBtn = document.querySelector("[data-users-complete]") as HTMLButtonElement;
+
+		switch (filterName) {
+			case "categories":
+				return;
+			case "sort_by":
+				return;
+			case "weekly_sends":
+				return;
+			case "monthly_growth":
+				return;
+			case "price_type":
+				return this.setLoading(completePricesBtn);
+			case "price_min":
+				return this.setLoading(completePricesBtn);
+			case "price_max":
+				return this.setLoading(completePricesBtn);
+			case "users_min":
+				return this.setLoading(completeUsersBtn);
+			case "users_max":
+				return this.setLoading(completeUsersBtn);
+			case "languages":
+				return;
+			case "premium":
+				return;
+			case "search":
+				return;
+			default:
+				return undefined;
+		}
+	}
+
+	private getFilterСallback(filterName: string): undefined | void {
+		const completePricesBtn = document.querySelector("[data-prices-complete]") as HTMLButtonElement;
+		const completeUsersBtn = document.querySelector("[data-users-complete]") as HTMLButtonElement;
+
+		switch (filterName) {
+			case "categories":
+				return;
+			case "sort_by":
+				return;
+			case "weekly_sends":
+				return;
+			case "monthly_growth":
+				return;
+			case "price_type":
+				return this.updateUIQuantityInBtn(completePricesBtn);
+			case "price_min":
+				return this.updateUIQuantityInBtn(completePricesBtn);
+			case "price_max":
+				return this.updateUIQuantityInBtn(completeUsersBtn);
+			case "users_min":
+				return this.updateUIQuantityInBtn(completeUsersBtn);
+			case "users_max":
+				return;
+			case "languages":
+				return;
+			case "premium":
+				return;
+			case "search":
+				return;
+			default:
+				return undefined;
+		}
+	}
+
 	public resetFilters(
 		filterNames: (keyof SearchRequest)[] = [
 			"languages",
@@ -151,8 +238,15 @@ export class FilterHandler {
 	}
 
 	private resetFilter(filterName: string) {
-		const selectedInputs = document.querySelectorAll<HTMLInputElement>(`input[name='${filterName}']:checked`);
-		selectedInputs.forEach((input) => (input.checked = false));
+		const inputs = document.querySelectorAll<HTMLInputElement>(`input[name='${filterName}']`);
+
+		inputs.forEach((input) => {
+			if (input.type === "checkbox" || input.type === "radio") {
+				input.checked = false;
+			} else {
+				input.dispatchEvent(new Event("reset", { bubbles: true }));
+			}
+		});
 	}
 
 	private getFilterValue(filterName: string): string | number | boolean | undefined {
@@ -300,5 +394,52 @@ export class FilterHandler {
 			activeButton.classList.add("active");
 			runner.style.left = `${activeIndex * 50}%`;
 		}
+	}
+
+	public updateUIQuantityInBtn(btn: HTMLButtonElement, type: "бот" = "бот") {
+		if (!btn) return;
+
+		const quantity = store.getState().cards.length;
+
+		const getDeclension = (num: number, word: string): string => {
+			if (num % 10 === 1 && num % 100 !== 11) return word;
+			if ([2, 3, 4].includes(num % 10) && ![12, 13, 14].includes(num % 100)) return `${word}а`;
+			return `${word}ов`;
+		};
+
+		let priceSpan = btn.querySelector(".complete-btn__price");
+
+		if (quantity > 0) {
+			const text = `${quantity} ${getDeclension(quantity, type)}`;
+
+			if (!priceSpan) {
+				priceSpan = document.createElement("span");
+				priceSpan.className = "complete-btn__price";
+				btn.appendChild(priceSpan);
+			}
+			priceSpan.textContent = text;
+
+			btn.textContent = "Показать все";
+
+			btn.appendChild(priceSpan);
+
+			btn.classList.remove("btn-primary-outline");
+			btn.classList.add("btn-primary");
+		} else {
+			if (priceSpan) priceSpan.remove();
+
+			btn.textContent = "Очистить";
+			btn.classList.remove("btn-primary");
+			btn.classList.add("btn-primary-outline");
+		}
+
+		this.removeLoading(btn);
+	}
+
+	public setLoading(btn: HTMLButtonElement) {
+		return btn.classList.add("loading");
+	}
+	public removeLoading(btn: HTMLButtonElement) {
+		return btn.classList.remove("loading");
 	}
 }

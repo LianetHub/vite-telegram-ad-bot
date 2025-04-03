@@ -161,7 +161,7 @@
 }
 
 .segmented-controls {
-	margin-top: rem(28);
+	margin-top: rem(12);
 	border-radius: 0.75rem;
 	background: rgba(8, 8, 26, 0.12);
 	padding: 0.12rem;
@@ -610,10 +610,13 @@
 	}
 	// .modal__filter-inputs
 	&__filter-inputs {
+		&:first-child {
+			margin-top: rem(28);
+		}
 		margin-top: 2.5rem;
 		display: flex;
 		justify-content: space-between;
-		gap: 1.5rem;
+		gap: rem(12);
 	}
 	// .modal__filter-field
 	&__filter-field {
@@ -639,7 +642,7 @@
 	}
 	// .modal__filter-btn
 	&__filter-btn {
-		margin-top: 2.5rem;
+		margin-top: rem(48);
 	}
 }
 

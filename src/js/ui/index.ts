@@ -5,7 +5,7 @@ import { FilterHandler } from "./handlers/filterHandler";
 import { ClickHandler } from "./handlers/clickHandler";
 import { SearchHandler } from "./handlers/searchHandler";
 import { StateRenderer } from "./StateRenderer";
-import { SliderInitializer } from "./initializers/SliderInitializer";
+import { RangeSliderInitializer } from "./initializers/RangeSliderInitializer";
 import { CalendarInitializer } from "./initializers/CalendarInitializer";
 import { Modal } from "../components/Modal";
 
@@ -15,7 +15,7 @@ export class UIHandler extends EventEmitter {
 	private cartHandler: CartHandler;
 	private filterHandler: FilterHandler;
 	private stateRenderer: StateRenderer;
-	private sliderInitializer: SliderInitializer;
+	private rangeSliderInitializer: RangeSliderInitializer;
 	private сalendarInitializer: CalendarInitializer;
 	private modal: Modal;
 	private isFirstLoad: boolean;
@@ -28,11 +28,10 @@ export class UIHandler extends EventEmitter {
 		this.clickHandler = new ClickHandler(this);
 		this.searchHandler = new SearchHandler(this);
 		this.stateRenderer = new StateRenderer();
-		this.sliderInitializer = new SliderInitializer();
+		this.rangeSliderInitializer = new RangeSliderInitializer();
 		this.сalendarInitializer = new CalendarInitializer(this, this.modal);
 		this.isFirstLoad = true;
 
-		this.on("filters:change", this.filterHandler.handleFilterChanged.bind(this.filterHandler));
 		this.on("filters:change-datepicker", (selectedDate: string[] | undefined) => {
 			this.filterHandler.handleDateChange(selectedDate, () => {
 				document.querySelector("[data-calendar-submit]")?.classList.remove("loading");
@@ -47,6 +46,18 @@ export class UIHandler extends EventEmitter {
 		});
 		this.on("filters:categories-reset", () => {
 			this.filterHandler.resetFilters(["categories"], () => this.filterHandler.categoriesUIUpdate(0));
+		});
+		this.on("filters:prices-reset", () => {
+			this.filterHandler.resetFilters(["price_type", "price_min", "price_max"], () => {
+				const completePricesBtn = document.querySelector("[data-prices-complete]") as HTMLButtonElement;
+				this.filterHandler.updateUIQuantityInBtn(completePricesBtn);
+			});
+		});
+		this.on("filters:users-reset", () => {
+			this.filterHandler.resetFilters(["users_min", "users_max"], () => {
+				const completeUsersBtn = document.querySelector("[data-users-complete]") as HTMLButtonElement;
+				this.filterHandler.updateUIQuantityInBtn(completeUsersBtn);
+			});
 		});
 		this.on("filters:languages-reset", () => this.filterHandler.resetFilters(["languages"]));
 		this.on("filters:search-reset", () => this.filterHandler.resetFilters(["search"]));
@@ -68,6 +79,11 @@ export class UIHandler extends EventEmitter {
 			])
 		);
 
+		this.on("filters:complete", () => {
+			this.modal.closeModal();
+			this.stateRenderer.renderCards();
+		});
+
 		this.on("modal:opened", this.handleModalOpened);
 
 		this.on("change-datepicker-type", this.сalendarInitializer.changeDatepickerType.bind(this));
@@ -76,19 +92,26 @@ export class UIHandler extends EventEmitter {
 	}
 
 	private initApp() {
-		this.sliderInitializer.initializeSliders();
+		this.rangeSliderInitializer.initializeSliders();
 		this.сalendarInitializer.initializeCalendars();
 
-		store.subscribe("loading:start", this.stateRenderer.showSkeleton);
-		store.subscribe("cards:empty", this.stateRenderer.showEmptyState);
+		store.subscribe("loading:start", () => {
+			if (this.isFirstLoad) {
+				this.stateRenderer.showSkeleton();
+			}
+		});
+		// store.subscribe("cards:empty", this.stateRenderer.showEmptyState);
 		store.subscribe("cards:loading-error", this.stateRenderer.showErrorLoading);
-		store.subscribe("cards:loaded", this.stateRenderer.renderCards);
 		store.subscribe("cards:loaded", () => {
 			if (this.isFirstLoad) {
+				console.log("Первая загрузка");
+
+				this.stateRenderer.renderCards();
 				this.cartHandler.handleCartUpdate.bind(this.cartHandler);
 				this.isFirstLoad = false;
 			}
 		});
+
 		store.subscribe("cart:update", this.cartHandler.handleCartUpdate.bind(this.cartHandler));
 		store.subscribe("cart:cleared", this.cartHandler.clearCartList.bind(this.cartHandler));
 	}

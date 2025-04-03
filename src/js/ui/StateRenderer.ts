@@ -43,6 +43,12 @@ export class StateRenderer {
 
 	renderCards(cards = store.getState().cards): void {
 		console.log("Рендер карточек");
+
+		if (!cards.length) {
+			this.showEmptyState();
+			return;
+		}
+
 		const cardList = new CardList(cards);
 		this._updateAppContent(cardList.render());
 	}

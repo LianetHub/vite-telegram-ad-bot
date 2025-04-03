@@ -1,6 +1,6 @@
 import { RangeSlider } from "../../components/RangeSlider";
 
-export class SliderInitializer {
+export class RangeSliderInitializer {
 	initializeSliders() {
 		this.initPriceRangeSlider();
 		this.initUsersRangeSlider();
