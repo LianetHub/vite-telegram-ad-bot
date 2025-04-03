@@ -44,7 +44,7 @@ export class FilterHandler {
 
 			const resetFilterBtn = target.closest("[data-reset-filter]") as HTMLElement | null;
 			if (resetFilterBtn) {
-				resetFilterBtn.classList.add("loading");
+				// resetFilterBtn.classList.add("loading");
 				this.eventEmitter.emit("filters:reset");
 			}
 
@@ -63,6 +63,14 @@ export class FilterHandler {
 				if (store.getState().cards.length !== 0) {
 					this.eventEmitter.emit("filters:complete");
 					this.modal.closeModal();
+				}
+			}
+
+			const completFiltersBtn = target.closest("[data-filter-complete]") as HTMLButtonElement | null;
+			if (completFiltersBtn) {
+				if (store.getState().cards.length !== 0) {
+					this.modal.closeModal();
+					this.eventEmitter.emit("filters:complete");
 				}
 			}
 
@@ -147,16 +155,17 @@ export class FilterHandler {
 		const completeUsersBtn = document.querySelector("[data-users-complete]") as HTMLButtonElement;
 		const categoriesQuantityElement = document.querySelector("[data-categories-quantity]") as HTMLElement;
 		const languageQuantityElement = document.querySelector("[data-language-quantity]") as HTMLElement;
+		const filterCompleteBtn = document.querySelector("[data-filter-complete]") as HTMLButtonElement;
 
 		switch (filterName) {
 			case "categories":
 				return this.updateCountersQuantity(categoriesQuantityElement, (count) => this.categoriesUIUpdate(count));
 			case "sort_by":
-				return;
+				return this.setLoading(filterCompleteBtn);
 			case "weekly_sends":
-				return;
+				return this.setLoading(filterCompleteBtn);
 			case "monthly_growth":
-				return;
+				return this.setLoading(filterCompleteBtn);
 			case "price_type":
 				return this.setLoading(completePricesBtn);
 			case "price_min":
@@ -181,16 +190,17 @@ export class FilterHandler {
 	private getFilterСallback(filterName: string): undefined | void {
 		const completePricesBtn = document.querySelector("[data-prices-complete]") as HTMLButtonElement;
 		const completeUsersBtn = document.querySelector("[data-users-complete]") as HTMLButtonElement;
+		const filterCompleteBtn = document.querySelector("[data-filter-complete]") as HTMLButtonElement;
 
 		switch (filterName) {
 			case "categories":
 				return this.eventEmitter.emit("filters:complete");
 			case "sort_by":
-				return;
+				return this.updateUIQuantityInBtn(filterCompleteBtn, true);
 			case "weekly_sends":
-				return;
+				return this.updateUIQuantityInBtn(filterCompleteBtn, true);
 			case "monthly_growth":
-				return;
+				return this.updateUIQuantityInBtn(filterCompleteBtn, true);
 			case "price_type":
 				return this.updateUIQuantityInBtn(completePricesBtn);
 			case "price_min":
@@ -248,6 +258,7 @@ export class FilterHandler {
 			if (input.type === "checkbox" || input.type === "radio") {
 				input.checked = false;
 			} else {
+				input.value = "";
 				input.dispatchEvent(new Event("reset", { bubbles: true }));
 			}
 		});
@@ -262,7 +273,7 @@ export class FilterHandler {
 			case "weekly_sends":
 				return this.getSelectedFilter<WeeklySends>(filterName);
 			case "monthly_growth":
-				return this.getSelectedFilter<MonthlyGrowth>(filterName);
+				return this.getFieldString(filterName);
 			case "price_type":
 				return this.getSelectedFilter<PriceType>(filterName);
 			case "price_min":
@@ -321,17 +332,19 @@ export class FilterHandler {
 	// ui actions
 
 	public checkVisiblityResetFilterBtn(filterNames: string | string[]) {
-		const resetFilterBtn = document.querySelector<HTMLElement>("[data-reset-filter]");
-
+		const filterWrapper = document.querySelector<HTMLElement>(".filter");
+		const filterCompleteBtn = document.querySelector<HTMLButtonElement>("[data-filter-complete]");
 		const filters = Array.isArray(filterNames) ? filterNames : [filterNames];
 
 		const isAnyFilterSelected = filters.some(isFilterSelected);
 
 		if (!isAnyFilterSelected) {
-			resetFilterBtn?.classList.remove("loading");
+			filterWrapper?.classList.remove("modal-selected");
+			filterCompleteBtn?.classList.add("hide");
 		}
-		if (resetFilterBtn) {
-			resetFilterBtn.classList.toggle("hide", !isAnyFilterSelected);
+		if (filterWrapper) {
+			filterWrapper.classList.toggle("modal-selected", isAnyFilterSelected);
+			filterCompleteBtn?.classList.toggle("hide", !isAnyFilterSelected);
 		}
 
 		function isFilterSelected(filterName: string): boolean {
@@ -400,7 +413,7 @@ export class FilterHandler {
 		}
 	}
 
-	public updateUIQuantityInBtn(btn: HTMLButtonElement, type: "бот" = "бот") {
+	public updateUIQuantityInBtn(btn: HTMLButtonElement, hideOnEmpty: boolean = false, type: "бот" = "бот") {
 		if (!btn) return;
 
 		const quantity = store.getState().cards.length;
@@ -424,17 +437,19 @@ export class FilterHandler {
 			priceSpan.textContent = text;
 
 			btn.textContent = "Показать все";
-
 			btn.appendChild(priceSpan);
 
-			btn.classList.remove("btn-primary-outline");
+			btn.classList.remove("btn-primary-outline", "hide", "disabled");
 			btn.classList.add("btn-primary");
 		} else {
-			if (priceSpan) priceSpan.remove();
-
-			btn.textContent = "Очистить";
-			btn.classList.remove("btn-primary");
-			btn.classList.add("btn-primary-outline");
+			if (hideOnEmpty) {
+				btn.classList.add("disabled");
+			} else {
+				if (priceSpan) priceSpan.remove();
+				btn.textContent = "Очистить";
+				btn.classList.remove("btn-primary");
+				btn.classList.add("btn-primary-outline");
+			}
 		}
 
 		this.removeLoading(btn);

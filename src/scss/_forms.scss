@@ -310,8 +310,12 @@
 		}
 	}
 
+	&.disabled,
 	&:disabled,
 	&[aria-disabled="true"] {
+		background: #f5f5f6;
+		color: rgba($color: #000000, $alpha: 0.5);
+		pointer-events: none;
 		cursor: default;
 		pointer-events: none;
 	}
@@ -424,7 +428,7 @@
 	&__input {
 		&:checked {
 			& + .radio-btn__field {
-				font-weight: 600;
+				font-weight: 500;
 				&::after {
 					background: $accent;
 					border: 0.5rem solid #f3f8ff;
@@ -436,12 +440,13 @@
 	&__field {
 		position: relative;
 		overflow: hidden;
-		font-size: 1.0625rem;
+		font-size: 0.9375rem;
 		line-height: 129.412%;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0.81rem 1.25rem;
+		padding: 0.6rem 1.25rem;
+		min-height: rem(44);
 		gap: 1.5rem;
 		cursor: pointer;
 		&::after {

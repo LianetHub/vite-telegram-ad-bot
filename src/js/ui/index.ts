@@ -8,6 +8,7 @@ import { StateRenderer } from "./StateRenderer";
 import { RangeSliderInitializer } from "./initializers/RangeSliderInitializer";
 import { CalendarInitializer } from "./initializers/CalendarInitializer";
 import { Modal } from "../components/Modal";
+import { Dropdown } from "../components/Dropdown";
 
 export class UIHandler extends EventEmitter {
 	public clickHandler: ClickHandler;
@@ -42,10 +43,9 @@ export class UIHandler extends EventEmitter {
 			});
 		});
 		this.on("filters:reset", () => {
-			this.filterHandler.resetFilters(["sort_by", "weekly_sends", "monthly_growth"], () => {
-				this.filterHandler.checkVisiblityResetFilterBtn(["sort_by", "weekly_sends", "monthly_growth"]);
-				this.emit("filters:complete");
-			});
+			this.filterHandler.resetFilters(["sort_by", "weekly_sends", "monthly_growth"]);
+			this.modal.closeModal();
+			this.filterHandler.checkVisiblityResetFilterBtn(["sort_by", "weekly_sends", "monthly_growth"]);
 		});
 		this.on("filters:categories-reset", () => {
 			this.filterHandler.resetFilters(["categories"], () => this.filterHandler.categoriesUIUpdate(0));
@@ -98,6 +98,7 @@ export class UIHandler extends EventEmitter {
 	private initApp() {
 		this.rangeSliderInitializer.initializeSliders();
 		this.сalendarInitializer.initializeCalendars();
+		document.querySelectorAll(".dropdown")?.forEach((dropdown) => new Dropdown(dropdown as HTMLElement));
 
 		store.subscribe("loading:start", () => {
 			this.stateRenderer.showSkeleton();
