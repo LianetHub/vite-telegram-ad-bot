@@ -104,12 +104,13 @@ export class UIHandler extends EventEmitter {
 		});
 		// store.subscribe("cards:empty", this.stateRenderer.showEmptyState);
 		store.subscribe("cards:loading-error", this.stateRenderer.showErrorLoading);
+
 		store.subscribe("cards:loaded", () => {
 			if (this.isFirstLoad) {
 				console.log("Первая загрузка");
-
 				this.stateRenderer.renderCards();
-				this.cartHandler.handleCartUpdate.bind(this.cartHandler);
+				store.updateTotalCart();
+				this.cartHandler.handleCartUpdate.call(this.cartHandler);
 				this.isFirstLoad = false;
 			}
 		});

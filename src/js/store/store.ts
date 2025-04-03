@@ -180,7 +180,7 @@ class Store {
 		}
 	}
 
-	private updateTotalCart() {
+	updateTotalCart() {
 		const total = this.state.cart.reduce((sum, itemId) => {
 			const item = this.state.fullData.find((card) => card.id === +itemId);
 

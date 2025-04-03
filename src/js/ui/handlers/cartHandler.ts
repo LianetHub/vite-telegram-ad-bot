@@ -1,3 +1,4 @@
+import { LanguageCode } from "../../api/types";
 import { CardList } from "../../components/CardList";
 import { store } from "../../store/store";
 import { addThousandSeparator } from "../../utils/addThousandSeparator";
@@ -22,6 +23,38 @@ interface LanguageData {
 }
 
 export class CartHandler {
+	private static LANGUAGE_NAMES: Record<LanguageCode, string> = {
+		en: "Английский",
+		ru: "Русский",
+		ar: "Арабский",
+		be: "Белорусский",
+		ca: "Каталанский",
+		hr: "Хорватский",
+		cs: "Чешский",
+		nl: "Нидерландский",
+		fi: "Финский",
+		fr: "Французский",
+		de: "Немецкий",
+		he: "Иврит",
+		hu: "Венгерский",
+		id: "Индонезийский",
+		it: "Итальянский",
+		kk: "Казахский",
+		ko: "Корейский",
+		ms: "Малайский",
+		nb: "Норвежский",
+		fa: "Персидский",
+		pl: "Польский",
+		"pt-BR": "Португальский (Бразилия)",
+		sr: "Сербский",
+		sk: "Словацкий",
+		es: "Испанский",
+		sv: "Шведский",
+		tr: "Турецкий",
+		uk: "Украинский",
+		uz: "Узбекский",
+	};
+
 	constructor() {
 		this.initEventListeners();
 	}
@@ -77,6 +110,7 @@ export class CartHandler {
 
 		if (totalElements.length) {
 			let totalPrice = store.getState().total ?? 0;
+
 			document.querySelector("[data-clear-cart]")?.classList.remove("hidden");
 			totalElements.forEach((totalElement) => {
 				totalElement.textContent = `${addThousandSeparator(totalPrice)}\u205F₽`;
@@ -142,7 +176,7 @@ export class CartHandler {
 				"рассылка",
 				"рассылки",
 				"рассылок",
-			])} · ${addThousandSeparator(totalMessages)} раз будет отправлено рекламное сообщение`;
+			])} · ${addThousandSeparator(totalMessages, true)} сообщений`;
 		}
 
 		const audienceData: LanguageData[] = this.aggregateUsersByLanguage(cartItems);
@@ -156,9 +190,11 @@ export class CartHandler {
 
 	private aggregateUsersByLanguage(cartItems: CartItem[]): LanguageData[] {
 		const langCounts: Record<string, number> = {};
+
 		cartItems.forEach((item) => {
 			Object.entries(item.users_per_lang).forEach(([lang, data]) => {
-				langCounts[lang] = (langCounts[lang] || 0) + data.count;
+				const fullLangName = CartHandler.LANGUAGE_NAMES[lang as LanguageCode] || lang;
+				langCounts[fullLangName] = (langCounts[fullLangName] || 0) + data.count;
 			});
 		});
 
