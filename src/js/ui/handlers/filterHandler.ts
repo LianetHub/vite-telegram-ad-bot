@@ -439,11 +439,11 @@ export class FilterHandler {
 			btn.textContent = "Показать все";
 			btn.appendChild(priceSpan);
 
-			btn.classList.remove("btn-primary-outline", "hide", "disabled");
+			btn.classList.remove("btn-primary-outline", "hide");
 			btn.classList.add("btn-primary");
 		} else {
 			if (hideOnEmpty) {
-				btn.classList.add("disabled");
+				btn.classList.add("hide");
 			} else {
 				if (priceSpan) priceSpan.remove();
 				btn.textContent = "Очистить";
