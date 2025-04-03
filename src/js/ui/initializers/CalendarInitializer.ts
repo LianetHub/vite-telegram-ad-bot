@@ -36,7 +36,6 @@ export class CalendarInitializer {
 					this.calendarUIUpdate(selectedDate, calendarAvailableWrapper, calendarInstance);
 				},
 				onDateSubmit: () => {
-					this.modalInstanse.closeModal();
 					this.modalInstanse.openModal("#check-available-time");
 				},
 			});
@@ -53,7 +52,7 @@ export class CalendarInitializer {
 		}
 	}
 
-	private calendarUIUpdate(date: string[] | undefined, calendarWrapper: HTMLElement, instance: Calendar | null = null) {
+	private calendarUIUpdate(date: string | undefined, calendarWrapper: HTMLElement, instance: Calendar | null = null) {
 		console.log(`Обновление UI Календаря. Выбранно: ${date}`);
 
 		const selectedDaysBlock = calendarWrapper.querySelector('[data-name="selected-days"]') as HTMLElement;
@@ -62,16 +61,14 @@ export class CalendarInitializer {
 		let selectedDayValue = 1;
 		let selectedDayTextValue = "день";
 
-		if (instance?.mode === "range") {
-			const quantitySelectedDays = instance?.getQuantitySelectedDays() || 0;
+		const quantitySelectedDays = instance?.getQuantitySelectedDays() || 0;
 
-			if (quantitySelectedDays > 1) {
-				selectedDayValue = quantitySelectedDays;
-				selectedDayTextValue = getCorrectDayDeclension(quantitySelectedDays);
-			} else if (date?.length) {
-				selectedDayValue = 1;
-				selectedDayTextValue = "день";
-			}
+		if (quantitySelectedDays > 1) {
+			selectedDayValue = quantitySelectedDays;
+			selectedDayTextValue = getCorrectDayDeclension(quantitySelectedDays);
+		} else if (date?.length) {
+			selectedDayValue = 1;
+			selectedDayTextValue = "день";
 		}
 
 		function getCorrectDayDeclension(count: number): string {

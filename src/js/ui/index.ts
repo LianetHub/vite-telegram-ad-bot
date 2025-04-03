@@ -24,7 +24,7 @@ export class UIHandler extends EventEmitter {
 		super();
 		this.modal = new Modal(this);
 		this.cartHandler = new CartHandler();
-		this.filterHandler = new FilterHandler(this);
+		this.filterHandler = new FilterHandler(this, this.modal);
 		this.clickHandler = new ClickHandler(this);
 		this.searchHandler = new SearchHandler(this);
 		this.stateRenderer = new StateRenderer();
@@ -32,16 +32,19 @@ export class UIHandler extends EventEmitter {
 		this.сalendarInitializer = new CalendarInitializer(this, this.modal);
 		this.isFirstLoad = true;
 
+		this.on("filters:change", (event: Event) => {
+			this.filterHandler.handleFilterChanged(event, () => this.emit("filters:complete"));
+		});
 		this.on("filters:change-datepicker", (selectedDate: string[] | undefined) => {
 			this.filterHandler.handleDateChange(selectedDate, () => {
 				document.querySelector("[data-calendar-submit]")?.classList.remove("loading");
-				this.modal.closeModal();
+				this.emit("filters:complete");
 			});
 		});
 		this.on("filters:reset", () => {
 			this.filterHandler.resetFilters(["sort_by", "weekly_sends", "monthly_growth"], () => {
-				this.modal.closeModal();
 				this.filterHandler.checkVisiblityResetFilterBtn(["sort_by", "weekly_sends", "monthly_growth"]);
+				this.emit("filters:complete");
 			});
 		});
 		this.on("filters:categories-reset", () => {
@@ -80,6 +83,7 @@ export class UIHandler extends EventEmitter {
 		);
 
 		this.on("filters:complete", () => {
+			console.log("Фильтр применен");
 			this.modal.closeModal();
 			this.stateRenderer.renderCards();
 		});
@@ -96,9 +100,7 @@ export class UIHandler extends EventEmitter {
 		this.сalendarInitializer.initializeCalendars();
 
 		store.subscribe("loading:start", () => {
-			if (this.isFirstLoad) {
-				this.stateRenderer.showSkeleton();
-			}
+			this.stateRenderer.showSkeleton();
 		});
 		// store.subscribe("cards:empty", this.stateRenderer.showEmptyState);
 		store.subscribe("cards:loading-error", this.stateRenderer.showErrorLoading);

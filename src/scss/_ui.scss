@@ -430,6 +430,12 @@
 		}
 	}
 
+	&.calendar {
+		.modal__row-actions {
+			margin-right: 0.75rem;
+		}
+	}
+
 	// .modal__wrapper
 	&__wrapper {
 		border-radius: 1rem 1rem 0 0;
@@ -508,6 +514,13 @@
 		display: flex;
 		transition: all 0.15s $smooth-accelerate-easing;
 		width: rem(24);
+		&.single-selected {
+			width: 0;
+			margin-right: -6rem !important;
+			.modal-selected & {
+				margin-right: 0 !important;
+			}
+		}
 	}
 	// .modal__row-action-default
 	&__row-action-default {
@@ -562,6 +575,25 @@
 		transition: all 0.15s $smooth-accelerate-easing;
 		display: flex;
 		gap: 0.25rem;
+		position: relative;
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 2rem;
+			height: 100%;
+			border-radius: 0.5rem;
+			background: rgba(13, 129, 255, 0.15);
+			transition: all 0.3s ease;
+			z-index: -1;
+		}
+		&:has(.modal__type:last-child .modal__type-input:checked) {
+			&::before {
+				width: rem(48);
+				left: 2.25rem;
+			}
+		}
 	}
 	// .modal__type
 	&__type {
@@ -577,7 +609,7 @@
 	&__type-input {
 		&:checked {
 			& + .modal__type-field {
-				background: rgba(13, 129, 255, 0.15);
+				// background: rgba(13, 129, 255, 0.15);
 				&::before {
 					background: $accent;
 				}

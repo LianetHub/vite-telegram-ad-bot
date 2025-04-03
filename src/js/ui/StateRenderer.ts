@@ -24,6 +24,8 @@ export class StateRenderer {
 	}
 
 	showEmptyState(): void {
+		console.log("Рендер пустого состояния");
+
 		const emptyState = new EmptyState({
 			message: "Нет результатов",
 			showButton: false,

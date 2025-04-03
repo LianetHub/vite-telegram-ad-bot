@@ -7,8 +7,8 @@ import "../../scss/_datepicker.scss";
 
 export interface CalendarOptions {
 	monthsToRender?: number;
-	onDateChange?: (selectedDate: string[] | undefined) => void;
-	onDateSubmit?: (selectedDate: string[] | undefined) => void;
+	onDateChange?: (selectedDate: string | undefined) => void;
+	onDateSubmit?: (selectedDate: string | undefined) => void;
 	mode?: "single" | "range";
 }
 
@@ -21,14 +21,14 @@ export class Calendar {
 	public options: CalendarOptions;
 	private wrapper: HTMLElementWithDatepicker | null;
 	private monthsToRender: number;
-	private selectedDate: string[] | undefined = undefined;
+	private selectedDate: string | undefined = undefined;
 	private resetBtn: HTMLElement | null = null;
 	private submitBtn: HTMLElement | null = null;
 	public mode: "single" | "range";
 	private rangeStart: HTMLElement | null = null;
 	private rangeEnd: HTMLElement | null = null;
-	public onDateChange: (selectedDate: string[] | undefined) => void;
-	public onDateSubmit: (selectedDate: string[] | undefined) => void;
+	public onDateChange: (selectedDate: string | undefined) => void;
+	public onDateSubmit: (selectedDate: string | undefined) => void;
 
 	constructor(container: HTMLElement, options: CalendarOptions = {}) {
 		this.container = container;
@@ -137,16 +137,25 @@ export class Calendar {
 	}
 
 	private selectDay(dayElement: HTMLElement) {
+		const dayValue = `${dayElement.dataset.value}`;
+
 		if (this.mode === "single") {
-			this.clearSelectedDate();
-			dayElement.classList.add("selected");
-			this.selectedDate = [`${dayElement.dataset.value}`];
+			if (this.selectedDate && this.selectedDate.includes(dayValue)) {
+				this.selectedDate = this.selectedDate
+					.split(",")
+					.filter((date) => date !== dayValue)
+					.join(",");
+				dayElement.classList.remove("selected");
+			} else {
+				this.selectedDate = this.selectedDate ? `${this.selectedDate},${dayValue}` : dayValue;
+				dayElement.classList.add("selected");
+			}
 		} else {
 			if (!this.rangeStart || this.rangeEnd) {
 				this.clearSelectedDate();
 				this.rangeStart = dayElement;
 				this.rangeStart.classList.add("selected", "start");
-				this.selectedDate = [`${this.rangeStart.dataset.value}`];
+				this.selectedDate = `${this.rangeStart.dataset.value}`;
 			} else {
 				const clickedDate = parseInt(dayElement.dataset.value || "0", 10);
 				const startDate = parseInt(this.rangeStart.dataset.value || "0", 10);
@@ -155,7 +164,7 @@ export class Calendar {
 					this.clearSelectedDate();
 					this.rangeStart = dayElement;
 					this.rangeStart.classList.add("selected", "start");
-					this.selectedDate = [`${this.rangeStart.dataset.value}`];
+					this.selectedDate = `${this.rangeStart.dataset.value}`;
 				} else {
 					this.rangeEnd = dayElement;
 					this.rangeEnd.classList.add("selected", "end");
@@ -173,16 +182,22 @@ export class Calendar {
 		const startUnix = this.rangeStart.dataset.value;
 		const endUnix = this.rangeEnd.dataset.value;
 
-		this.selectedDate = [`${startUnix}-${endUnix}`];
+		let rangeDates = [];
+		let currentDate = moment.unix(parseInt(startUnix || "0"));
+		const endDate = moment.unix(parseInt(endUnix || "0"));
+
+		while (currentDate.isBefore(endDate) || currentDate.isSame(endDate)) {
+			rangeDates.push(currentDate.unix().toString());
+			currentDate.add(1, "day");
+		}
+
+		this.selectedDate = rangeDates.join(",");
 
 		const allDays = this.container.querySelectorAll(".calendar__item");
 
 		allDays.forEach((day) => {
-			const dayValue = parseInt(day.getAttribute("data-value") || "0", 10);
-			const startValue = parseInt(startUnix || "0", 10);
-			const endValue = parseInt(endUnix || "0", 10);
-
-			if (dayValue >= startValue && dayValue <= endValue) {
+			const dayValue = day.getAttribute("data-value");
+			if (this.selectedDate?.split(",").includes(dayValue || "")) {
 				day.classList.add("selected");
 			}
 		});
@@ -199,16 +214,8 @@ export class Calendar {
 	}
 
 	public getQuantitySelectedDays(): number {
-		if (this.mode === "single") {
-			return this.selectedDate && this.selectedDate.length > 0 ? 1 : 0;
-		} else if (this.mode === "range" && this.selectedDate) {
-			if (this.rangeStart && this.rangeEnd) {
-				const startDate = parseInt(this.rangeStart.dataset.value || "0", 10);
-				const endDate = parseInt(this.rangeEnd.dataset.value || "0", 10);
-
-				return Math.max(0, moment(endDate * 1000).diff(moment(startDate * 1000), "days") + 1);
-			}
-			return 0;
+		if (this.selectedDate) {
+			return this.selectedDate.split(",").length;
 		}
 		return 0;
 	}
@@ -219,7 +226,5 @@ export class Calendar {
 
 	public setMode(type: "single" | "range") {
 		this.mode = type;
-		this.clearSelectedDate();
-		this.onDateChange(this.selectedDate);
 	}
 }

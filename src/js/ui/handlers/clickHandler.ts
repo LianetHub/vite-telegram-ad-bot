@@ -22,17 +22,6 @@ export class ClickHandler {
 		const addButton = target.closest(".header__add") as HTMLElement | null;
 		if (addButton) {
 			this.toggleSubMenu(addButton);
-			this.eventEmitter.emit("test");
-		}
-
-		const categoriesBtn = target.closest(".header__categories-btn") as HTMLElement | null;
-		if (categoriesBtn) {
-			this.toggleCategories();
-		}
-
-		const categoriesHideBtn = target.closest(".header__categories-close") as HTMLElement | null;
-		if (categoriesHideBtn) {
-			this.hideCategories();
 		}
 
 		const moreCardCountriesBtn = target.closest(".card__countries-more") as HTMLButtonElement | null;
@@ -60,18 +49,6 @@ export class ClickHandler {
 		addButton.classList.toggle("active");
 		const sortElement = document.querySelector(".header__sort") as HTMLElement | null;
 		sortElement?.classList.toggle("active");
-	}
-
-	private toggleCategories() {
-		const wrapper = document.querySelector(".header__bottom") as HTMLElement | null;
-		wrapper?.classList.toggle("open-categories");
-		document.body.classList.toggle("lock");
-	}
-
-	private hideCategories() {
-		const wrapper = document.querySelector(".header__bottom") as HTMLElement | null;
-		wrapper?.classList.remove("open-categories");
-		document.body.classList.remove("lock");
 	}
 
 	private createRippleEffect(button: HTMLElement, event: MouseEvent) {

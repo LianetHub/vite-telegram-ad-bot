@@ -1,9 +1,10 @@
 import { store } from "../../store/store";
 import { Category, SortBy, WeeklySends, MonthlyGrowth, LanguageCode, PriceType, SearchRequest } from "../../api/types";
 import { EventEmitter } from "../../store/EventEmitter";
+import { Modal } from "../../components/Modal";
 
 export class FilterHandler {
-	constructor(private eventEmitter: EventEmitter) {
+	constructor(private eventEmitter: EventEmitter, private modal: Modal) {
 		this.initEventListeners();
 	}
 
@@ -11,6 +12,16 @@ export class FilterHandler {
 		document.addEventListener("click", (event: MouseEvent) => {
 			const target = event.target as HTMLElement | null;
 			if (!target) return;
+
+			const categoriesBtn = target.closest(".header__categories-btn") as HTMLElement | null;
+			if (categoriesBtn) {
+				this.toggleCategories();
+			}
+
+			const categoriesHideBtn = target.closest(".header__categories-close") as HTMLElement | null;
+			if (categoriesHideBtn) {
+				this.hideCategories();
+			}
 
 			const categoriesResetBtn = target.closest("[data-categories-reset]") as HTMLElement | null;
 			if (categoriesResetBtn) {
@@ -46,6 +57,15 @@ export class FilterHandler {
 					this.eventEmitter.emit("filters:complete");
 				}
 			}
+
+			const languageBtn = target.closest("[data-language-complete]") as HTMLButtonElement | null;
+			if (languageBtn) {
+				if (store.getState().cards.length !== 0) {
+					this.eventEmitter.emit("filters:complete");
+					this.modal.closeModal();
+				}
+			}
+
 			const completeUsersBtn = target.closest("[data-users-complete]") as HTMLButtonElement | null;
 			if (completeUsersBtn) {
 				if (store.getState().cards.length == 0) {
@@ -79,25 +99,6 @@ export class FilterHandler {
 				this.handleUIUpdate(target.name);
 				this.handleFilterChanged(event, () => this.getFilterСallback(target.name));
 			}
-
-			// const uiUpdates: { [key: string]: { selector: string; callback: (count: number) => void } } = {
-			// 	categories: {
-			// 		selector: ".header__categories-quantity",
-			// 		callback: this.categoriesUIUpdate,
-			// 	},
-			// 	languages: {
-			// 		selector: ".modal__language-quantity",
-			// 		callback: this.languageUIUpdate,
-			// 	},
-			// };
-
-			// if (uiUpdates[target.name]) {
-			// 	const { selector, callback } = uiUpdates[target.name];
-			// 	const quantityElement = document.querySelector(selector) as HTMLElement;
-			// 	if (quantityElement) {
-			// 		this.updateCountersQuantity(quantityElement, (count) => callback(count));
-			// 	}
-			// }
 
 			if (target.classList.contains("segmented-controls__item-input")) {
 				const segmentedControls = target.closest(".segmented-controls") as HTMLElement;
@@ -144,10 +145,12 @@ export class FilterHandler {
 	private handleUIUpdate(filterName: string): undefined | void {
 		const completePricesBtn = document.querySelector("[data-prices-complete]") as HTMLButtonElement;
 		const completeUsersBtn = document.querySelector("[data-users-complete]") as HTMLButtonElement;
+		const categoriesQuantityElement = document.querySelector("[data-categories-quantity]") as HTMLElement;
+		const languageQuantityElement = document.querySelector("[data-language-quantity]") as HTMLElement;
 
 		switch (filterName) {
 			case "categories":
-				return;
+				return this.updateCountersQuantity(categoriesQuantityElement, (count) => this.categoriesUIUpdate(count));
 			case "sort_by":
 				return;
 			case "weekly_sends":
@@ -165,7 +168,7 @@ export class FilterHandler {
 			case "users_max":
 				return this.setLoading(completeUsersBtn);
 			case "languages":
-				return;
+				return this.updateCountersQuantity(languageQuantityElement, (count) => this.languageUIUpdate(count));
 			case "premium":
 				return;
 			case "search":
@@ -181,7 +184,7 @@ export class FilterHandler {
 
 		switch (filterName) {
 			case "categories":
-				return;
+				return this.eventEmitter.emit("filters:complete");
 			case "sort_by":
 				return;
 			case "weekly_sends":
@@ -203,7 +206,7 @@ export class FilterHandler {
 			case "premium":
 				return;
 			case "search":
-				return;
+				return this.eventEmitter.emit("filters:complete");
 			default:
 				return undefined;
 		}
@@ -234,6 +237,7 @@ export class FilterHandler {
 
 		Promise.resolve(store.fetchCards()).then(() => {
 			if (callback) callback();
+			this.eventEmitter.emit("filters:complete");
 		});
 	}
 
@@ -363,10 +367,10 @@ export class FilterHandler {
 		console.log(`Количество выбранных языков: ${count}`);
 		const languageWrapper = document.querySelector(".language") as HTMLElement;
 		if (count > 0) {
-			document.querySelector("[data-language-submit]")?.classList.remove("hide");
+			document.querySelector("[data-language-complete]")?.classList.remove("hide");
 			languageWrapper?.classList.add("modal-selected");
 		} else {
-			document.querySelector("[data-language-submit]")?.classList.add("hide");
+			document.querySelector("[data-language-complete]")?.classList.add("hide");
 			languageWrapper?.classList.remove("modal-selected");
 		}
 	}
@@ -439,7 +443,20 @@ export class FilterHandler {
 	public setLoading(btn: HTMLButtonElement) {
 		return btn.classList.add("loading");
 	}
+
 	public removeLoading(btn: HTMLButtonElement) {
 		return btn.classList.remove("loading");
+	}
+
+	private toggleCategories() {
+		const wrapper = document.querySelector(".header__bottom") as HTMLElement | null;
+		wrapper?.classList.toggle("open-categories");
+		document.body.classList.toggle("lock");
+	}
+
+	private hideCategories() {
+		const wrapper = document.querySelector(".header__bottom") as HTMLElement | null;
+		wrapper?.classList.remove("open-categories");
+		document.body.classList.remove("lock");
 	}
 }
