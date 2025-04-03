@@ -9,6 +9,7 @@ import { RangeSliderInitializer } from "./initializers/RangeSliderInitializer";
 import { CalendarInitializer } from "./initializers/CalendarInitializer";
 import { Modal } from "../components/Modal";
 import { Dropdown } from "../components/Dropdown";
+import { Timepicker } from "../components/Timepicker";
 
 export class UIHandler extends EventEmitter {
 	public clickHandler: ClickHandler;
@@ -99,6 +100,7 @@ export class UIHandler extends EventEmitter {
 		this.rangeSliderInitializer.initializeSliders();
 		this.сalendarInitializer.initializeCalendars();
 		document.querySelectorAll(".dropdown")?.forEach((dropdown) => new Dropdown(dropdown as HTMLElement));
+		document.querySelectorAll(".timepicker")?.forEach((timepicker) => new Timepicker(timepicker as HTMLElement));
 
 		store.subscribe("loading:start", () => {
 			this.stateRenderer.showSkeleton();

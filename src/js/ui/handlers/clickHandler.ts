@@ -19,6 +19,20 @@ export class ClickHandler {
 			this.createRippleEffect(button, e);
 		}
 
+		const cartTimeBtn = target.closest(".time-start__card") as HTMLElement | null;
+		if (cartTimeBtn && !cartTimeBtn.classList.contains("active")) {
+			cartTimeBtn.classList.add("active");
+		}
+
+		if (document.querySelector(".time-start__card.active") && !target.closest(".time-start__card.active")) {
+			document.querySelector(".time-start__card.active")?.classList.remove("active");
+		}
+
+		const cartTimeComplete = target.closest("[data-time-complete]") as HTMLButtonElement | null;
+		if (cartTimeComplete) {
+			cartTimeComplete.closest(".time-start__card")?.classList.remove("active");
+		}
+
 		const addButton = target.closest(".header__add") as HTMLElement | null;
 		if (addButton) {
 			this.toggleSubMenu(addButton);

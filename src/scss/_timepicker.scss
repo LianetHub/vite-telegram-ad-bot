@@ -1,0 +1,57 @@
+@use "sass:math";
+@use "sass:color";
+@use "variables" as *;
+@use "mixins" as *;
+
+.picker {
+	max-width: rem(200);
+	margin: 0 auto;
+}
+
+.picker-dialog {
+	border: 0 !important;
+}
+
+.picker-list {
+	margin: -4.5rem 0 !important;
+}
+
+.picker-cell {
+	border: 0 !important;
+	&:first-child {
+		position: relative;
+		&::after {
+			content: "";
+			position: absolute;
+			top: 1rem;
+			left: auto;
+			right: 0;
+			width: rem(1);
+			height: 100%;
+			height: calc(100% - 3.5rem);
+			background: rgba(8, 8, 26, 0.12);
+			display: block !important;
+		}
+	}
+	&::after,
+	&::before {
+		display: none !important;
+	}
+}
+
+.picker-item {
+	padding: 0.75rem 0.5rem !important;
+	text-align: center;
+	white-space: nowrap;
+	font-weight: 300;
+	opacity: 0.3;
+	color: $tertiary;
+	font-size: 2.5rem;
+	line-height: 120%;
+	&.picker-picked {
+		font-weight: 400;
+		opacity: 1;
+		color: $text;
+		font-size: 2.875rem;
+	}
+}
