@@ -1,0 +1,43 @@
+/* White */
+:root {
+  --white-main: #ffffff;
+  --white-700: rgba(255, 255, 255, 0.70);
+}
+
+/* Black */
+:root {
+  --black-main: #08081a;
+  --black-0: rgba(8, 8, 26, 0.00);
+  --black-50: rgba(8, 8, 26, 0.02);
+  --black-100: rgba(8, 8, 26, 0.04);
+  --black-200: rgba(8, 8, 26, 0.08);
+  --black-300: rgba(8, 8, 26, 0.12);
+  --black-400: rgba(8, 8, 26, 0.16);
+  --black-500: rgba(8, 8, 26, 0.20);
+  --black-600: rgba(8, 8, 26, 0.36);
+  --black-700: rgba(8, 8, 26, 0.60);
+  --black-800: rgba(8, 8, 26, 0.88);
+}
+
+/* Blue */
+:root {
+  --blue-main: #0d81ff;
+  --blue-100: rgba(13, 129, 255, 0.05);
+  --blue-700: #3394ff;
+  --blue-800: #1a88ff;
+}
+
+/* Dark */
+:root {
+  --dark-blue-main: #004c8b;
+  --dark-blue-0: rgb(0, 76, 139, 0.00);
+  --dark-blue-50: rgb(32, 32, 128, 0.035);
+  --dark-blue-100: rgba(0, 76, 139, 0.05);
+  --dark-blue-500: rgba(0, 76, 139, 0.50);
+}
+
+/* Red */
+:root {
+  --red-main: #ff3e33;
+  --red-100: rgba(255, 62, 51, 0.05);
+}

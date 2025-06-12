@@ -1,0 +1,19 @@
+:root {
+  --interval-2: 2px;
+  --interval-4: 4px;
+  --interval-6: 6px;
+  --interval-8: 8px;
+  --interval-10: 10px;
+  --interval-12: 12px;
+  --interval-16: 16px;
+  --interval-20: 20px;
+  --interval-24: 24px;
+  --interval-32: 32px;
+  --interval-40: 40px;
+  --interval-48: 48px;
+  --interval-64: 64px;
+  --interval-80: 80px;
+  --interval-96: 96px;
+  --interval-112: 112px;
+  --interval-128: 128px;
+}

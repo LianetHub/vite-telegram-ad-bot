@@ -1,0 +1,112 @@
+/* Background */
+:root {
+  --bg-primary: var(--white-main);
+  --bg-primary-inverse: var(--black-800);
+  --bg-secondary: var(--black-100);
+  --bg-secondary-weak: var(--black-50);
+  --bg-secondary-inverce: var(--black-700);
+  --bg-accent: var(--blue-main);
+  --bg-accent-weak: var(--blue-100);
+  --bg-accent-link: var(--dark-blue-main);
+  --bg-accent-link-weak: var(--dark-blue-100);
+  --bg-critic: var(--red-main);
+  --bg-critic-weak: var(--red-100);
+}
+
+/* Text */
+:root {
+  --text-primary: var(--black-main);
+  --text-primary-on-color: var(--white-main);
+  --text-primary-on-color-weak: var(--white-700);
+  --text-primary-inverse: var(--white-main);
+  --text-secondary: var(--black-700);
+  --text-tertiary: var(--black-600);
+  --text-accent: var(--blue-main);
+  --text-accent-link: var(--dark-blue-main);
+  --text-critic: var(--red-main);
+}
+
+/* Icon */
+:root {
+  --icon-primary: var(--black-main);
+  --icon-primary-on-color: var(--white-main);
+  --icon-primary-inverse: var(--white-main);
+  --icon-secondary: var(--black-700);
+  --icon-tertiary: var(--black-600);
+  --icon-accent: var(--blue-main);
+  --icon-critic: var(--red-main);
+}
+
+/* Border */
+:root {
+  --border-primary: var(--black-300);
+  --border-secondary: var(--black-200);
+  --border-accent: var(--blue-main);
+  --border-accent-link: var(--dark-blue-main);
+  --border-accent-link-weak: var(--dark-blue-500);
+  --border-accent-link-weak-0: var(--dark-blue-0);
+  --border-critic: var(--red-main);
+}
+
+/* Overlay */
+:root {
+  --dimming-primary: var(--black-500);
+  --dimming-secondary: var(--black-300);
+  --dimming-secondary-0: var(--black-0);
+}
+
+/* Shadow */
+:root {
+  --shadow-primary: var(--black-400);
+  --shadow-secondary: var(--black-300);
+}
+
+/* Flag */
+:root {
+  --flag-primery: #000000;
+  --flag-secondary-100: #f0f0f0;
+  --flag-secondary-200: #cccccc;
+  --flag-red-300: #ed72aa;
+  --flag-red-350: #db4446;
+  --flag-red-400: #ed2939;
+  --flag-red-450: #ce2b37;
+  --flag-red-500: #ce2939;
+  --flag-red-550: #d80027;
+  --flag-red-600: #d40026;
+  --flag-red-650: #da0000;
+  --flag-red-700: #cc0000;
+  --flag-red-750: #c60b1e;
+  --flag-red-800: #ba0c2f;
+  --flag-red-850: #ad1519;
+  --flag-red-900: #a2001d;
+  --flag-blue-300: #0093dd;
+  --flag-blue-350: #338af3;
+  --flag-blue-400: #005bbf;
+  --flag-blue-450: #005bbb;
+  --flag-blue-500: #0052b4;
+  --flag-blue-550: #004699;
+  --flag-blue-600: #21468b;
+  --flag-blue-650: #11457e;
+  --flag-blue-700: #0039a6;
+  --flag-blue-750: #002395;
+  --flag-blue-800: #171796;
+  --flag-blue-850: #002776;
+  --flag-blue-900: #000066;
+  --flag-green-200: #6da544;
+  --flag-green-300: #058e6e;
+  --flag-green-400: #239f40;
+  --flag-green-500: #009b3a;
+  --flag-green-600: #009246;
+  --flag-green-700: #007c30;
+  --flag-green-800: #477050;
+  --flag-green-900: #005430;
+  --flag-yellow-300: #ffd691;
+  --flag-yellow-400: #ffec2d;
+  --flag-yellow-500: #fedf00;
+  --flag-yellow-600: #ffd500;
+  --flag-yellow-700: #ffce00;
+  --flag-yellow-800: #ffc400;
+  --flag-yellow-900: #c8b100;
+  --flag-purple-900: #4a1f63;
+  --flag-teal-400: #00abc2;
+}

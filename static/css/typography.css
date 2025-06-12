@@ -1,0 +1,277 @@
+.text-style-x-large-title-regular {
+  font-size: 46px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 55px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-large-title-light {
+  font-size: 40px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  line-height: 48px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-title-1-regular {
+  font-size: 28px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 34px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-title-1-bold {
+  font-size: 28px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 34px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-title-2-regular {
+  font-size: 22px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 28px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-title-2-semibold {
+  font-size: 22px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 28px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-title-2-bold {
+  font-size: 22px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 28px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-title-3-regular {
+  font-size: 20px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 25px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-title-3-semibold {
+  font-size: 20px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 25px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-title-3-bold {
+  font-size: 20px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 25px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-headline-medium {
+  font-size: 17px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 22px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-headline-semibold {
+  font-size: 17px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 22px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-body-regular {
+  font-size: 17px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 22px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-body-semibold {
+  font-size: 17px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 22px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-callout-regular {
+  font-size: 16px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 21px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-callout-medium {
+  font-size: 16px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 21px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-subheadline-regular {
+  font-size: 15px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 20px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-subheadline-medium {
+  font-size: 15px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 20px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-subheadline-semibold {
+  font-size: 15px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 20px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-footnote-regular {
+  font-size: 13px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 18px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-footnote-semibold {
+  font-size: 13px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 18px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-caption-1-regular {
+  font-size: 12px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 16px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-caption-1-medium {
+  font-size: 12px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 16px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-caption-2-regular {
+  font-size: 11px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 13px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-caption-2-medium {
+  font-size: 11px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 13px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-caption-3-regular {
+  font-size: 10px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 12px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.text-style-caption-3-medium {
+  font-size: 10px;
+  font-family: "SF Pro Text", Roboto, "Noto Sans", "Open Sans", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 12px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+
+.text-overflow {
+width: 100%;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}

@@ -1,0 +1,19 @@
+:root {
+  --space-x0-5: var(--interval-2);
+  --space-x1: var(--interval-4);
+  --space-x1-5: var(--interval-6);
+  --space-x2: var(--interval-8);
+  --space-x2-5: var(--interval-10);
+  --space-x3: var(--interval-12);
+  --space-x4: var(--interval-16);
+  --space-x5: var(--interval-20);
+  --space-x6: var(--interval-24);
+  --space-x8: var(--interval-32);
+  --space-x10: var(--interval-40);
+  --space-x12: var(--interval-48);
+  --space-x16: var(--interval-64);
+  --space-x20: var(--interval-80);
+  --space-x24: var(--interval-96);
+  --space-x28: var(--interval-112);
+  --space-x32: var(--interval-128);
+}
