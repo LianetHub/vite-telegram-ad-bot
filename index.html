@@ -16,40 +16,91 @@
           <div class="header__top">
             <a href="#select-language" data-modal class="header__users btn btn-primary btn-sm">
               <span class="btn__text">
-                <svg>
-                  <use xlink:href="/img/sprite.svg#icon-language"></use>
-                </svg>
-                Все пользователи
+                <span class="btn__icon">
+                  <span class="btn__icon-globe">
+                    <svg>
+                      <use xlink:href="/img/sprite.svg#icon-language"></use>
+                    </svg>
+                  </span>
+                  <span class="btn__icon-crown">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <g clip-path="url(#clip0_17009_760)">
+                        <path opacity="0.2" d="M14.6765 17.8564H5.32349C3.46733 17.8564 1.90401 16.4692 1.68322 14.6262L0.841296 7.59841C0.735174 6.71259 1.71426 6.10805 2.4587 6.59975L4.03309 7.63964C5.10487 8.34756 6.5555 7.93314 7.09158 6.76588L8.8865 2.85759C9.08632 2.4225 9.52125 2.14365 10 2.14365C10.4788 2.14365 10.9137 2.4225 11.1135 2.85759L12.9085 6.76588C13.4446 7.93313 14.8952 8.34756 15.967 7.63964L17.5413 6.59976C18.2858 6.10806 19.2649 6.7126 19.1587 7.59843L18.3168 14.6262C18.096 16.4692 16.5326 17.8564 14.6765 17.8564Z" fill="url(#paint0_linear_17009_760)" />
+                        <path d="M14.6765 17.8564H5.32349C3.46733 17.8564 1.90401 16.4692 1.68322 14.6262L0.841296 7.59841C0.735174 6.71259 1.71426 6.10805 2.4587 6.59975L4.03309 7.63964C5.10487 8.34756 6.5555 7.93314 7.09158 6.76588L8.8865 2.85759C9.08632 2.4225 9.52125 2.14365 10 2.14365C10.4788 2.14365 10.9137 2.4225 11.1135 2.85759L12.9085 6.76588C13.4446 7.93313 14.8952 8.34756 15.967 7.63964L17.5413 6.59976C18.2858 6.10806 19.2649 6.7126 19.1587 7.59843L18.3168 14.6262C18.096 16.4692 16.5326 17.8564 14.6765 17.8564Z" stroke="white" stroke-width="1.8" />
+                        <path d="M10 11.5713V14.19" stroke="white" stroke-width="1.8" stroke-linecap="round" />
+                      </g>
+                      <defs>
+                        <linearGradient id="paint0_linear_17009_760" x1="10" y1="2.14365" x2="10" y2="17.8564" gradientUnits="userSpaceOnUse">
+                          <stop stop-color="white" stop-opacity="0.1" />
+                          <stop offset="0.2" stop-color="white" stop-opacity="0.5" />
+                          <stop offset="0.5" stop-color="white" stop-opacity="0.9" />
+                        </linearGradient>
+                        <clipPath id="clip0_17009_760">
+                          <rect width="20" height="20" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </span>
+                </span>
+                <span class="btn__flag hidden"></span>
+                <span class="btn__text-body">
+                  Все пользователи
+                </span>
               </span>
-              <svg class="btn__icon-down">
-                <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
-              </svg>
+              <span class="btn__side">
+                <span class="btn__quantity hidden"></span>
+                <svg class="btn__icon-down">
+                  <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
+                </svg>
+              </span>
             </a>
-            <button type="button" class="header__add btn btn-secondary btn-icon"></button>
+            <button type="button" class="header__add  btn-secondary btn-icon"></button>
           </div>
           <div class="header__sort">
-            <a href="#select-price" data-modal class="header__sort-btn btn btn-secondary btn-sm">
-              Цена
-              <svg class="btn__icon-down">
-                <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
-              </svg>
+            <a href="#select-price" data-modal data-prices-toggler class="header__sort-btn btn-secondary btn-sm">
+              <span class="btn__hint caption-lg color-secondary hidden">100k</span>
+              <span class="btn__value">Цена</span>
+              <span class="btn__icon-down">
+                <svg>
+                  <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
+                </svg>
+              </span>
+              <span class="btn__reset">
+                <svg>
+                  <use xlink:href="/img/sprite.svg#icon-cross"></use>
+                </svg>
+              </span>
             </a>
-            <a href="#select-date" data-modal class="header__sort-btn btn btn-secondary btn-sm">
-              Дата
-              <svg class="btn__icon-down">
-                <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
-              </svg>
+            <a href="#select-date" data-modal data-date-toggler class="header__sort-btn btn-secondary btn-sm">
+              <span class="btn__value">Дата</span>
+              <span class="btn__icon-down">
+                <svg>
+                  <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
+                </svg>
+              </span>
+              <span class="btn__reset">
+                <svg>
+                  <use xlink:href="/img/sprite.svg#icon-cross"></use>
+                </svg>
+              </span>
             </a>
-            <a href="#select-users" data-modal class="header__sort-btn btn btn-secondary btn-sm">
-              Количество пользователей
-              <svg class="btn__icon-down">
-                <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
-              </svg>
+            <a href="#select-users" data-modal data-users-toggler class="header__sort-btn btn-secondary btn-sm">
+              <span class="btn__value">Количество пользователей</span>
+              <span class="btn__icon-down">
+                <svg>
+                  <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
+                </svg>
+              </span>
+              <span class="btn__reset">
+                <svg>
+                  <use xlink:href="/img/sprite.svg#icon-cross"></use>
+                </svg>
+              </span>
             </a>
           </div>
-          <div class="header__bottom ">
+          <div class="header__bottom">
             <div class="header__filter">
-              <a href="#filter" data-modal class="header__filter btn btn-white btn-icon btn-xs">
+              <a href="#filter" data-modal class="header__filter-btn btn btn-white btn-icon btn-xs ">
                 <svg>
                   <use xlink:href="/img/sprite.svg#icon-filter"></use>
                 </svg>
@@ -59,9 +110,11 @@
               <button type="button" class="header__categories-btn btn btn-white btn-xs">
                 Категории
                 <span class="header__categories-btn-actions">
-                  <svg class="header__categories-down">
-                    <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
-                  </svg>
+                  <span class="header__categories-down">
+                    <svg>
+                      <use xlink:href="/img/sprite.svg#icon-chevron-down"></use>
+                    </svg>
+                  </span>
                   <span class="header__categories-quantity" data-categories-quantity data-name="categories">0</span>
                 </span>
               </button>
@@ -169,7 +222,7 @@
                   <use xlink:href="/img/sprite.svg#icon-arrow-left"></use>
                 </svg>
               </button>
-              <input type="text" name="search" class="form__control" inputmode="text" placeholder="Поиск">
+              <input type="text" name="search" class="form__control" inputmode="text" enterkeyhint="search" placeholder="Поиск">
               <button type="button" class="header__search-btn btn btn-white btn-icon btn-xs">
                 <svg>
                   <use xlink:href="/img/sprite.svg#icon-search"></use>
@@ -283,8 +336,8 @@
                   Выберите язык
                 </span>
                 <span class="modal__title-selected">
-                  Выбрано
-                  <span class="modal__language-quantity" data-language-quantity data-name="languages">0</span>
+                  <span data-language-title>Выбрано</span>
+                  <span class="modal__language-quantity" data-language-quantity data-name="languages"></span>
                 </span>
               </div>
               <div class="modal__row-actions">
@@ -385,6 +438,14 @@
                   </span>
                 </label>
                 <label class="language__item input-label">
+                  <input type="checkbox" name="languages" value="de" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/de.svg" alt="Флаг">
+                    </span> German
+                  </span>
+                </label>
+                <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="hu" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
@@ -460,6 +521,13 @@
                     </span> Polish </span>
                 </label>
                 <label class="language__item input-label">
+                  <input type="checkbox" name="languages" value="pt-BR" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/pt-BR.svg" alt="Флаг">
+                    </span> Portuguese </span>
+                </label>
+                <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="sr" class="input-label__control hidden" hidden>
                   <span class="input-label__field">
                     <span class="input-label__icon">
@@ -472,6 +540,13 @@
                     <span class="input-label__icon">
                       <img src="img/flags/sk.svg" alt="Флаг">
                     </span> Slovak </span>
+                </label>
+                <label class="language__item input-label">
+                  <input type="checkbox" name="languages" value="es" class="input-label__control hidden" hidden>
+                  <span class="input-label__field">
+                    <span class="input-label__icon">
+                      <img src="img/flags/es.svg" alt="Флаг">
+                    </span> Spanish </span>
                 </label>
                 <label class="language__item input-label">
                   <input type="checkbox" name="languages" value="sv" class="input-label__control hidden" hidden>
@@ -520,12 +595,12 @@
               </span>
               <span class="language__bottom-text subtitle fw-semibold">Telegram Premium</span>
               <span class="switch">
-                <input type="checkbox" name="premium" class="switch__input hidden" hidden>
+                <input type="checkbox" name="premium" data-premium-toggler class="switch__input hidden" hidden>
                 <span class="switch__field"></span>
               </span>
             </label>
             <div class="complete-btn__wrapper">
-              <button data-language-complete class="complete-btn btn btn-primary btn-sm hide">Показать</button>
+              <button data-language-complete class="complete-btn btn btn-primary btn-sm">Показать все</button>
             </div>
           </div>
         </div>
@@ -536,7 +611,7 @@
           <div class="filter__header">
             <div class="modal__row">
               <div class="modal__title title-sm fw-semibold">
-                Фильтр
+                Фильтры
               </div>
               <div class="modal__row-actions">
                 <div class="modal__row-action-selected">
@@ -575,35 +650,35 @@
               <h2 class="filter__title headline fw-semibold">Рассылок за неделю</h2>
               <div class="filter__labels">
                 <label class="input-label">
-                  <input type="radio" name="weekly_sends" value="none" class="input-label__control hidden" hidden>
+                  <input type="checkbox" name="weekly_sends" value="none" class="input-label__control hidden" hidden>
                   <span class="input-label__field">Ни одной</span>
                 </label>
                 <label class="input-label">
-                  <input type="radio" name="weekly_sends" value="one" class="input-label__control hidden" hidden>
+                  <input type="checkbox" name="weekly_sends" value="one" class="input-label__control hidden" hidden>
                   <span class="input-label__field">Одна</span>
                 </label>
                 <label class="input-label">
-                  <input type="radio" name="weekly_sends" value="two" class="input-label__control hidden" hidden>
+                  <input type="checkbox" name="weekly_sends" value="two" class="input-label__control hidden" hidden>
                   <span class="input-label__field">Две</span>
                 </label>
                 <label class="input-label">
-                  <input type="radio" name="weekly_sends" value="three" class="input-label__control hidden" hidden>
+                  <input type="checkbox" name="weekly_sends" value="three" class="input-label__control hidden" hidden>
                   <span class="input-label__field">Три</span>
                 </label>
                 <label class="input-label">
-                  <input type="radio" name="weekly_sends" value="four" class="input-label__control hidden" hidden>
+                  <input type="checkbox" name="weekly_sends" value="four" class="input-label__control hidden" hidden>
                   <span class="input-label__field">Четыре</span>
                 </label>
                 <label class="input-label">
-                  <input type="radio" name="weekly_sends" value="five" class="input-label__control hidden" hidden>
+                  <input type="checkbox" name="weekly_sends" value="five" class="input-label__control hidden" hidden>
                   <span class="input-label__field">Пять</span>
                 </label>
                 <label class="input-label">
-                  <input type="radio" name="weekly_sends" value="six" class="input-label__control hidden" hidden>
+                  <input type="checkbox" name="weekly_sends" value="six" class="input-label__control hidden" hidden>
                   <span class="input-label__field">Шесть</span>
                 </label>
                 <label class="input-label">
-                  <input type="radio" name="weekly_sends" value="seven_or_more" class="input-label__control hidden" hidden>
+                  <input type="checkbox" name="weekly_sends" value="seven_or_more" class="input-label__control hidden" hidden>
                   <span class="input-label__field">Семь и более</span>
                 </label>
               </div>
@@ -619,15 +694,15 @@
                 </span>
               </button>
               <ul class="dropdown__list">
-                <li data-value="" aria-selected="true" class="dropdown__item">Любой</li>
-                <li data-value="positive" class="dropdown__item">Положительный</li>
-                <li data-value="negative" class="dropdown__item">Отрицательный</li>
+                <li data-value="" aria-selected="true" class="dropdown__item btn btn-white">Любой</li>
+                <li data-value="positive" class="dropdown__item btn btn-white">Положительный</li>
+                <li data-value="negative" class="dropdown__item btn btn-white">Отрицательный</li>
               </ul>
               <input type="hidden" name="monthly_growth" class="dropdown__input hidden" hidden value="">
             </div>
           </div>
           <div class="complete-btn__wrapper">
-            <button data-filter-complete class="complete-btn btn btn-primary btn-sm hide">Показать все</button>
+            <button data-filter-complete class="complete-btn btn btn-primary btn-sm">Применить</button>
           </div>
         </div>
       </div>
@@ -646,15 +721,16 @@
             <div class="modal__filter-inputs">
               <div class="modal__filter-field">
                 <span class="color-secondary caption-lg">от</span>
-                <input type="text" name="users_min" id="start-users-input" class="form__control" value="1000" data-unit="чел.">
+                <input type="text" name="users_min" enterkeyhint="done" tabindex="-1" inputmode="numeric" id="start-users-input" class="form__control" value="" data-unit="чел.">
               </div>
               <div class="modal__filter-field">
                 <span class="color-secondary caption-lg">до</span>
-                <input type="text" name="users_max" id="end-users-input" class="form__control" value="9010000" data-unit="чел.">
+                <input type="text" name="users_max" enterkeyhint="done" tabindex="-1" inputmode="numeric" id="end-users-input" class="form__control" value="" data-unit="чел.">
               </div>
             </div>
             <div id="range-users" class="range"></div>
-            <button type="button" data-users-complete class="modal__filter-btn btn btn-primary btn-sm">Показать</button>
+            <button type="button" data-users-complete class="modal__filter-btn btn btn-primary btn-sm">Показать все</button>
+            <button type="button" data-users-reset class="modal__filter-reset btn modal__clear subtitle hidden">Сбросить</button>
           </div>
         </div>
       </div>
@@ -694,7 +770,7 @@
                   </button>
                 </div>
                 <div class="modal__row-action-selected">
-                  <button type="button" data-reset-calendar class="modal__clear subtitle">Очистить</button>
+                  <button type="button" data-reset-calendar data-main-calendar-reset class="modal__clear subtitle">Очистить</button>
                 </div>
               </div>
             </div>
@@ -729,7 +805,7 @@
             <div class="segmented-controls subtitle fw-medium">
               <div class="segmented-controls__wrapper">
                 <label class="segmented-controls__item">
-                  <input type="radio" name="price_type" value="total" class="segmented-controls__item-input hidden" hidden>
+                  <input type="radio" name="price_type" value="total" checked class="segmented-controls__item-input hidden" hidden>
                   <span class="segmented-controls__item-btn">За всех</span>
                 </label>
                 <label class="segmented-controls__item">
@@ -742,15 +818,16 @@
             <div class="modal__filter-inputs">
               <div class="modal__filter-field">
                 <span class="color-secondary caption-lg">от</span>
-                <input type="text" name="price_min" inputmode="numeric" class="form__control" id="start-price-input" value="1000" data-unit="₽">
+                <input type="text" name="price_min" enterkeyhint="done" inputmode="numeric" tabindex="-1" class="form__control" id="start-price-input" value="" data-unit="₽">
               </div>
               <div class="modal__filter-field">
                 <span class="color-secondary caption-lg">до</span>
-                <input type="text" name="price_max" inputmode="numeric" class="form__control" id="end-price-input" value="2400000" data-unit="₽">
+                <input type="text" name="price_max" enterkeyhint="done" inputmode="numeric" tabindex="-1" class="form__control" id="end-price-input" value="" data-unit="₽">
               </div>
             </div>
             <div id="range-price" class="range"></div>
             <button type="button" data-prices-complete class="modal__filter-btn btn btn-primary btn-sm">Показать все</button>
+            <button type="button" data-prices-reset class="modal__filter-reset btn modal__clear subtitle hidden">Сбросить</button>
           </div>
         </div>
       </div>
@@ -941,8 +1018,6 @@
           </div>
         </div>
       </div>
-
-
 
       <script type="module" src="/src/main.ts"></script>
   </body>

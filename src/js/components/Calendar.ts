@@ -2,13 +2,15 @@ import moment from "moment";
 // @ts-ignore
 import "moment/dist/locale/ru";
 moment.locale("ru");
-
 import "../../scss/_datepicker.scss";
+
+import { addLoading } from "../utils/buttonLoadingUtils";
 
 export interface CalendarOptions {
 	monthsToRender?: number;
-	onDateChange?: (selectedDate: string | undefined) => void;
-	onDateSubmit?: (selectedDate: string | undefined) => void;
+	onDateChange?: (selectedDate: string[] | undefined) => void;
+	onDateSubmit?: (selectedDate: string[] | undefined) => void;
+	onReset?: (selectedDate: string[] | undefined) => void;
 	mode?: "single" | "range";
 }
 
@@ -22,13 +24,14 @@ export class Calendar {
 	private wrapper: HTMLElementWithDatepicker | null;
 	private monthsToRender: number;
 	private selectedDate: string | undefined = undefined;
-	private resetBtn: HTMLElement | null = null;
-	private submitBtn: HTMLElement | null = null;
+	private resetBtn: HTMLButtonElement | null = null;
+	private submitBtn: HTMLButtonElement | null = null;
 	public mode: "single" | "range";
 	private rangeStart: HTMLElement | null = null;
 	private rangeEnd: HTMLElement | null = null;
-	public onDateChange: (selectedDate: string | undefined) => void;
-	public onDateSubmit: (selectedDate: string | undefined) => void;
+	public onDateChange: (selectedDate: string[] | undefined) => void;
+	public onDateSubmit: (selectedDate: string[] | undefined) => void;
+	public onReset: (selectedDate: string[] | undefined) => void;
 
 	constructor(container: HTMLElement, options: CalendarOptions = {}) {
 		this.container = container;
@@ -37,6 +40,7 @@ export class Calendar {
 		this.monthsToRender = options.monthsToRender || 24;
 		this.onDateChange = options.onDateChange || (() => {});
 		this.onDateSubmit = options.onDateSubmit || (() => {});
+		this.onReset = options.onReset || (() => {});
 		this.mode = options.mode || "single";
 		this.resetBtn = this.wrapper?.querySelector("[data-reset-calendar]") || null;
 		this.submitBtn = this.wrapper?.querySelector("[data-calendar-submit]") || null;
@@ -128,11 +132,12 @@ export class Calendar {
 
 		this.resetBtn?.addEventListener("click", () => {
 			this.clearSelectedDate();
+			this.onReset(this.selectedDate?.split(","));
 		});
 
 		this.submitBtn?.addEventListener("click", () => {
-			this.submitBtn?.classList.add("loading");
-			this.onDateSubmit(this.selectedDate);
+			addLoading(this.submitBtn);
+			this.onDateSubmit(this.selectedDate?.split(","));
 		});
 	}
 
@@ -173,7 +178,7 @@ export class Calendar {
 			}
 		}
 
-		this.onDateChange(this.selectedDate);
+		this.onDateChange(this.selectedDate?.split(","));
 	}
 
 	private updateRange() {

@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://45.152.122.55:34562";
+export const API_BASE_URL = "https://api-dev.botads.app";
 
 export const API_ENDPOINTS = {
 	SEARCH_CATALOG: "/api/catalog/search",

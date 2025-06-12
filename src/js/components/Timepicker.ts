@@ -4,8 +4,8 @@ import "pickerjs/dist/picker.css";
 export class Timepicker {
 	private element: HTMLElement;
 	private picker: Picker | undefined;
-	private hours: number[];
-	private minutes: number[];
+	public hours: number[];
+	public minutes: number[];
 
 	constructor(element: HTMLElement) {
 		this.element = element;
@@ -27,9 +27,6 @@ export class Timepicker {
 				controls: false,
 				headers: false,
 				rows: 3,
-				pick: (event) => {
-					this.element.value = event.detail.date;
-				},
 			});
 		}
 	}

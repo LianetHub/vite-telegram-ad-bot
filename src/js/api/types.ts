@@ -30,7 +30,7 @@ export type LanguageCode =
 	| "uz";
 
 export type SortBy = "cheapest_first" | "most_expensive_first" | "most_users_first" | "fewest_users_first";
-export type WeeklySends = "none" | "one" | "two" | "three" | "four" | "five_or_more";
+export type WeeklySends = "none" | "one" | "two" | "three" | "four" | "five" | "six" | "seven_or_more";
 export type MonthlyGrowth = "positive" | "negative";
 export type PriceType = "total" | "per_100k";
 
@@ -70,6 +70,27 @@ export type CardProps = {
 	next_available_date: number;
 };
 
+export interface FiltersData {
+	static: {
+		categories: string[];
+		languages: Record<string, { premium: boolean }>;
+		price_total: MinMaxPrice;
+		users_count: MinMaxPrice;
+		price_per_100k: MinMaxPrice;
+	};
+	dynamic: {};
+}
+
+interface MinMaxPrice {
+	min: PriceDetails;
+	max: PriceDetails;
+}
+
+export interface PriceDetails {
+	premium: number;
+	non_premium: number;
+}
+
 export interface ApiError {
 	status: "error";
 	error: string;
@@ -96,6 +117,8 @@ export interface SearchRequest {
 export interface ApiResponse {
 	status: "success";
 	data: CardProps[];
+	total: number;
+	filters_data: FiltersData;
 }
 
 export interface AvailableDatesRequest {

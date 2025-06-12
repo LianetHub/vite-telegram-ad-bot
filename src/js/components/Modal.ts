@@ -5,6 +5,15 @@ export class Modal {
 
 	constructor(private eventEmitter: EventEmitter) {
 		this.initEventListeners();
+		window.addEventListener("popstate", (event) => {
+			if (event.state?.modalOpen) {
+				if (this.openModals.length > 0) {
+					let activeModal = this.openModals[0];
+					this.closeModal(true);
+					this.eventEmitter.emit("modal:closed-without-save", activeModal);
+				}
+			}
+		});
 	}
 
 	private initEventListeners() {
@@ -14,6 +23,11 @@ export class Modal {
 
 			const modalLink = target.closest("[data-modal]") as HTMLElement | null;
 			if (modalLink) {
+				if (target.closest(".btn__reset")) {
+					e.stopPropagation();
+					return;
+				}
+
 				this.openModal(modalLink);
 				this.eventEmitter.emit("modal:opened", modalLink);
 			}
@@ -27,7 +41,7 @@ export class Modal {
 			const modal = target.closest(".modal") as HTMLElement | null;
 			if (modal && !target.closest(".modal__wrapper")) {
 				this.closeModal();
-				this.eventEmitter.emit("modal:closed", modal);
+				this.eventEmitter.emit("modal:closed-without-save", modal);
 			}
 		});
 	}
@@ -49,20 +63,35 @@ export class Modal {
 			modal.classList.add("active");
 			modal.style.zIndex = `${1000 + this.openModals.length}`;
 			document.body.classList.add("lock");
+
+			history.pushState({ modalOpen: true }, "");
+
+			const wrapper = modal.querySelector(".modal__wrapper") as HTMLElement | null;
+			if (wrapper) {
+				wrapper.scrollTop = 0;
+			}
 		}
 	}
 
-	public closeModal() {
+	public closeModal(triggeredByPopstate = false) {
 		if (this.openModals.length === 0) return;
 
 		const lastModal = this.openModals.pop();
 		if (lastModal) {
+			const wrapper = lastModal.querySelector(".modal__wrapper") as HTMLElement | null;
+			if (wrapper) {
+				wrapper.scrollTop = 0;
+			}
 			lastModal.classList.remove("active");
 			lastModal.style.zIndex = "";
 		}
 
 		if (this.openModals.length === 0) {
 			document.body.classList.remove("lock");
+		}
+
+		if (!triggeredByPopstate) {
+			history.back();
 		}
 	}
 }

@@ -3,9 +3,10 @@ export function addThousandSeparator(number: number, shortenToMillion: boolean =
 
 	if (shortenToMillion && number >= 1000000) {
 		const million = (number / 1000000).toFixed(1);
-		formattedNumber = `${million} млн`;
+		const formattedMillion = parseFloat(million) % 1 === 0 ? parseInt(million, 10).toString() : million;
+		formattedNumber = `${formattedMillion} млн`;
 	} else {
-		formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u205F");
+		formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u202F");
 	}
 
 	return formattedNumber;

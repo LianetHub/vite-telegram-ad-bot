@@ -33,6 +33,7 @@ export class Card {
 	render(): HTMLElement {
 		const cardElement = document.createElement("div");
 		cardElement.classList.add("card");
+		this.isOneLanguageCard && cardElement.classList.add("card-single");
 		this.isDisabled && cardElement.classList.add("card-disabled");
 		cardElement.setAttribute("id", this.data.id.toString());
 
@@ -127,7 +128,7 @@ export class Card {
 
 		const cardPrice = document.createElement("div");
 		cardPrice.classList.add("card__price", "title-sm", "fw-semibold");
-		cardPrice.textContent = `${addThousandSeparator(this.data.total_price, true)}\u205F${this.data.currency === "RUB" ? "₽" : this.data.currency}`;
+		cardPrice.textContent = `${addThousandSeparator(this.data.total_price, true)}\u202F${this.data.currency === "RUB" ? "₽" : this.data.currency}`;
 
 		const actionButtonBlock = this.hasRemoveButton ? this.createRemoveBtn() : this.createAddBtn();
 
@@ -151,15 +152,15 @@ export class Card {
 		const cardActive = document.createElement("div");
 		cardActive.className = "card__active subtitle";
 
+		const activeUsers = document.createElement("span");
+		activeUsers.className = "card__active-quantity fw-medium";
+		activeUsers.textContent = formatNumber(this.data.total_users).toString();
+
 		const activeLabel = document.createElement("span");
 		activeLabel.className = "color-secondary";
 		activeLabel.textContent = "Актив:";
-
-		const activeUsers = document.createElement("span");
-		activeUsers.className = "fw-medium";
-		activeUsers.textContent = formatNumber(this.data.total_users).toString();
-
 		cardActive.appendChild(activeLabel);
+
 		cardActive.appendChild(activeUsers);
 
 		if (hasCountryIcon) {
@@ -309,10 +310,10 @@ export class Card {
 		const timeLink = document.createElement("a");
 		timeLink.href = "#check-available-date";
 		timeLink.setAttribute("data-modal", "");
-		timeLink.classList.add("card__time", "subtitle", "fw-medium", "btn", "btn-white");
+		timeLink.classList.add("card__time", "subtitle", "btn", "btn-white");
 
 		const timeValue = document.createElement("span");
-		timeValue.classList.add("card__time-value");
+		timeValue.classList.add("card__time-value", "fw-medium");
 		timeValue.textContent = formatDate(this.data.next_available_date);
 
 		const svg = `<svg><use xlink:href="/img/sprite.svg#icon-chevron-right"></use></svg>`;

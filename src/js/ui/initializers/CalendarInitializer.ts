@@ -22,6 +22,10 @@ export class CalendarInitializer {
 				onDateSubmit: (selectedDate) => {
 					this.eventEmitter.emit("filters:change-datepicker", selectedDate);
 				},
+				onReset: () => {
+					this.eventEmitter.emit("filters:reset-datepicker");
+					this.calendarUIUpdate(undefined, calendarWrapper, calendarInstance);
+				},
 			});
 		}
 	}
@@ -52,7 +56,7 @@ export class CalendarInitializer {
 		}
 	}
 
-	private calendarUIUpdate(date: string | undefined, calendarWrapper: HTMLElement, instance: Calendar | null = null) {
+	public calendarUIUpdate(date: string[] | undefined, calendarWrapper: HTMLElement, instance: Calendar | null = null) {
 		console.log(`Обновление UI Календаря. Выбранно: ${date}`);
 
 		const selectedDaysBlock = calendarWrapper.querySelector('[data-name="selected-days"]') as HTMLElement;

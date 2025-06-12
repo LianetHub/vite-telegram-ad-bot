@@ -10,6 +10,7 @@ import {
 	StartDatesResponse,
 	CheckAvailabilityRequest,
 	CheckAvailabilityResponse,
+	FiltersData,
 } from "../api/types";
 
 export interface StoreState {
@@ -18,10 +19,13 @@ export interface StoreState {
 	error: string | null;
 	cart: string[];
 	filters: SearchRequest;
+	tempFilters: SearchRequest | null;
 	availableDates?: AvailableDatesResponse;
 	startDates?: StartDatesResponse;
 	checkAvailability?: CheckAvailabilityResponse;
 	total?: number;
+	filtersData?: FiltersData;
+	isSilent: boolean;
 }
 
 class Store {
@@ -31,6 +35,8 @@ class Store {
 		error: null,
 		cart: [],
 		filters: {},
+		tempFilters: null,
+		isSilent: false,
 	};
 
 	private events = new EventEmitter();
@@ -56,7 +62,6 @@ class Store {
 
 	setFilters(filters: Partial<StoreState["filters"]>) {
 		this.state.filters = { ...this.state.filters, ...filters };
-		this.events.emit("filters:updated");
 		console.log("Текущий фильтр", this.state.filters);
 	}
 
@@ -64,9 +69,45 @@ class Store {
 		this.events.on(event, callback);
 	}
 
-	async fetchCards(params: SearchRequest = this.state.filters): Promise<void> {
-		console.log("Начало загрузки");
-		this.events.emit("loading:start");
+	setSilent() {
+		this.state.isSilent = true;
+	}
+
+	removeSilent() {
+		this.state.isSilent = false;
+	}
+
+	saveTempFilters() {
+		this.state.tempFilters = { ...this.state.filters };
+	}
+
+	restoreTempFilters() {
+		this.state.filters = { ...this.state.tempFilters };
+		this.state.tempFilters = null;
+		console.log("запрос из рестора");
+		this.fetchCards(false);
+	}
+
+	clearTempFilters() {
+		this.state.tempFilters = null;
+	}
+
+	when(eventName: string): Promise<void> {
+		return new Promise((resolve) => {
+			const callback = () => {
+				this.events.off(eventName, callback);
+				resolve();
+			};
+
+			this.subscribe(eventName, callback);
+		});
+	}
+
+	async fetchCards(showLoading: boolean = true, params: SearchRequest = this.state.filters): Promise<void> {
+		console.log("Начало загрузки c параметами", params);
+		if (showLoading) {
+			this.events.emit("loading:start");
+		}
 
 		try {
 			const response: ApiResponse | ApiError = await Api.searchCatalog(params);
@@ -76,8 +117,12 @@ class Store {
 			this.state.cards = response.data;
 			if (this.init) {
 				this.state.fullData = response.data;
+				this.state.filtersData = response.filters_data;
 				this.init = false;
 			}
+
+			this.state.total = response.total;
+			console.log("Cервер вернул ответ", response);
 
 			if (this.state.cards.length === 0) {
 				console.log("Карточек с такими условиями нет");
